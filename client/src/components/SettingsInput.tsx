@@ -1,17 +1,18 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
 import Input from "./Input";
 import Button from "./Button";
 import updateProfileByEmail from "@/database/profiles/updateProfileByEmail";
 
-const SettingsInput = ({
-  handleSave,
-}: {
-  handleSave: (firstName: string, lastName: string, email: string) => void;
-}) => {
-  const [firstName, setfirstName] = useState("");
-  const [lastName, setlastName] = useState("");
-  const [email, setEmail] = useState("");
+import { useAppSelector } from "@/store/hooks";
+
+const SettingsInput = () => {
+  const user = useAppSelector((state) => state.auth);
+  console.log(user.first_name);
+
+  const [firstName, setfirstName] = useState(`${user.first_name}`);
+  const [lastName, setlastName] = useState(`${user.last_name}`);
+  const [email, setEmail] = useState(`${user.email}`);
 
   const handleUpdateInfo = async () => {
     await updateProfileByEmail(email, {
@@ -19,8 +20,6 @@ const SettingsInput = ({
       first_name: firstName,
       last_name: lastName,
     });
-
-    handleSave(firstName, lastName, email);
   };
 
   return (
@@ -51,18 +50,9 @@ const SettingsInput = ({
             value={lastName}
             onChange={(e) => setlastName(e.target.value)}
             className="p-2 outline outline-[1px] outline-gray-400 rounded w-full"
+            placeholder={user.first_name}
           />
         </div>
-        {/*<label className="font-bold">School Year </label>
-         <select
-          className="font-bold p-2 outline outline-[1px] outline-gray-400 rounded "
-          onChange={(e) => setGrade(e.target.value)}
-        >
-          <option value="Freshman">Freshman</option>
-          <option value="Sophomore">Sophomore</option>
-          <option value="Junior">Junior</option>
-          <option value="Senior">Senior</option>
-        </select> */}
         <label htmlFor=" Email:" className="font-bold">
           {" "}
           Email
