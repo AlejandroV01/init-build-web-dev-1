@@ -1,27 +1,28 @@
-import supabase from '@/lib/supabaseClient'
-import { IExperienceTableTypes } from '@/types'
+import supabase from "@/lib/supabaseClient";
+import { IExperienceTableTypes } from "./../../types/index";
 
-const insertExperience = async (experienceInfo: IExperienceTableTypes) => {
+const insertExperience = async (experience: IExperienceTableTypes) => {
   const { data, error } = await supabase
-    .from('experiences')
+    .from("experience")
     .insert([
       {
-        profile_id: experienceInfo.profile_id,
-        company: experienceInfo.company,
-        title: experienceInfo.title,
-        start_date: experienceInfo.start_date,
-        end_date: experienceInfo.end_date,
-        description: experienceInfo.description,
+        profile_id: experience.profile_id,
+        experience_id: experience.experience_id,
+        company: experience.company,
+        title: experience.title,
+        start_date: experience.start_date,
+        end_date: experience.end_date,
+        description: experience.description,
       },
     ])
-    .select()
+    .select();
   if (data) {
-    console.log(data)
-    return true
+    console.log(data);
+    return true;
   } else {
-    console.error(error)
-    return false
+    console.error(error);
+    return false;
   }
-}
+};
 
-export default insertExperience
+export default insertExperience;
