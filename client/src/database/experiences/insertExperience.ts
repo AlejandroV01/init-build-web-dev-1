@@ -7,7 +7,6 @@ const insertExperience = async (experience: IExperienceTableTypes) => {
     .insert([
       {
         profile_id: experience.profile_id,
-        experience_id: experience.experience_id,
         company: experience.company,
         title: experience.title,
         start_date: experience.start_date,
