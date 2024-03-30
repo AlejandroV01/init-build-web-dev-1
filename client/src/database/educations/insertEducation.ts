@@ -6,7 +6,6 @@ const insertEducation = async (education: IEducationTableTypes) => {
     .from('education')
     .insert([
       {
-        education_id: education.education_id,
         profile_id: education.profile_id,
         school: education.school,
         major: education.major,
