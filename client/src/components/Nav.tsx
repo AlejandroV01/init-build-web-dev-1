@@ -29,9 +29,9 @@ const Nav = () => {
           <a href='/signup'>
             <Button variant='primary'>Sign up</Button>
           </a>
-          <ModeToggle />
         </div>
       )}
+      <ModeToggle />
     </div>
   )
 }
