@@ -18,7 +18,7 @@ interface IProfile {
   uuid: string
 }
 const initialState: IProfile = {
-  id: 1,
+  id: null,
   first_name: '',
   last_name: '',
   email: '',
