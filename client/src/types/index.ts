@@ -13,3 +13,20 @@ export interface IIdeaSavesTableTypes {
   idea_id: number
   profile_id: number
 }
+
+export interface IProfilesTableTypes {
+  profile_id: number | null
+  first_name: string
+  last_name: string
+  email: string
+  school: string
+  major: string
+  location: string
+  linkedin_link: string | null
+  github_link: string | null
+  portfolio_link: string | null
+  skills: string[] | null
+  languages: string[] | null
+  created_at: Date | null | string
+  uuid?: string
+}

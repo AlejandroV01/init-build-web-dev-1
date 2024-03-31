@@ -5,6 +5,7 @@ export type Database = {
     Tables: {
       educations: {
         Row: {
+          education_id: number
           end_date: string
           major: string
           profile_id: number | null
@@ -12,6 +13,7 @@ export type Database = {
           start_date: string
         }
         Insert: {
+          education_id?: number
           end_date: string
           major: string
           profile_id?: number | null
@@ -19,6 +21,7 @@ export type Database = {
           start_date: string
         }
         Update: {
+          education_id?: number
           end_date?: string
           major?: string
           profile_id?: number | null
@@ -31,7 +34,7 @@ export type Database = {
             columns: ['profile_id']
             isOneToOne: false
             referencedRelation: 'profiles'
-            referencedColumns: ['id']
+            referencedColumns: ['profile_id']
           }
         ]
       }
@@ -40,6 +43,7 @@ export type Database = {
           company: string
           description: string | null
           end_date: string
+          experience_id: number
           profile_id: number | null
           start_date: string
           title: string
@@ -48,6 +52,7 @@ export type Database = {
           company: string
           description?: string | null
           end_date: string
+          experience_id?: number
           profile_id?: number | null
           start_date: string
           title: string
@@ -56,6 +61,7 @@ export type Database = {
           company?: string
           description?: string | null
           end_date?: string
+          experience_id?: number
           profile_id?: number | null
           start_date?: string
           title?: string
@@ -66,20 +72,23 @@ export type Database = {
             columns: ['profile_id']
             isOneToOne: false
             referencedRelation: 'profiles'
-            referencedColumns: ['id']
+            referencedColumns: ['profile_id']
           }
         ]
       }
       idea_applicants: {
         Row: {
+          application_role: Database['public']['Enums']['application_role']
           idea_id: number
           profile_id: number
         }
         Insert: {
+          application_role: Database['public']['Enums']['application_role']
           idea_id: number
           profile_id: number
         }
         Update: {
+          application_role?: Database['public']['Enums']['application_role']
           idea_id?: number
           profile_id?: number
         }
@@ -96,7 +105,7 @@ export type Database = {
             columns: ['profile_id']
             isOneToOne: false
             referencedRelation: 'profiles'
-            referencedColumns: ['id']
+            referencedColumns: ['profile_id']
           }
         ]
       }
@@ -126,7 +135,7 @@ export type Database = {
             columns: ['profile_id']
             isOneToOne: false
             referencedRelation: 'profiles'
-            referencedColumns: ['id']
+            referencedColumns: ['profile_id']
           }
         ]
       }
@@ -173,7 +182,7 @@ export type Database = {
             columns: ['profile_id']
             isOneToOne: false
             referencedRelation: 'profiles'
-            referencedColumns: ['id']
+            referencedColumns: ['profile_id']
           }
         ]
       }
@@ -183,14 +192,13 @@ export type Database = {
           email: string
           first_name: string
           github_link: string | null
-          id: number
           languages: string[] | null
           last_name: string
           linkedin_link: string | null
           location: string
           major: string
-          password_hash: string
           portfolio_link: string | null
+          profile_id: number
           school: string
           skills: string[] | null
         }
@@ -199,14 +207,13 @@ export type Database = {
           email: string
           first_name: string
           github_link?: string | null
-          id?: never
           languages?: string[] | null
           last_name: string
           linkedin_link?: string | null
           location: string
           major: string
-          password_hash: string
           portfolio_link?: string | null
+          profile_id?: number
           school: string
           skills?: string[] | null
         }
@@ -215,14 +222,13 @@ export type Database = {
           email?: string
           first_name?: string
           github_link?: string | null
-          id?: never
           languages?: string[] | null
           last_name?: string
           linkedin_link?: string | null
           location?: string
           major?: string
-          password_hash?: string
           portfolio_link?: string | null
+          profile_id?: number
           school?: string
           skills?: string[] | null
         }
@@ -232,26 +238,29 @@ export type Database = {
         Row: {
           description: string | null
           end_date: string
+          position_title: string
           profile_id: number | null
+          project_id: number
           project_name: string
           start_date: string
-          working_title: string
         }
         Insert: {
           description?: string | null
           end_date: string
+          position_title: string
           profile_id?: number | null
+          project_id?: number
           project_name: string
           start_date: string
-          working_title: string
         }
         Update: {
           description?: string | null
           end_date?: string
+          position_title?: string
           profile_id?: number | null
+          project_id?: number
           project_name?: string
           start_date?: string
-          working_title?: string
         }
         Relationships: [
           {
@@ -259,7 +268,7 @@ export type Database = {
             columns: ['profile_id']
             isOneToOne: false
             referencedRelation: 'profiles'
-            referencedColumns: ['id']
+            referencedColumns: ['profile_id']
           }
         ]
       }
@@ -271,7 +280,7 @@ export type Database = {
       [_ in never]: never
     }
     Enums: {
-      [_ in never]: never
+      application_role: 'Frontend' | 'Backend' | 'Full-Stack' | 'UI/UX'
     }
     CompositeTypes: {
       [_ in never]: never
@@ -279,8 +288,10 @@ export type Database = {
   }
 }
 
+type PublicSchema = Database[Extract<keyof Database, 'public'>]
+
 export type Tables<
-  PublicTableNameOrOptions extends keyof (Database['public']['Tables'] & Database['public']['Views']) | { schema: keyof Database },
+  PublicTableNameOrOptions extends keyof (PublicSchema['Tables'] & PublicSchema['Views']) | { schema: keyof Database },
   TableName extends PublicTableNameOrOptions extends { schema: keyof Database }
     ? keyof (Database[PublicTableNameOrOptions['schema']]['Tables'] & Database[PublicTableNameOrOptions['schema']]['Views'])
     : never = never
@@ -290,8 +301,8 @@ export type Tables<
     }
     ? R
     : never
-  : PublicTableNameOrOptions extends keyof (Database['public']['Tables'] & Database['public']['Views'])
-  ? (Database['public']['Tables'] & Database['public']['Views'])[PublicTableNameOrOptions] extends {
+  : PublicTableNameOrOptions extends keyof (PublicSchema['Tables'] & PublicSchema['Views'])
+  ? (PublicSchema['Tables'] & PublicSchema['Views'])[PublicTableNameOrOptions] extends {
       Row: infer R
     }
     ? R
@@ -299,7 +310,7 @@ export type Tables<
   : never
 
 export type TablesInsert<
-  PublicTableNameOrOptions extends keyof Database['public']['Tables'] | { schema: keyof Database },
+  PublicTableNameOrOptions extends keyof PublicSchema['Tables'] | { schema: keyof Database },
   TableName extends PublicTableNameOrOptions extends { schema: keyof Database }
     ? keyof Database[PublicTableNameOrOptions['schema']]['Tables']
     : never = never
@@ -309,8 +320,8 @@ export type TablesInsert<
     }
     ? I
     : never
-  : PublicTableNameOrOptions extends keyof Database['public']['Tables']
-  ? Database['public']['Tables'][PublicTableNameOrOptions] extends {
+  : PublicTableNameOrOptions extends keyof PublicSchema['Tables']
+  ? PublicSchema['Tables'][PublicTableNameOrOptions] extends {
       Insert: infer I
     }
     ? I
@@ -318,7 +329,7 @@ export type TablesInsert<
   : never
 
 export type TablesUpdate<
-  PublicTableNameOrOptions extends keyof Database['public']['Tables'] | { schema: keyof Database },
+  PublicTableNameOrOptions extends keyof PublicSchema['Tables'] | { schema: keyof Database },
   TableName extends PublicTableNameOrOptions extends { schema: keyof Database }
     ? keyof Database[PublicTableNameOrOptions['schema']]['Tables']
     : never = never
@@ -328,8 +339,8 @@ export type TablesUpdate<
     }
     ? U
     : never
-  : PublicTableNameOrOptions extends keyof Database['public']['Tables']
-  ? Database['public']['Tables'][PublicTableNameOrOptions] extends {
+  : PublicTableNameOrOptions extends keyof PublicSchema['Tables']
+  ? PublicSchema['Tables'][PublicTableNameOrOptions] extends {
       Update: infer U
     }
     ? U
@@ -337,12 +348,12 @@ export type TablesUpdate<
   : never
 
 export type Enums<
-  PublicEnumNameOrOptions extends keyof Database['public']['Enums'] | { schema: keyof Database },
+  PublicEnumNameOrOptions extends keyof PublicSchema['Enums'] | { schema: keyof Database },
   EnumName extends PublicEnumNameOrOptions extends { schema: keyof Database }
     ? keyof Database[PublicEnumNameOrOptions['schema']]['Enums']
     : never = never
 > = PublicEnumNameOrOptions extends { schema: keyof Database }
   ? Database[PublicEnumNameOrOptions['schema']]['Enums'][EnumName]
-  : PublicEnumNameOrOptions extends keyof Database['public']['Enums']
-  ? Database['public']['Enums'][PublicEnumNameOrOptions]
+  : PublicEnumNameOrOptions extends keyof PublicSchema['Enums']
+  ? PublicSchema['Enums'][PublicEnumNameOrOptions]
   : never
