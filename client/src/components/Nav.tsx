@@ -1,5 +1,4 @@
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
-import { useReduxSignOut } from '@/functions/reduxSignOut'
 import supabase from '@/lib/supabaseClient'
 import { removeProfile } from '@/store/auth/auth.slice'
 import { useAppDispatch, useAppSelector } from '@/store/hooks'
@@ -38,7 +37,7 @@ const Nav = () => {
       </a>
       <ul className='gap-5 change [&>*]:hover:cursor-pointer font-medium hidden sm:flex'>
         {items.map(item => (
-          <li>
+          <li key={item.route}>
             <a href={item.route}>{item.name}</a>
           </li>
         ))}
