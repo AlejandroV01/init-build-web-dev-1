@@ -1,6 +1,6 @@
 import Button from '@/components/Button'
 import Input from '@/components/Input'
-import getProfileByEmail from '@/database/profiles/getProfileByEmail'
+import fetchProfileByEmail from '@/database/profiles/fetchProfileByEmail'
 import supabase from '@/lib/supabaseClient'
 import { addProfile, addProfileUuid } from '@/store/auth/auth.slice'
 import { useAppDispatch } from '@/store/hooks'
@@ -22,7 +22,7 @@ export const LoginCard = () => {
     if (data.user && data.user.email) {
       setValidCredentials(true)
       dispatch(addProfileUuid(data.user.id))
-      const profile = await getProfileByEmail(data.user.email)
+      const profile = await fetchProfileByEmail(data.user.email)
       if (profile) {
         dispatch(addProfile(profile))
       } else {
