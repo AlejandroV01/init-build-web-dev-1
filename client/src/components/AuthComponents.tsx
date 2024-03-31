@@ -4,7 +4,6 @@ import getProfileByEmail from '@/database/profiles/getProfileByEmail'
 import supabase from '@/lib/supabaseClient'
 import { addProfile, addProfileUuid } from '@/store/auth/auth.slice'
 import { useAppDispatch } from '@/store/hooks'
-import { IProfilesTableTypes } from '@/types'
 import React, { useState } from 'react'
 import Logo from './Logo'
 
@@ -23,7 +22,7 @@ export const LoginCard = () => {
     if (data.user && data.user.email) {
       setValidCredentials(true)
       dispatch(addProfileUuid(data.user.id))
-      const profile: IProfilesTableTypes | null = await getProfileByEmail(data.user.email)
+      const profile = await getProfileByEmail(data.user.email)
       if (profile) {
         dispatch(addProfile(profile))
       } else {
@@ -40,10 +39,10 @@ export const LoginCard = () => {
     handleSignIn()
   }
   return (
-    <div className='flex flex-col items-center mt-14 w-full'>
+    <div className='flex flex-col items-center mt-14 w-full '>
       <h1 className='font-bold text-4xl mb-4 text-center'>Log Into Your Account</h1>
       <p className='text-foreground/80 text-center'>Log back into your account here!</p>
-      <div className='border-2 border-foreground/40 p-5 rounded-lg shadow-lg mt-8 w-full sm:w-[500px]'>
+      <div className='border-2 border-foreground/40 p-5 rounded-lg shadow-lg mt-8 w-full sm:w-[500px] dark:border-foreground/20'>
         <div className='w-full flex justify-center my-2'>
           <Logo />
         </div>
@@ -101,7 +100,7 @@ export const SignUpCard = () => {
     <div className='flex flex-col items-center mt-14 w-full'>
       <h1 className='font-bold text-4xl mb-4 text-center'>Create Your Account</h1>
       <p className='text-foreground/80 text-center'>Create your free account here!</p>
-      <div className='border-2 border-foreground/40 p-5 rounded-lg shadow-lg mt-8 w-full sm:w-[500px]'>
+      <div className='border-2 border-foreground/40 p-5 rounded-lg shadow-lg mt-8 w-full sm:w-[500px] dark:border-foreground/20'>
         <div className='w-full flex justify-center my-2'>
           <Logo />
         </div>

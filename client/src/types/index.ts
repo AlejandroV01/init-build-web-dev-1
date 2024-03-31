@@ -34,15 +34,17 @@ export interface IExperienceTableTypes {
 }
 
 export interface IProfileTableTypes {
-  first_name?: string
-  last_name?: string
-  email?: string
-  school?: string
-  major?: string
-  location?: string
-  linkedin_link?: string
-  github_link?: string
-  portfolio_link?: string
-  skills?: string[]
-  languages?: string[]
+  profile_id: number
+  first_name: string
+  last_name: string
+  email: string
+  school: string
+  major: string
+  location: string
+  linkedin_link: string
+  github_link: string
+  portfolio_link: string
+  skills: string[]
+  languages: string[]
+  created_at: string
 }
