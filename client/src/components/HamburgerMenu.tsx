@@ -2,9 +2,11 @@ import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/co
 import supabase from '@/lib/supabaseClient'
 import { removeProfile } from '@/store/auth/auth.slice'
 import { useAppDispatch, useAppSelector } from '@/store/hooks'
-import { Home, LayoutDashboard, LogOut, LucideIcon, Menu } from 'lucide-react'
+import { Home, LayoutDashboard, Lightbulb, LogOut, LucideIcon, Menu } from 'lucide-react'
 import React from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
+import Logo from './Logo'
+import { NavAuthButtons } from './Nav'
 import { ModeToggle } from './mode-toggle'
 const HamburgerMenu = () => {
   const navigate = useNavigate()
@@ -17,8 +19,13 @@ const HamburgerMenu = () => {
       route: '/',
     },
     {
+      icon: Lightbulb,
+      name: 'Browse Ideas',
+      route: '/ideas',
+    },
+    {
       icon: LayoutDashboard,
-      name: 'Dashboard',
+      name: 'Profile',
       route: '/dashboard',
     },
   ]
@@ -33,22 +40,24 @@ const HamburgerMenu = () => {
   }
   return (
     <Sheet>
-      <SheetTrigger>
+      <SheetTrigger className='sm:hidden h-[24px]'>
         <Menu />
       </SheetTrigger>
       <SheetContent className='flex flex-col gap-10'>
         <SheetHeader className='flex flex-col items-center gap-3'>
-          <SheetTitle>NutriSnap</SheetTitle>
-          <ModeToggle />
+          <SheetTitle>
+            <Logo />
+          </SheetTitle>
+          {user.profile_id ? <ModeToggle /> : <NavAuthButtons className='flex' />}
         </SheetHeader>
-        <div className='flex flex-col justify-between'>
+        <div className='flex flex-col justify-between h-full'>
           <div className='flex flex-col gap-2'>
             {items.map(item => {
               return <NavbarRouteButton key={item.name} icon={item.icon} name={item.name} route={item.route} />
             })}
           </div>
           {user.profile_id && (
-            <div className={`flex p-3 w-full gap-3 rounded-lg cursor-pointer`} onClick={handleSignOut}>
+            <div className={`flex p-3 w-full gap-3 rounded-lg cursor-pointer mt-auto`} onClick={handleSignOut}>
               <LogOut />
               <p className='font-medium'>Logout</p>
             </div>

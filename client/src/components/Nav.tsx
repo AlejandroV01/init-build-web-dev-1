@@ -21,18 +21,27 @@ const Nav = () => {
     }
     navigate('/')
   }
+  const items = [
+    {
+      name: 'Home',
+      route: '/',
+    },
+    {
+      name: 'Browse Ideas',
+      route: '/ideas',
+    },
+  ]
   return (
     <div className='flex justify-between container items-center h-[60px]'>
       <a href='/'>
         <h2 className='font-bold text-xl'>Devbuds</h2>
       </a>
       <ul className='gap-5 change [&>*]:hover:cursor-pointer font-medium hidden sm:flex'>
-        <li>
-          <a href='/projects'>Projects</a>
-        </li>
-        <li>
-          <a href='/about'>About</a>
-        </li>
+        {items.map(item => (
+          <li>
+            <a href={item.route}>{item.name}</a>
+          </li>
+        ))}
       </ul>
       <div className='flex gap-5 items-center'>
         {user.profile_id ? (
@@ -51,24 +60,12 @@ const Nav = () => {
                 </div>
               </PopoverContent>
             </Popover>
-            <div className='sm:hidden h-[24px]'>
-              <HamburgerMenu />
-            </div>
+            <HamburgerMenu />
           </div>
         ) : (
           <>
-            <div className='items-center hidden sm:flex gap-5 '>
-              <a href='/auth?login=true'>
-                <Button variant='secondary'>Log in</Button>
-              </a>
-              <a href='/auth?login=false'>
-                <Button variant='primary'>Sign up</Button>
-              </a>
-              <ModeToggle />
-            </div>
-            <div className='sm:hidden'>
-              <HamburgerMenu />
-            </div>
+            <NavAuthButtons className='hidden sm:flex' />
+            <HamburgerMenu />
           </>
         )}
       </div>
@@ -77,3 +74,17 @@ const Nav = () => {
 }
 
 export default Nav
+
+export const NavAuthButtons = ({ className }: { className?: string }) => {
+  return (
+    <div className={`items-center gap-3 ${className}`}>
+      <a href='/auth?login=true'>
+        <Button variant='secondary'>Log in</Button>
+      </a>
+      <a href='/auth?login=false'>
+        <Button variant='primary'>Sign up</Button>
+      </a>
+      <ModeToggle />
+    </div>
+  )
+}
