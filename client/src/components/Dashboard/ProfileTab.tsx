@@ -47,7 +47,7 @@ const ProfileTab = () => {
   const user = useAppSelector(state => state.auth)
   const [ profileData, setProfileData ] = useState<IProfileTableTypes>();
   const [ experiences, setExperiences ] = useState<IExperienceTableTypes[]>([]);
-  const [ education, setEducation ] = useState<IEducationTableTypes[]>([]);
+  const [ educations, setEducations ] = useState<IEducationTableTypes[]>([]);
   //console.log('user id: ', user)
 
   useEffect( () => {
@@ -67,7 +67,7 @@ const ProfileTab = () => {
         }
         
         if (educationData) {
-          setEducation(educationData);
+          setEducations(educationData);
         }
 
       }
@@ -110,8 +110,21 @@ const ProfileTab = () => {
 
 
   const createEducationCard = () => {
-    if (education) {
+    if (educations) {
       const formattedEducation: formattedEducation[] = [];
+      educations.map( (education) => (
+        formattedEducation.push({
+        schoolLogo: education.school,
+        schoolName: education.school,
+        schoolMajor: education.major,
+        startDate: education.start_date,
+        endDate: education.end_date
+      })));
+      return (
+        <div>
+          <EducationCard educations={formattedEducation}/>
+        </div>
+      );
     }
   };
 
@@ -147,6 +160,7 @@ const ProfileTab = () => {
       <h1>Profile Tab</h1>
       {createAvatar()}
       {createExperienceCard()}
+      {createEducationCard()}
     </div>
   )
 }
