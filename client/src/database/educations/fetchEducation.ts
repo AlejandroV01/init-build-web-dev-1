@@ -11,7 +11,7 @@ const fetchEducation = async (profile_id: number) => {
         return ;
     }
 
-    return education.length > 0 ? education[0] : null;
+    return education.length > 0 ? education : null;
 };
 
 
