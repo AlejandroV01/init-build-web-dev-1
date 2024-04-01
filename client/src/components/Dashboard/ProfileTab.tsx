@@ -1,6 +1,7 @@
 import fetchProfileByID from '@/database/profiles/fetchProfileByID'
 import fetchExperiences from '@/database/experiences/fetchExperiences'
 import fetchEducation from '@/database/educations/fetchEducation'
+import getProjects from '@/database/projects/getProjects'
 import { useAppSelector } from '@/store/hooks'
 import React, { useEffect, useState } from 'react'
 import Avatar from '../Avatar'
@@ -9,27 +10,13 @@ import ExperienceCard from '../ExperienceCard'
 import PortfolioCard from '../PortfolioCard'
 import ProfileInfoCard from '../ProfileInfoCard'
 import ProfileProjectCard from '../ProfileProjectCard'
-import { IProfileTableTypes, IExperienceTableTypes, IEducationTableTypes } from '@/types'
-
-
-const experiencess = [
-  {companyLogo: 'LOGO', companyTitle: 'SDE', companyName: 'Amazon', companyLocation: 'Miami', startDate: 'May 2024', endDate: 'current', description: 'Sample description'}
-];
-
-const educationss = [
-  {schoolLogo: 'LOGO', schoolName: 'FIU', schoolMajor: 'CS', startDate: '2022', endDate: '2024'}
-];
-
-const projects = [
-  {projectName: 'project1', hackathonName: 'mmama', projectDate: '2022', description: 'Sample description'}
-];
+import { IProfileTableTypes, IExperienceTableTypes, IEducationTableTypes, IProjectTableTypes } from '@/types'
 
 
 interface formattedExperience {
   companyLogo: string;
   companyTitle: string;
   companyName: string;
-  companyLocation: string;
   startDate: string;
   endDate: string;
   description: string | null;
@@ -43,12 +30,19 @@ interface formattedEducation {
   endDate: string;
 }
 
+interface formattedProject {
+  projectName: string;
+  hackathonName: string;
+  projectDate: string;
+  description: string;
+}
+
 const ProfileTab = () => {
   const user = useAppSelector(state => state.auth)
   const [ profileData, setProfileData ] = useState<IProfileTableTypes>();
   const [ experiences, setExperiences ] = useState<IExperienceTableTypes[]>([]);
   const [ educations, setEducations ] = useState<IEducationTableTypes[]>([]);
-  //console.log('user id: ', user)
+  const [ projects, setProjects ] = useState<IProjectTableTypes[]>([]);
 
   useEffect( () => {
     async function getData() {
@@ -56,13 +50,13 @@ const ProfileTab = () => {
         const userData = await fetchProfileByID(user.id);
         const experienceData = await fetchExperiences(user.id);
         const educationData = await fetchEducation(user.id);
+        const projectsData = await getProjects(user.id);
 
         if (userData) {
           setProfileData(userData);
         }
 
         if (experienceData) {
-          console.log(experienceData);
           setExperiences(experienceData);
         }
         
@@ -70,10 +64,30 @@ const ProfileTab = () => {
           setEducations(educationData);
         }
 
+        if (projectsData) {
+          console.log(projects);
+          setProjects(projectsData);
+        }
       }
     }
     getData();
   }, []);
+
+
+  const createProfileInfoCard = () => {
+    if (profileData) {
+      return (
+        <div>
+          <ProfileInfoCard userFirstName={profileData.first_name} 
+                           userLastName={profileData.last_name}
+                           userSchool={profileData.school}
+                           userLocation={profileData.location}
+                           userEmail={profileData.email}
+                           userMajor={profileData.major}/>
+        </div>
+      );
+    }
+  };
 
   const createAvatar = () => {
     if (profileData) {
@@ -93,11 +107,11 @@ const ProfileTab = () => {
           companyLogo: experience.company,
           companyTitle: experience.title,
           companyName: experience.company,
-          companyLocation: 'Default',
           startDate: experience.start_date,
           endDate: experience.end_date,
           description: experience.description
-      })));
+        })
+      ));
       
       // fix type of description It can't be NULL
       return (
@@ -119,7 +133,8 @@ const ProfileTab = () => {
         schoolMajor: education.major,
         startDate: education.start_date,
         endDate: education.end_date
-      })));
+        })
+      ));
       return (
         <div>
           <EducationCard educations={formattedEducation}/>
@@ -128,17 +143,24 @@ const ProfileTab = () => {
     }
   };
 
-  if (profileData) {
-    return (
-      <div className='w-full bg-orange-500 h-[2000px]'>
-      <ProfileInfoCard userFirstName={profileData.first_name} userLastName={profileData.last_name} userSchool={profileData.school} userPhone='123123' userEmail={profileData.email} userMajor={profileData.major}/>
-      <ExperienceCard experiences={experiencess} />
-      <EducationCard educations={educationss}/>
-      <ProfileProjectCard projects={projects}/>
-      <PortfolioCard />
-    </div>)
-  ;
-  }
+  const createProjectCard = () => {
+    if (projects) {
+      const formattedProjects: formattedProject[] = [];
+      projects.map( (project) => (
+        formattedProjects.push({
+          projectName: project.project_name,
+          hackathonName: project.position_title,
+          projectDate: project.start_date + project.end_date,
+          description: project.description
+        })
+      ));
+      return (
+        <div>
+          <ProfileProjectCard projects={formattedProjects}/>
+        </div>
+      );
+    }
+  };
   
   /**
    * Navigate to localhost:5167/dashboard to view this file
@@ -156,11 +178,30 @@ const ProfileTab = () => {
    * If you have any questions, please ask!
    */
   return (
-    <div className='w-full bg-orange-500 h-[2000px]'>
-      <h1>Profile Tab</h1>
-      {createAvatar()}
-      {createExperienceCard()}
-      {createEducationCard()}
+    <div className='relative'>
+      <div className='absolut inset-0 bg-[#ededed] rounded-3xl border-1'>
+        <div className='w-full px-14 py-7 ml-4'>
+          <div className='flex items-center space-x-8'>
+            {createAvatar()}
+            {createProfileInfoCard()}
+          </div>
+          <div className='py-5 mr-10'>
+            <div className='py-5'>
+              {createExperienceCard()}
+            </div>
+
+            <div className='py-5'>
+              {createEducationCard()}
+            </div>
+
+            <div className='py-5'>
+              {createProjectCard()}
+            </div>
+
+            <PortfolioCard />
+          </div>
+        </div>
+      </div>
     </div>
   )
 }
