@@ -46,28 +46,27 @@ const ProfileTab = () => {
 
   useEffect( () => {
     async function getData() {
+      // make user user id is not null
       if (typeof(user.id) === 'number') {
+        // fetch user profile data using id
         const userData = await fetchProfileByID(user.id);
+        // fetch user experience data using id
         const experienceData = await fetchExperiences(user.id);
+        // fetch user education data using id
         const educationData = await fetchEducation(user.id);
+        // fetch user projects data using id
         const projectsData = await getProjects(user.id);
 
-        if (userData) {
-          setProfileData(userData);
-        }
+        // if statements to make sure data is not null type
 
-        if (experienceData) {
-          setExperiences(experienceData);
-        }
+        if (userData) setProfileData(userData);
+
+        if (experienceData) setExperiences(experienceData);
         
-        if (educationData) {
-          setEducations(educationData);
-        }
+        if (educationData) setEducations(educationData);
 
-        if (projectsData) {
-          console.log(projects);
-          setProjects(projectsData);
-        }
+        if (projectsData) setProjects(projectsData);
+
       }
     }
     getData();
@@ -102,6 +101,7 @@ const ProfileTab = () => {
   const createExperienceCard = () => {
     if (experiences) {
       const formattedExperiences: formattedExperience[] = [];
+      // format experience data to a format acceptable for Experience Card
       experiences.map( (experience) => (
         formattedExperiences.push({
           companyLogo: experience.company,
@@ -126,6 +126,7 @@ const ProfileTab = () => {
   const createEducationCard = () => {
     if (educations) {
       const formattedEducation: formattedEducation[] = [];
+      // Format education to be acceptable for EducationCard
       educations.map( (education) => (
         formattedEducation.push({
         schoolLogo: education.school,
@@ -146,6 +147,7 @@ const ProfileTab = () => {
   const createProjectCard = () => {
     if (projects) {
       const formattedProjects: formattedProject[] = [];
+      // Format projects to be acceptable by Project Card
       projects.map( (project) => (
         formattedProjects.push({
           projectName: project.project_name,
@@ -154,6 +156,7 @@ const ProfileTab = () => {
           description: project.description
         })
       ));
+      // Fix type of description, it can't be NULL ?
       return (
         <div>
           <ProfileProjectCard projects={formattedProjects}/>
