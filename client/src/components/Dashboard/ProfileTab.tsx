@@ -179,7 +179,7 @@ const ProfileTab = () => {
    */
   return (
     <div className='relative'>
-      <div className='absolut inset-0 bg-[#ededed] rounded-3xl border-1'>
+      <div className='bg-[#ededed] rounded-3xl border-1'>
         <div className='w-full px-14 py-7 ml-4'>
           <div className='flex items-center space-x-8'>
             {createAvatar()}
