@@ -7,7 +7,6 @@ interface Experiences {
   companyLogo: string;
   companyTitle: string;
   companyName: string;
-  companyLocation: string;
   startDate: string;
   endDate: string;
   description: string;
@@ -33,7 +32,6 @@ const ExperienceCard: React.FC<ExperienceCardProps> = ({ experiences }) => {
             companyLogo={exp.companyLogo}
             companyTitle={exp.companyTitle}
             companyName={exp.companyName}
-            companyLocation={exp.companyLocation}
             startDate={exp.startDate}
             endDate={exp.endDate}
             description={exp.description}
