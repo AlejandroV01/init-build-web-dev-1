@@ -197,8 +197,9 @@ const ProfileTab = () => {
             <div className='py-5'>
               {createProjectCard()}
             </div>
-
+            <div className='py-5'>
             <PortfolioCard />
+            </div>
           </div>
         </div>
       </div>
