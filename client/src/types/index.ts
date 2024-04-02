@@ -48,3 +48,13 @@ export interface IProfileTableTypes {
   languages: string[]
   created_at: string
 }
+
+export interface IProjectTableTypes {
+  project_id: number
+  profile_id: number
+  project_name: string
+  position_title: string
+  start_date: string
+  end_date: string
+  description: string | null
+}
