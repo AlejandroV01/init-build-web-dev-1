@@ -38,22 +38,24 @@ const ProjectCard: React.FC<CardProps> = ({
   imageSrc,
   onClick,
 }) => {
-  const [bookmarked, setBookmarked] = useState<boolean>(false);
-
-  const handleBookmarkBtnOnClick = () => {
-    setBookmarked(!bookmarked);
-  };
-
   const user = useAppSelector((state) => state.auth);
-  console.log(user.uuid);
-
+  const [bookmarked, setBookmarked] = useState<boolean>(false);
   const [isYourPost, setIsYourPost] = useState(false);
+  const [activePopover, setActivePopover] = useState(false);
 
   useEffect(() => {
     if (user.profile_id === author.author_id) {
       setIsYourPost(true);
     }
   }, [user.profile_id, author.author_id]);
+
+  const handleBookmarkBtnOnClick = () => {
+    setBookmarked(!bookmarked);
+  };
+
+  const handleManageBtnOnClick = () => {
+    setActivePopover(!activePopover);
+  };
 
   return (
     <div
@@ -118,7 +120,11 @@ const ProjectCard: React.FC<CardProps> = ({
 
         {isYourPost ? (
           <div className="flex flex-row py-3 gap-2">
-            <Button variant="primary" className="w-full" onClick={onClick}>
+            <Button
+              variant="primary"
+              className="w-full"
+              onClick={handleManageBtnOnClick}
+            >
               Manage
             </Button>
             <Button variant="secondary" onClick={onClick} className="w-full">
@@ -147,6 +153,12 @@ const ProjectCard: React.FC<CardProps> = ({
           </div>
         )}
       </div>
+
+      {activePopover && (
+        <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-40">
+          {/* Popover */}
+        </div>
+      )}
     </div>
   );
 };
