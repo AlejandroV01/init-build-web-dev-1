@@ -37,7 +37,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
     <StoreProvider>
       <ThemeProvider defaultTheme='system' storageKey='vite-ui-theme'>
         <RouterProvider router={router} />
-        {<ToastContainer
+        <ToastContainer
           position='bottom-right'
           autoClose={5000}
           hideProgressBar={false}
@@ -49,7 +49,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
           pauseOnHover
           theme='colored'
           transition={Bounce}
-        />}
+        />
       </ThemeProvider>
     </StoreProvider>
   </React.StrictMode>
