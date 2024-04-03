@@ -3,11 +3,14 @@ import Button from "./Button";
 import Badge from "./badge";
 import { BsBookmark } from "react-icons/bs";
 import { useState } from "react";
+import { useEffect } from "react";
+import { useAppSelector } from "@/store/hooks";
 
 interface Author {
   firstName: string;
   lastName: string;
   src: string;
+  author_id: number;
 }
 
 interface CardProps {
@@ -35,10 +38,23 @@ const ProjectCard: React.FC<CardProps> = ({
   imageSrc,
   onClick,
 }) => {
+  const user = useAppSelector((state) => state.auth);
   const [bookmarked, setBookmarked] = useState<boolean>(false);
+  const [isYourPost, setIsYourPost] = useState(false);
+  const [activePopover, setActivePopover] = useState(false);
+
+  useEffect(() => {
+    if (user.profile_id === author.author_id) {
+      setIsYourPost(true);
+    }
+  }, [user.profile_id, author.author_id]);
 
   const handleBookmarkBtnOnClick = () => {
     setBookmarked(!bookmarked);
+  };
+
+  const handleManageBtnOnClick = () => {
+    setActivePopover(!activePopover);
   };
 
   return (
@@ -101,19 +117,48 @@ const ProjectCard: React.FC<CardProps> = ({
             <img src={imageSrc} alt="project-preview" className="rounded-md" />
           </div>
         )}
-        <div className="flex flex-row py-3 gap-2">
-          <Button variant="primary" className="w-full" onClick={onClick}>
-            Apply
-          </Button>
-          <Button
-            variant="secondary"
-            onClick={handleBookmarkBtnOnClick}
-            className={bookmarked ? "bg-yellow-400" : ""}
-          >
-            <BsBookmark />
-          </Button>
-        </div>
+
+        {isYourPost ? (
+          <div className="flex flex-row py-3 gap-2">
+            <Button
+              variant="primary"
+              className="w-full"
+              onClick={handleManageBtnOnClick}
+            >
+              Manage
+            </Button>
+            <Button variant="secondary" onClick={onClick} className="w-full">
+              Edit Idea
+            </Button>
+            <Button
+              variant="secondary"
+              onClick={handleBookmarkBtnOnClick}
+              className={bookmarked ? "bg-yellow-400" : ""}
+            >
+              <BsBookmark />
+            </Button>
+          </div>
+        ) : (
+          <div className="flex flex-row py-3 gap-2">
+            <Button variant="primary" className="w-full" onClick={onClick}>
+              Apply
+            </Button>
+            <Button
+              variant="secondary"
+              onClick={handleBookmarkBtnOnClick}
+              className={bookmarked ? "bg-yellow-400" : ""}
+            >
+              <BsBookmark />
+            </Button>
+          </div>
+        )}
       </div>
+
+      {activePopover && (
+        <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-40">
+          {/* Popover */}
+        </div>
+      )}
     </div>
   );
 };

@@ -1,29 +1,15 @@
-import supabase from '@/lib/supabaseClient'
-import { ThemeSupa } from '@supabase/auth-ui-shared'
-import { Session } from '@supabase/supabase-js'
-import React, { useEffect, useState } from 'react'
+import { LoginCard, SignUpCard } from '@/components/AuthComponents'
+import { useAppSelector } from '@/store/hooks'
+import { useNavigate, useSearchParams } from 'react-router-dom'
 const Auth = () => {
-  const [session, setSession] = useState<null | Session>(null)
-
-  useEffect(() => {
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      setSession(session)
-    })
-
-    const {
-      data: { subscription },
-    } = supabase.auth.onAuthStateChange((_event, session) => {
-      setSession(session)
-    })
-
-    return () => subscription.unsubscribe()
-  }, [])
-  return (
-    <div>
-      <h1>Auth</h1>
-      {session && <p>Signed In</p>}
-    </div>
-  )
+  const [params] = useSearchParams()
+  const isLogin = params.get('login')
+  const user = useAppSelector(state => state.auth)
+  const navigate = useNavigate()
+  if (user.profile_id) {
+    return navigate('/')
+  }
+  return <div className='flex flex-col items-center container '>{isLogin === 'true' ? <LoginCard /> : <SignUpCard />}</div>
 }
 
 export default Auth

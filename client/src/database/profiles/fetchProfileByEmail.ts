@@ -1,5 +1,6 @@
 import supabase from '@/lib/supabaseClient'
-const getProfileByEmail = async (email: string) => {
+
+const fetchProfileByEmail = async (email: string) => {
   const { data: profiles, error } = await supabase.from('profiles').select('*').eq('email', email)
   if (profiles) {
     return profiles[0]
@@ -9,4 +10,4 @@ const getProfileByEmail = async (email: string) => {
   }
 }
 
-export default getProfileByEmail
+export default fetchProfileByEmail

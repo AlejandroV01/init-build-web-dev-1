@@ -6,12 +6,12 @@ interface IProfileInfoCard {
   userFirstName: string
   userLastName: string
   userSchool: string
-  userPhone: string
+  userLocation: string
   userEmail: string
   userMajor: string
 }
 
-const ProfileInfoCard = ({ userFirstName, userLastName, userSchool, userPhone, userEmail, userMajor }: IProfileInfoCard) => {
+const ProfileInfoCard = ({ userFirstName, userLastName, userSchool, userLocation, userEmail, userMajor }: IProfileInfoCard) => {
   return (
     <div className='flex flex-col sm:flex-row gap-6 justify-between w-fit bg-primary p-5 rounded-lg text-white'>
       <div className='flex-col'>
@@ -33,7 +33,7 @@ const ProfileInfoCard = ({ userFirstName, userLastName, userSchool, userPhone, u
       <div className='flex-col'>
         <div className='text-[18px] font-semibold'>Contact</div>
         <div className='text-[14px]'>
-          {userEmail} <br /> {userPhone}
+          {userEmail} <br /> {userLocation}
         </div>
       </div>
     </div>

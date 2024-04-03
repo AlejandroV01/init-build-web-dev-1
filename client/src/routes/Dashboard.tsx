@@ -1,5 +1,7 @@
 import MyIdeasTab from '@/components/Dashboard/MyIdeasTab'
 import OthersIdeasTab from '@/components/Dashboard/OthersIdeasTab'
+import ProfileTab from '@/components/Dashboard/ProfileTab'
+import SettingsTab from '@/components/Dashboard/SettingsTab'
 import SideNav, { Tab } from '@/components/SideNav'
 import React, { useState } from 'react'
 import { FaRegLightbulb } from 'react-icons/fa'
@@ -21,6 +23,10 @@ const Dashboard = () => {
         return <MyIdeasTab />
       case "Other's Ideas":
         return <OthersIdeasTab />
+      case 'Profile':
+        return <ProfileTab />
+      case 'Settings':
+        return <SettingsTab />
     }
   }
   return (
