@@ -17,7 +17,7 @@ export interface IIdeaSavesTableTypes {
 
 export interface IEducationTableTypes {
   education_id: number
-  profile_id: number
+  profile_id: string
   school: string
   major: string
   start_date: string
