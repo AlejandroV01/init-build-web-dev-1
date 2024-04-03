@@ -4,7 +4,6 @@ interface ExperienceProps {
   companyLogo: string;
   companyTitle: string;
   companyName: string;
-  companyLocation: string;
   startDate: string;
   endDate: string;
   description: string;
@@ -30,8 +29,6 @@ const Experience = ({
           <span className="font-extrabold text-lg text-2">{companyTitle}</span>
           <span className="mb-[5px]">
             <span className="">{companyName}</span>
-            <span> • </span>
-            <span>{companyLocation}</span>
           </span>
           <span>
             <span className="text-gray-500 text-sm">{startDate}</span>

@@ -32,3 +32,29 @@ export interface IExperienceTableTypes {
   end_date: string
   description: string
 }
+
+export interface IProfileTableTypes {
+  profile_id: number
+  first_name: string
+  last_name: string
+  email: string
+  school: string
+  major: string
+  location: string
+  linkedin_link: string
+  github_link: string
+  portfolio_link: string
+  skills: string[]
+  languages: string[]
+  created_at: string
+}
+
+export interface IProjectTableTypes {
+  project_id: number
+  profile_id: number
+  project_name: string
+  position_title: string
+  start_date: string
+  end_date: string
+  description: string | null
+}

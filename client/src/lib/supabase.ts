@@ -191,46 +191,46 @@ export type Database = {
           created_at: string | null
           email: string
           first_name: string
-          github_link: string | null
-          languages: string[] | null
+          github_link: string
+          languages: string[]
           last_name: string
-          linkedin_link: string | null
+          linkedin_link: string
           location: string
           major: string
-          portfolio_link: string | null
+          portfolio_link: string
           profile_id: number
           school: string
-          skills: string[] | null
+          skills: string[]
         }
         Insert: {
           created_at?: string | null
           email: string
           first_name: string
-          github_link?: string | null
-          languages?: string[] | null
+          github_link: string
+          languages: string[]
           last_name: string
-          linkedin_link?: string | null
+          linkedin_link: string
           location: string
           major: string
-          portfolio_link?: string | null
+          portfolio_link: string
           profile_id?: number
           school: string
-          skills?: string[] | null
+          skills: string[]
         }
         Update: {
           created_at?: string | null
           email?: string
           first_name?: string
-          github_link?: string | null
-          languages?: string[] | null
+          github_link?: string
+          languages?: string[]
           last_name?: string
-          linkedin_link?: string | null
+          linkedin_link?: string
           location?: string
           major?: string
-          portfolio_link?: string | null
+          portfolio_link?: string
           profile_id?: number
           school?: string
-          skills?: string[] | null
+          skills?: string[]
         }
         Relationships: []
       }
@@ -239,7 +239,7 @@ export type Database = {
           description: string | null
           end_date: string
           position_title: string
-          profile_id: number | null
+          profile_id: number
           project_id: number
           project_name: string
           start_date: string
@@ -248,7 +248,7 @@ export type Database = {
           description?: string | null
           end_date: string
           position_title: string
-          profile_id?: number | null
+          profile_id: number
           project_id?: number
           project_name: string
           start_date: string
@@ -257,7 +257,7 @@ export type Database = {
           description?: string | null
           end_date?: string
           position_title?: string
-          profile_id?: number | null
+          profile_id?: number
           project_id?: number
           project_name?: string
           start_date?: string
