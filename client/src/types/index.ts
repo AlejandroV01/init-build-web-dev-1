@@ -56,5 +56,4 @@ export interface IProjectTableTypes {
   position_title: string
   start_date: string
   end_date: string
-  description: string | null
 }
