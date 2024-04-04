@@ -1,7 +1,7 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
 @layer base {
   :root {
     --background: 0 0% 100%;
@@ -10,7 +10,7 @@
     --card-foreground: 222.2 84% 4.9%;
     --popover: 0 0% 100%;
     --popover-foreground: 222.2 84% 4.9%;
-    --primary: 247, 86%, 65%;
+    --primary: 247 86% 65%;
     --primary-foreground: 210 40% 98%;
     --secondary: 0 0% 18%;
     --secondary-foreground: 222.2 47.4% 11.2%;
@@ -32,7 +32,7 @@
     --card-foreground: 210 40% 98%;
     --popover: 222.2 84% 4.9%;
     --popover-foreground: 210 40% 98%;
-    --primary: 247, 86%, 65%;
+    --primary: 247 86% 65%;
     --primary-foreground: 222.2 47.4% 11.2%;
     --secondary: 0 0% 18%;
     --secondary-foreground: 210 40% 98%;
@@ -59,4 +59,17 @@
 
 .button {
   @apply bg-primary text-primary-foreground;
+}
+
+* {
+  font-family: 'Poppins', sans-serif;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: 'Ubuntu', sans-serif;
 }

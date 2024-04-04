@@ -72,31 +72,35 @@ const lastPageButton = (totalPages: number, onPageChange: onPageChangeType) => {
 
 
 /**
- * 
+ * @param renderSize - represents how many numbers are rendered at once
+ * @param distribution - this represents how many numbers to each side of the currentPage I.E ( 2 3 5 6 7) distribution = 2
  * @param currentPage - takes current page user is at
  * @param totalPages - total available pages
  * @returns - array of possible page numbers to render
  */
-const getRenderNumbers = (currentPage: number, totalPages: number) => {
+const getRenderNumbers = (renderSize: number, 
+                          distribution: number, 
+                          currentPage: number, 
+                          totalPages: number) => {
   
-  const renderSize: number = 3;
-  const distribution: number = Math.floor(renderSize / 2)
   const numbers: number[] = [];
   let startPage: number, lastPage: number;
 
   startPage = Math.max(currentPage - distribution, 1);
   lastPage = Math.min(currentPage + distribution, totalPages);
 
-  // case for the last 2 pages
-  if ((totalPages - currentPage) <= 1) {
-    startPage = totalPages - renderSize + 1;
-    lastPage = totalPages;
-  }
+  if (totalPages >= renderSize) {
+    // case for the last 2 pages
+    if ((totalPages - currentPage) <= 1) {
+      startPage = totalPages - renderSize + 1;
+      lastPage = totalPages;
+    }
 
-  // case for the first two pages
-  if (currentPage <= 2) {
-    startPage = 1;
-    lastPage = renderSize;
+    // case for the first two pages
+    if (currentPage <= 2) {
+      startPage = 1;
+      lastPage = renderSize;
+    }
   }
   
 
@@ -134,10 +138,20 @@ const getButtonStyling = (borderColor: string = 'border-gray-900',
 };
 
 
-const Pagination = ({totalPages, currentPage, onPageChange}: PaginationProps) => {
+const render = ({currentPage, totalPages, onPageChange}: PaginationProps) => {
+
+  // renderSize represents how many page numbers will be displayed at the same time
+  const renderSize: number = 5;
+  // symmetrical distribution for each side around the renderSize
+  const distribution: number = Math.floor(renderSize / 2)
 
   const renderNumbers = () => {
-    const pages: number[] = getRenderNumbers(currentPage, totalPages);
+
+    let pages: number[] = [];
+
+
+    pages = getRenderNumbers(renderSize, distribution, currentPage, totalPages);
+
     return (
       <>
         {pages.map((n) => (
@@ -159,24 +173,32 @@ const Pagination = ({totalPages, currentPage, onPageChange}: PaginationProps) =>
     );
   };
 
-
   return (
-    <div className='flex justify-start items-center space-x-3'>
-
+    <>
       {prevButton(currentPage, onPageChange)}
       
-      {currentPage > 3 &&(
+      {currentPage - 1 >= 1 + distribution && totalPages > renderSize && (
         firstPageButton(onPageChange)
       )}
 
       {renderNumbers()}
 
-      {totalPages - currentPage > 4 && (
+      { (totalPages - currentPage > distribution)  && totalPages > renderSize &&(
         lastPageButton(totalPages, onPageChange)
       )}
 
       {nextButton(currentPage, totalPages, onPageChange)}
+    </>
+  )
 
+}
+
+
+const Pagination = (props: PaginationProps) => {
+
+  return (
+    <div className='flex justify-start items-center space-x-3'>
+      {render(props)}
     </div>
   );
 };
