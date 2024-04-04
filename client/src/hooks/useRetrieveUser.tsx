@@ -1,6 +1,6 @@
 import fetchProfileByEmail from '@/database/profiles/fetchProfileByEmail'
 import supabase from '@/lib/supabaseClient'
-import { addProfile } from '@/store/auth/auth.slice'
+import { addProfile, addProfileUuid } from '@/store/auth/auth.slice'
 import { useAppDispatch } from '@/store/hooks'
 import { User } from '@supabase/supabase-js'
 import { useEffect, useState } from 'react'
@@ -31,6 +31,7 @@ export const useRetrieveUser = () => {
       }
       data.session.user.email && (await fetchProfile(data.session.user.email))
       setUser(data.session.user)
+      dispatch(addProfileUuid(data.session.user.id))
       setLoading(false)
     }
 

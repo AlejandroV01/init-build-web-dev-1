@@ -53,7 +53,7 @@ export const LoginCard = () => {
             {validCredentials === false && <p className='text-red-500 text-sm text-center'>Invalid credentials. Please try again.</p>}
           </div>
           <Button variant='primary' className='w-full' type='submit'>
-            Create Account
+            Log In
           </Button>
           <p>
             Don't have an account? Sign Up{' '}
