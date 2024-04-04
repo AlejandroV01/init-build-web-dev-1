@@ -1,3 +1,4 @@
+import { spawn } from 'child_process'
 import React, { useState } from 'react'
 import { CiEdit } from 'react-icons/ci'
 import { FaXmark } from 'react-icons/fa6'
@@ -5,79 +6,62 @@ import { RiPencilFill } from 'react-icons/ri'
 import Button from './Button'
 import Input from './Input'
 import Badge from './badge'
-import { spawn } from 'child_process'
 
 const SkillCard = ({
   onFinishEditing,
   skills,
-  onDoneClick,
+  onSkillEnter,
+  handleRemoveSkill,
 }: {
   onFinishEditing: () => void
   skills: string[]
-  onDoneClick: (e: React.FormEvent<HTMLFormElement>, val: string) => void
+  onSkillEnter: (val: string) => void
+  handleRemoveSkill: (skill: string) => void
 }) => {
   const [inputSkill, setInputSkill] = useState<string>('')
 
-  
+  const [isEdit, setIsEdit] = useState<boolean>(false)
 
+  const handleEdit = () => {
+    setIsEdit(true)
+  }
+  const exitEdit = () => {
+    setIsEdit(false)
+    onFinishEditing()
+  }
 
-  const handleAddSkill = (event: React.FormEvent) => {
-    event.preventDefault()
-    if (!inputSkill) return
+  const handleFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    onSkillEnter(inputSkill)
     setInputSkill('')
-
-    
   }
-
-  const [showExit, setShowExit] = useState<boolean>(false)
-  const [showPencil, setShowPencil] = useState<boolean>(true)
-  const [editMode, setEditMode] = useState<boolean>(false)  
-  const [showSkills, setShowSkills] = useState <boolean>(true)
-  const handleEdit = (event: React.FormEvent) => {
-    event.preventDefault()
-    setShowPencil(!showPencil)
-    setShowExit(true)
-    setEditMode(true)
-    setShowSkills(false)
-  }
-  const exitEdit = (event: React.FormEvent) => {
-    event.preventDefault()
-    setShowExit(!showExit)
-    setShowPencil(true)
-    setEditMode(false)
-    setShowSkills(true)
-  }
-  
-
   return (
-    <div className ='flex flex-col gap-4 bg-blue-400 p-6'>
+    <div className='flex flex-col gap-2 bg-[#ededed] p-6 w-full'>
       <div className='flex items-center justify-between'>
         <h1 className='font-bold text-3xl'>Skills</h1>
-        {showPencil && <button><RiPencilFill onClick={handleEdit} /></button>}
-        {showExit && <button><FaXmark onClick={exitEdit} /></button>}
-
+        {!isEdit && <RiPencilFill onClick={handleEdit} className='cursor-pointer' size={20} />}
+        {isEdit && <FaXmark onClick={exitEdit} className='cursor-pointer' size={20} />}
       </div>
-      {/**
-       * Edit mode will change decide if the div underneath this comment is shown
-       * Edit mode will also decide which icon is shown like the pencil
-       * onClick of x should also call the same function as the Finish button
-       */}
-      {showSkills && <div className = 'flex gap-5' >
-        <form onSubmit={e => onDoneClick(e, inputSkill)} className='flex gap-3'>
-          <Input type='text' value={inputSkill} onChange={event => setInputSkill(event.target.value)} className='bg-white' />
-          <Button variant='primary'>Enter Skill</Button>
-        </form>
-        {editMode && <Button variant='secondary' onClick={onFinishEditing}>
-          Finish
-        </Button>}
-      </div>}
+      {isEdit && <p className='text-primary'>Click a skill again to remove it.</p>}
+      {isEdit && (
+        <div className='flex gap-5'>
+          <form onSubmit={e => handleFormSubmit(e)} className='flex gap-3'>
+            <Input type='text' value={inputSkill} onChange={event => setInputSkill(event.target.value)} className='bg-white' />
+            <Button variant='primary'>Enter Skill</Button>
+          </form>
+          <Button variant='secondary' onClick={exitEdit}>
+            Finish
+          </Button>
+        </div>
+      )}
       <div className='flex justify-start gap-2 flex-wrap'>
         {skills.map((skill, index) => (
-          <Badge label={skill} key={index} />
+          <div className='cursor-pointer' onClick={() => handleRemoveSkill(skill)}>
+            <Badge label={skill} key={index} />
+          </div>
         ))}
       </div>
     </div>
   )
-       
 }
 export default SkillCard
