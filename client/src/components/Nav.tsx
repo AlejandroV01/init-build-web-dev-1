@@ -37,7 +37,8 @@ const Nav = () => {
       </a>
       <ul className='gap-5 change [&>*]:hover:cursor-pointer font-medium hidden sm:flex'>
         {items.map(item => (
-          <li key={item.route}>
+          //TYPE CLASS NAMES FOR NAV IN HERE
+          <li key={item.route} className='text-red-500'>
             <a href={item.route}>{item.name}</a>
           </li>
         ))}
