@@ -7,6 +7,7 @@ import Avatar from './Avatar'
 import Button from './Button'
 import HamburgerMenu from './HamburgerMenu'
 import { ModeToggle } from './mode-toggle'
+
 const Nav = () => {
   const user = useAppSelector(state => state.auth)
   const dispatch = useAppDispatch()
@@ -31,7 +32,7 @@ const Nav = () => {
     },
   ]
   return (
-    <div className='flex justify-between container items-center h-[60px]'>
+    <div className='flex justify-between container items-center h-[60px] z-20'>
       <a href='/'>
         <h2 className='font-bold text-xl'>Devbuds</h2>
       </a>
@@ -59,6 +60,7 @@ const Nav = () => {
                 </div>
               </PopoverContent>
             </Popover>
+            <ModeToggle />
             <HamburgerMenu />
           </div>
         ) : (
