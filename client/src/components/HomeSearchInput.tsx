@@ -32,7 +32,7 @@ const HomeSearchInput: React.FC<HomeSearchInputProps> = ({ handleSearch }) => {
           <FaSearch />
         </Button>
       </form>
-      <Select label='Job Type' options={['Frontend', 'Backend', 'Full-Stack', 'UI/UX']} onChange={} />
+      <Select label='Job Type' options={['Frontend', 'Backend', 'Full-Stack', 'UI/UX']} />
     </ShadowCard>
   )
 }
