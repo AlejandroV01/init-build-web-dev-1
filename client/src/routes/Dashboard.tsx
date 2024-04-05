@@ -30,7 +30,7 @@ const Dashboard = () => {
     }
   }
   return (
-    <div>
+    <div className='container'>
       <h1 className='text-center text-2xl font-bold'>Dashboard</h1>
       <div className='flex gap-5'>
         <SideNav tabs={tabs} active={activeTab} onTabClick={handleSetActive} />

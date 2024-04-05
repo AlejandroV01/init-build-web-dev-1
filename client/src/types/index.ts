@@ -1,5 +1,6 @@
 export interface IIdeaTableTypes {
   idea_id: number
+  profile_id: number
   idea_title: string
   idea_description: string
   tech_stack: string[]
@@ -7,6 +8,7 @@ export interface IIdeaTableTypes {
   back_end: number
   full_stack: number
   ux_ui: number
+  created_at: string
 }
 
 export interface IIdeaSavesTableTypes {
