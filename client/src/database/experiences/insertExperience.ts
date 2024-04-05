@@ -1,7 +1,15 @@
 import supabase from "@/lib/supabaseClient";
-import { IExperienceTableTypes } from "./../../types/index";
 
-const insertExperience = async (experience: IExperienceTableTypes) => {
+interface IExperience {
+  profile_id: number;
+  company: string;
+  title: string;
+  start_date: string;
+  end_date: string;
+  description: string;
+}
+
+const insertExperience = async (experience: IExperience) => {
   const { data, error } = await supabase
     .from("experience")
     .insert([
