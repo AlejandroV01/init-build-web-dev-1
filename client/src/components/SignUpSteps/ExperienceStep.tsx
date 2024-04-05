@@ -86,8 +86,8 @@ const ExperienceStep: React.FC<Props> = ({
     });
   };
 
-  const handleSubmit = async () => {
-    experiences.forEach((experience) => {
+  const handleSubmit = () => {
+    experiences.forEach(async (experience) => {
       //needed check to circument "profile_id cannot be number | null" error
       if (user.id) {
         const data = {
@@ -100,7 +100,7 @@ const ExperienceStep: React.FC<Props> = ({
             : `${experience.endMonth} ${experience.endYear}`,
           description: experience.description,
         };
-        insertExperience(data);
+        await insertExperience(data);
       }
     });
     handleStepSubmit();

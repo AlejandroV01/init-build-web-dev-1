@@ -81,8 +81,8 @@ const ProjectStep: React.FC<Props> = ({ handleStepSkip, handleStepSubmit }) => {
     });
   };
 
-  const handleSubmit = async () => {
-    projects.forEach((project) => {
+  const handleSubmit = () => {
+    projects.forEach(async (project) => {
       //needed check to circument "profile_id cannot be number | null" error
       if (user.id) {
         const data = {
@@ -95,7 +95,7 @@ const ProjectStep: React.FC<Props> = ({ handleStepSkip, handleStepSubmit }) => {
             : `${project.endMonth} ${project.endYear}`,
           description: project.description,
         };
-        insertProject(data);
+        await insertProject(data);
       }
     });
     handleStepSubmit();
