@@ -1,9 +1,17 @@
-import supabase from '@/lib/supabaseClient'
-import { IExperienceTableTypes } from './../../types/index'
+import supabase from "@/lib/supabaseClient";
 
-const insertExperience = async (experience: IExperienceTableTypes) => {
+interface IExperience {
+  profile_id: number;
+  company: string;
+  title: string;
+  start_date: string;
+  end_date: string;
+  description: string;
+}
+
+const insertExperience = async (experience: IExperience) => {
   const { data, error } = await supabase
-    .from('experience')
+    .from("experience")
     .insert([
       {
         profile_id: experience.profile_id,
@@ -14,14 +22,14 @@ const insertExperience = async (experience: IExperienceTableTypes) => {
         description: experience.description,
       },
     ])
-    .select()
+    .select();
   if (data) {
-    console.log(data)
-    return true
+    console.log(data);
+    return true;
   } else {
-    console.error(error)
-    return false
+    console.error(error);
+    return false;
   }
-}
+};
 
-export default insertExperience
+export default insertExperience;
