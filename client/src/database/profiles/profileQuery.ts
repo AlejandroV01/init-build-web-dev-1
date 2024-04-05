@@ -1,21 +1,16 @@
-import { QueryResult, QueryData, QueryError } from '@supabase/supabase-js'
 import supabase from "@/lib/supabaseClient"
-import fetchEducation from '@/database/educations/fetchEducation'
-import fetchExperiences from '@/database/experiences/fetchExperiences'
-import fetchProfileByID from '@/database/profiles/fetchProfileByID'
-import getProjects from '@/database/projects/getProjects'
-import { IEducationTableTypes, IExperienceTableTypes, IProfileTableTypes, IProjectTableTypes } from '@/types'
 
-
-const combiningEverything = async (profileID: number) => {
+const profileQuery = async (profileID: number) => {
     const { data: completeProfileInfo, error } = await supabase
         .from("profiles")
-        .select("*, experiences (*), educations(*), projects(*)")
+        .select("profile_id, first_name, last_name, school, major, email, location, " + 
+        "experiences (*), educations(*), projects(*)")
         if (completeProfileInfo) {
-            return completeProfileInfo
+            return completeProfileInfo[profileID]
         } else {
             console.error(error)
             return null
         }
     }
-export default combiningEverything
+    
+export default profileQuery
