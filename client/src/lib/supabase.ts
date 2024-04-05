@@ -8,7 +8,7 @@ export type Database = {
           education_id: number
           end_date: string
           major: string
-          profile_id: number | null
+          profile_id: number
           school: string
           start_date: string
         }
@@ -16,7 +16,7 @@ export type Database = {
           education_id?: number
           end_date: string
           major: string
-          profile_id?: number | null
+          profile_id: number
           school: string
           start_date: string
         }
@@ -24,7 +24,7 @@ export type Database = {
           education_id?: number
           end_date?: string
           major?: string
-          profile_id?: number | null
+          profile_id?: number
           school?: string
           start_date?: string
         }
@@ -41,28 +41,28 @@ export type Database = {
       experiences: {
         Row: {
           company: string
-          description: string | null
+          description: string
           end_date: string
           experience_id: number
-          profile_id: number | null
+          profile_id: number
           start_date: string
           title: string
         }
         Insert: {
           company: string
-          description?: string | null
+          description: string
           end_date: string
           experience_id?: number
-          profile_id?: number | null
+          profile_id: number
           start_date: string
           title: string
         }
         Update: {
           company?: string
-          description?: string | null
+          description?: string
           end_date?: string
           experience_id?: number
-          profile_id?: number | null
+          profile_id?: number
           start_date?: string
           title?: string
         }
@@ -80,16 +80,19 @@ export type Database = {
         Row: {
           application_role: Database['public']['Enums']['application_role']
           idea_id: number
+          is_accepted: boolean
           profile_id: number
         }
         Insert: {
           application_role: Database['public']['Enums']['application_role']
           idea_id: number
+          is_accepted?: boolean
           profile_id: number
         }
         Update: {
           application_role?: Database['public']['Enums']['application_role']
           idea_id?: number
+          is_accepted?: boolean
           profile_id?: number
         }
         Relationships: [
@@ -142,37 +145,37 @@ export type Database = {
       ideas: {
         Row: {
           back_end: number
-          created_at: string | null
+          created_at: string
           front_end: number
           full_stack: number
           idea_description: string
           idea_id: number
           idea_title: string
-          profile_id: number | null
+          profile_id: number
           tech_stack: string[]
           ux_ui: number
         }
         Insert: {
           back_end: number
-          created_at?: string | null
+          created_at?: string
           front_end: number
           full_stack: number
           idea_description: string
           idea_id?: never
           idea_title: string
-          profile_id?: number | null
+          profile_id: number
           tech_stack: string[]
           ux_ui: number
         }
         Update: {
           back_end?: number
-          created_at?: string | null
+          created_at?: string
           front_end?: number
           full_stack?: number
           idea_description?: string
           idea_id?: never
           idea_title?: string
-          profile_id?: number | null
+          profile_id?: number
           tech_stack?: string[]
           ux_ui?: number
         }
@@ -186,9 +189,48 @@ export type Database = {
           }
         ]
       }
+      messages: {
+        Row: {
+          created_at: string
+          id: number
+          idea_id: number
+          profile_id: number
+          text: string
+        }
+        Insert: {
+          created_at?: string
+          id?: number
+          idea_id: number
+          profile_id: number
+          text: string
+        }
+        Update: {
+          created_at?: string
+          id?: number
+          idea_id?: number
+          profile_id?: number
+          text?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: 'public_messages_idea_id_fkey'
+            columns: ['idea_id']
+            isOneToOne: false
+            referencedRelation: 'ideas'
+            referencedColumns: ['idea_id']
+          },
+          {
+            foreignKeyName: 'public_messages_profile_id_fkey'
+            columns: ['profile_id']
+            isOneToOne: false
+            referencedRelation: 'profiles'
+            referencedColumns: ['profile_id']
+          }
+        ]
+      }
       profiles: {
         Row: {
-          created_at: string | null
+          created_at: string
           email: string
           first_name: string
           github_link: string
@@ -203,7 +245,7 @@ export type Database = {
           skills: string[]
         }
         Insert: {
-          created_at?: string | null
+          created_at?: string
           email: string
           first_name: string
           github_link: string
@@ -218,7 +260,7 @@ export type Database = {
           skills: string[]
         }
         Update: {
-          created_at?: string | null
+          created_at?: string
           email?: string
           first_name?: string
           github_link?: string
@@ -236,7 +278,7 @@ export type Database = {
       }
       projects: {
         Row: {
-          description: string | null
+          description: string
           end_date: string
           position_title: string
           profile_id: number
@@ -245,7 +287,7 @@ export type Database = {
           start_date: string
         }
         Insert: {
-          description?: string | null
+          description: string
           end_date: string
           position_title: string
           profile_id: number
@@ -254,7 +296,7 @@ export type Database = {
           start_date: string
         }
         Update: {
-          description?: string | null
+          description?: string
           end_date?: string
           position_title?: string
           profile_id?: number

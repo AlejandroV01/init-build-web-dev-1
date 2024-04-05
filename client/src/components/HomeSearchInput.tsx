@@ -5,7 +5,7 @@ import Input from './Input'
 import ShadowCard from './ShadowCard'
 
 interface HomeSearchInputProps {
-  handleSearch: () => void
+  handleSearch: (term: string) => void
 }
 
 const HomeSearchInput: React.FC<HomeSearchInputProps> = ({ handleSearch }) => {
@@ -13,11 +13,11 @@ const HomeSearchInput: React.FC<HomeSearchInputProps> = ({ handleSearch }) => {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    handleSearch()
+    handleSearch(text)
   }
 
   return (
-    <ShadowCard className='p-3'>
+    <ShadowCard className='p-3 w-full max-w-[800px]'>
       <form onSubmit={handleSubmit} className='flex gap-5'>
         <Input
           type='text'
@@ -26,7 +26,7 @@ const HomeSearchInput: React.FC<HomeSearchInputProps> = ({ handleSearch }) => {
           placeholder='Search by idea title or description'
           className='w-full'
         />
-        <Button variant='primary' onClick={handleSearch}>
+        <Button variant='primary' type='submit'>
           <FaSearch />
         </Button>
       </form>

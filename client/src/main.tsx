@@ -9,6 +9,7 @@ import './index.css'
 import Auth from './routes/Auth.jsx'
 import Dashboard from './routes/Dashboard.tsx'
 import Home from './routes/Home.tsx'
+import Ideas from './routes/Ideas.tsx'
 import Root from './routes/Root.tsx'
 import StoreProvider from './store/StoreProvider.tsx'
 const router = createBrowserRouter([
@@ -28,6 +29,10 @@ const router = createBrowserRouter([
       {
         path: '/dashboard',
         element: <Dashboard />,
+      },
+      {
+        path: '/ideas',
+        element: <Ideas />,
       },
     ],
   },
