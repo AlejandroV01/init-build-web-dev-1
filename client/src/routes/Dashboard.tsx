@@ -30,9 +30,8 @@ const Dashboard = () => {
     }
   }
   return (
-    <div className='container'>
-      <h1 className='text-center text-2xl font-bold'>Dashboard</h1>
-      <div className='flex gap-5'>
+    <div className='container py-14'>
+      <div className='flex'>
         <SideNav tabs={tabs} active={activeTab} onTabClick={handleSetActive} />
         {renderInfo()}
       </div>

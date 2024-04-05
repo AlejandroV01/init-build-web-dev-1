@@ -128,7 +128,7 @@ const MeetTheTeam = () => {
     },
   ]
   return (
-    <div className='py-14 flex flex-col gap-10'>
+    <div className='py-14 flex flex-col gap-10 container md:pl-20 md:pr-20'>
       <h2 className='text-primary font-bold text-center text-3xl'>Meet The Team</h2>
       <div className='flex gap-10 w-full flex-wrap justify-center'>
         <Carousel
