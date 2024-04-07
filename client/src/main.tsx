@@ -1,17 +1,6 @@
-import React from 'react'
-import ReactDOM from 'react-dom/client'
-import { RouterProvider, createBrowserRouter } from 'react-router-dom'
-import { Bounce, ToastContainer } from 'react-toastify'
-import 'react-toastify/dist/ReactToastify.css'
-import { ThemeProvider } from './components/theme-provider.tsx'
-import ErrorPage from './error-page.tsx'
-import './index.css'
-import Auth from './routes/Auth.jsx'
-import Dashboard from './routes/Dashboard.tsx'
 import Home from './routes/Home.tsx'
 import Ideas from './routes/Ideas.tsx'
 import Root from './routes/Root.tsx'
-import Test from './routes/Test.tsx'
 import StoreProvider from './store/StoreProvider.tsx'
 const router = createBrowserRouter([
   {
@@ -34,10 +23,6 @@ const router = createBrowserRouter([
       {
         path: '/ideas',
         element: <Ideas />,
-      },
-      {
-        path: '/test',
-        element: <Test />,
       },
     ],
   },
@@ -62,5 +47,3 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
         />
       </ThemeProvider>
     </StoreProvider>
-  </React.StrictMode>
-)
