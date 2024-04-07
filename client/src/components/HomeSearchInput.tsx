@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { FaSearch } from 'react-icons/fa'
 import Button from './Button'
-import { default as Input, default as Input } from './Input'
+import Input from './Input'
 import ShadowCard from './ShadowCard'
 import { Select } from './select-ui'
 interface HomeSearchInputProps {
