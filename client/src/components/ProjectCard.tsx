@@ -3,8 +3,8 @@ import { useEffect, useState } from 'react'
 import { BsBookmark } from 'react-icons/bs'
 import Avatar from './Avatar'
 import Button from './Button'
+import ShadowCard from './ShadowCard'
 import Badge from './badge'
-
 interface Author {
   firstName: string
   lastName: string
@@ -22,9 +22,10 @@ interface CardProps {
   badges: string[]
   imageSrc?: string
   onClick?: () => void
+  ideaId: number
 }
 
-const ProjectCard: React.FC<CardProps> = ({ title, description, college, major, created, author, badges, imageSrc, onClick }) => {
+const ProjectCard: React.FC<CardProps> = ({ title, description, college, major, created, author, badges, imageSrc, onClick, ideaId }) => {
   const user = useAppSelector(state => state.auth)
   const [bookmarked, setBookmarked] = useState<boolean>(false)
   const [isYourPost, setIsYourPost] = useState(false)
@@ -44,7 +45,7 @@ const ProjectCard: React.FC<CardProps> = ({ title, description, college, major, 
     setActivePopover(!activePopover)
   }
   return (
-    <div className={`flex flex-col border dark:bg-black rounded-lg shadow-[0px_0px_2px_0px_rgba(0,0,0,0.5)] w-full max-w-[800px]`}>
+    <ShadowCard className={`flex flex-col  w-full max-w-[800px]`}>
       <div className='p-5'>
         {/* Card Header */}
         <div className='flex flex-col'>
@@ -97,9 +98,11 @@ const ProjectCard: React.FC<CardProps> = ({ title, description, college, major, 
           </div>
         ) : (
           <div className='flex flex-row py-3 gap-2'>
-            <Button variant='primary' className='w-full' onClick={onClick}>
-              Apply
-            </Button>
+            <a href={`/idea/${ideaId}`} className='w-full'>
+              <Button variant='primary' className='w-full'>
+                Apply
+              </Button>
+            </a>
             <Button variant='secondary' onClick={handleBookmarkBtnOnClick} className={bookmarked ? 'bg-yellow-400' : ''}>
               <BsBookmark />
             </Button>
@@ -108,7 +111,7 @@ const ProjectCard: React.FC<CardProps> = ({ title, description, college, major, 
       </div>
 
       {activePopover && <div className='fixed top-0 left-0 w-full h-full bg-black bg-opacity-40'>{/* Popover */}</div>}
-    </div>
+    </ShadowCard>
   )
 }
 

@@ -33,6 +33,13 @@ export type Database = {
             foreignKeyName: 'educations_profile_id_fkey'
             columns: ['profile_id']
             isOneToOne: false
+            referencedRelation: 'profile_ideas_view'
+            referencedColumns: ['profile_id_profiles']
+          },
+          {
+            foreignKeyName: 'educations_profile_id_fkey'
+            columns: ['profile_id']
+            isOneToOne: false
             referencedRelation: 'profiles'
             referencedColumns: ['profile_id']
           }
@@ -71,6 +78,13 @@ export type Database = {
             foreignKeyName: 'experiences_profile_id_fkey'
             columns: ['profile_id']
             isOneToOne: false
+            referencedRelation: 'profile_ideas_view'
+            referencedColumns: ['profile_id_profiles']
+          },
+          {
+            foreignKeyName: 'experiences_profile_id_fkey'
+            columns: ['profile_id']
+            isOneToOne: false
             referencedRelation: 'profiles'
             referencedColumns: ['profile_id']
           }
@@ -104,6 +118,20 @@ export type Database = {
             referencedColumns: ['idea_id']
           },
           {
+            foreignKeyName: 'idea_applicants_idea_id_fkey'
+            columns: ['idea_id']
+            isOneToOne: false
+            referencedRelation: 'profile_ideas_view'
+            referencedColumns: ['idea_id_ideas']
+          },
+          {
+            foreignKeyName: 'idea_applicants_profile_id_fkey'
+            columns: ['profile_id']
+            isOneToOne: false
+            referencedRelation: 'profile_ideas_view'
+            referencedColumns: ['profile_id_profiles']
+          },
+          {
             foreignKeyName: 'idea_applicants_profile_id_fkey'
             columns: ['profile_id']
             isOneToOne: false
@@ -132,6 +160,20 @@ export type Database = {
             isOneToOne: false
             referencedRelation: 'ideas'
             referencedColumns: ['idea_id']
+          },
+          {
+            foreignKeyName: 'idea_saves_idea_id_fkey'
+            columns: ['idea_id']
+            isOneToOne: false
+            referencedRelation: 'profile_ideas_view'
+            referencedColumns: ['idea_id_ideas']
+          },
+          {
+            foreignKeyName: 'idea_saves_profile_id_fkey'
+            columns: ['profile_id']
+            isOneToOne: false
+            referencedRelation: 'profile_ideas_view'
+            referencedColumns: ['profile_id_profiles']
           },
           {
             foreignKeyName: 'idea_saves_profile_id_fkey'
@@ -184,6 +226,13 @@ export type Database = {
             foreignKeyName: 'ideas_profile_id_fkey'
             columns: ['profile_id']
             isOneToOne: false
+            referencedRelation: 'profile_ideas_view'
+            referencedColumns: ['profile_id_profiles']
+          },
+          {
+            foreignKeyName: 'ideas_profile_id_fkey'
+            columns: ['profile_id']
+            isOneToOne: false
             referencedRelation: 'profiles'
             referencedColumns: ['profile_id']
           }
@@ -218,6 +267,20 @@ export type Database = {
             isOneToOne: false
             referencedRelation: 'ideas'
             referencedColumns: ['idea_id']
+          },
+          {
+            foreignKeyName: 'public_messages_idea_id_fkey'
+            columns: ['idea_id']
+            isOneToOne: false
+            referencedRelation: 'profile_ideas_view'
+            referencedColumns: ['idea_id_ideas']
+          },
+          {
+            foreignKeyName: 'public_messages_profile_id_fkey'
+            columns: ['profile_id']
+            isOneToOne: false
+            referencedRelation: 'profile_ideas_view'
+            referencedColumns: ['profile_id_profiles']
           },
           {
             foreignKeyName: 'public_messages_profile_id_fkey'
@@ -309,6 +372,13 @@ export type Database = {
             foreignKeyName: 'projects_profile_id_fkey'
             columns: ['profile_id']
             isOneToOne: false
+            referencedRelation: 'profile_ideas_view'
+            referencedColumns: ['profile_id_profiles']
+          },
+          {
+            foreignKeyName: 'projects_profile_id_fkey'
+            columns: ['profile_id']
+            isOneToOne: false
             referencedRelation: 'profiles'
             referencedColumns: ['profile_id']
           }
@@ -316,7 +386,33 @@ export type Database = {
       }
     }
     Views: {
-      [_ in never]: never
+      profile_ideas_view: {
+        Row: {
+          back_end_ideas: number
+          created_at_ideas: string
+          created_at_profiles: string
+          email_profiles: string
+          first_name_profiles: string
+          front_end_ideas: number
+          full_stack_ideas: number
+          github_link_profiles: string
+          idea_description_ideas: string
+          idea_id_ideas: number
+          idea_title_ideas: string
+          languages_profiles: string[]
+          last_name_profiles: string
+          linkedin_link_profiles: string
+          location_profiles: string
+          major_profiles: string
+          portfolio_link_profiles: string
+          profile_id_profiles: number
+          school_profiles: string
+          skills_profiles: string[]
+          tech_stack_ideas: string[]
+          ux_ui_ideas: number
+        }
+        Relationships: []
+      }
     }
     Functions: {
       [_ in never]: never

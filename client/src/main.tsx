@@ -9,6 +9,7 @@ import './index.css'
 import Auth from './routes/Auth.jsx'
 import Dashboard from './routes/Dashboard.tsx'
 import Home from './routes/Home.tsx'
+import Idea from './routes/Idea.tsx'
 import Ideas from './routes/Ideas.tsx'
 import Root from './routes/Root.tsx'
 import StoreProvider from './store/StoreProvider.tsx'
@@ -33,6 +34,10 @@ const router = createBrowserRouter([
       {
         path: '/ideas',
         element: <Ideas />,
+      },
+      {
+        path: '/idea/:id',
+        element: <Idea />,
       },
     ],
   },

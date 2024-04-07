@@ -59,3 +59,28 @@ export interface IProjectTableTypes {
   start_date: string
   end_date: string
 }
+
+export interface IProfileIdeasViewTypes {
+  profile_id_profiles: number
+  created_at_profiles: string
+  email_profiles: string
+  first_name_profiles: string
+  github_link_profiles: string
+  languages_profiles: string[]
+  last_name_profiles: string
+  linkedin_link_profiles: string
+  location_profiles: string
+  major_profiles: string
+  portfolio_link_profiles: string
+  school_profiles: string
+  skills_profiles: string[]
+  idea_id_ideas: number
+  back_end_ideas: number
+  created_at_ideas: string
+  front_end_ideas: number
+  full_stack_ideas: number
+  idea_description_ideas: string
+  idea_title_ideas: string
+  tech_stack_ideas: string[]
+  ux_ui_ideas: number
+}

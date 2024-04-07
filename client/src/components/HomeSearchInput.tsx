@@ -1,3 +1,4 @@
+import fetchProfileIdeasView from '@/database/profile_ideas_view/fetchProfileIdeasView'
 import { useState } from 'react'
 import { FaSearch } from 'react-icons/fa'
 import Button from './Button'
@@ -17,7 +18,9 @@ const HomeSearchInput: React.FC<HomeSearchInputProps> = ({ handleSearch }) => {
     e.preventDefault()
     handleSearch(text)
   }
-
+  const handleGetIdeas = async () => {
+    await fetchProfileIdeasView()
+  }
   return (
     <ShadowCard className='p-3 w-full max-w-[800px]'>
       <form onSubmit={handleSubmit} className='flex gap-5'>
@@ -33,6 +36,9 @@ const HomeSearchInput: React.FC<HomeSearchInputProps> = ({ handleSearch }) => {
         </Button>
       </form>
       <Select label='Job Type' options={['Frontend', 'Backend', 'Full-Stack', 'UI/UX']} />
+      <Button variant='primary' onClick={handleGetIdeas}>
+        Fetch View
+      </Button>
     </ShadowCard>
   )
 }
