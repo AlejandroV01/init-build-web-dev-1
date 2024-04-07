@@ -1,0 +1,12 @@
+CREATE TABLE ideas (
+idea_id BIGINT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
+profile_id BIGINT REFERENCES profiles (id),
+idea_title TEXT NOT NULL,
+idea_description TEXT NOT NULL,
+tech_stack TEXT[] NOT NULL,
+created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+front_end INT NOT NULL,
+back_end INT NOT NULL,
+full_stack INT NOT NULL,
+ux_ui INT NOT NULL
+);
