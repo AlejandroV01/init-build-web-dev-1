@@ -11,6 +11,7 @@ import Dashboard from './routes/Dashboard.tsx'
 import Home from './routes/Home.tsx'
 import Ideas from './routes/Ideas.tsx'
 import Root from './routes/Root.tsx'
+import Test from './routes/Test.tsx'
 import StoreProvider from './store/StoreProvider.tsx'
 const router = createBrowserRouter([
   {
@@ -33,6 +34,10 @@ const router = createBrowserRouter([
       {
         path: '/ideas',
         element: <Ideas />,
+      },
+      {
+        path: '/test',
+        element: <Test />,
       },
     ],
   },
