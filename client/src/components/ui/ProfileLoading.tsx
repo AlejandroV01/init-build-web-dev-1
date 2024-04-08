@@ -43,7 +43,7 @@ const topBanner = () => {
     );
 };
 
-const test = () => {
+const skeletons = () => {
     return (
         <div className='bg-[#ededed] rounded-3xl border-1'>
             <div className='w-full px-14 py-7 ml-4'>
@@ -70,7 +70,7 @@ const test = () => {
 const ProfileLoading = () => {
     return (
         <div>
-            {test()}
+            {skeletons()}
         </div>
     );
 };
