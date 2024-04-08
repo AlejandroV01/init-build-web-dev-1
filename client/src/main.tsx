@@ -1,54 +1,61 @@
-import React from 'react'
-import ReactDOM from 'react-dom/client'
-import { RouterProvider, createBrowserRouter } from 'react-router-dom'
-import { Bounce, ToastContainer } from 'react-toastify'
-import 'react-toastify/dist/ReactToastify.css'
-import { ThemeProvider } from './components/theme-provider.tsx'
-import ErrorPage from './error-page.tsx'
-import './index.css'
-import Auth from './routes/Auth.jsx'
-import Dashboard from './routes/Dashboard.tsx'
-import Home from './routes/Home.tsx'
-import Idea from './routes/Idea.tsx'
-import Ideas from './routes/Ideas.tsx'
-import Root from './routes/Root.tsx'
-import StoreProvider from './store/StoreProvider.tsx'
+import React from "react";
+import ReactDOM from "react-dom/client";
+import { RouterProvider, createBrowserRouter } from "react-router-dom";
+import { Bounce, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { ThemeProvider } from "./components/theme-provider.tsx";
+import ErrorPage from "./error-page.tsx";
+import "./index.css";
+import Auth from "./routes/Auth.jsx";
+import Dashboard from "./routes/Dashboard.tsx";
+import Home from "./routes/Home.tsx";
+import Idea from "./routes/Idea.tsx";
+import Ideas from "./routes/Ideas.tsx";
+import Root from "./routes/Root.tsx";
+import DevChats from "./components/DevChats.tsx";
+
+import StoreProvider from "./store/StoreProvider.tsx";
+
 const router = createBrowserRouter([
   {
-    path: '/',
+    path: "/",
     element: <Root />,
     errorElement: <ErrorPage />,
     children: [
       {
-        path: '/',
+        path: "/",
         element: <Home />,
       },
       {
-        path: '/auth',
+        path: "/auth",
         element: <Auth />,
       },
       {
-        path: '/dashboard',
+        path: "/dashboard",
         element: <Dashboard />,
       },
       {
-        path: '/ideas',
+        path: "/ideas",
         element: <Ideas />,
       },
       {
-        path: '/idea/:id',
+        path: "/idea/:id",
         element: <Idea />,
+      },
+      {
+        path: "devchats",
+        element: <DevChats />,
       },
     ],
   },
-])
-ReactDOM.createRoot(document.getElementById('root')!).render(
+]);
+ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <StoreProvider>
-      <ThemeProvider defaultTheme='system' storageKey='vite-ui-theme'>
+      <ThemeProvider defaultTheme="system" storageKey="vite-ui-theme">
         <RouterProvider router={router} />
         <ToastContainer
-          position='bottom-right'
+          position="bottom-right"
           autoClose={5000}
           hideProgressBar={false}
           newestOnTop={false}
@@ -57,10 +64,10 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
           pauseOnFocusLoss
           draggable
           pauseOnHover
-          theme='colored'
+          theme="colored"
           transition={Bounce}
         />
       </ThemeProvider>
     </StoreProvider>
   </React.StrictMode>
-)
+);
