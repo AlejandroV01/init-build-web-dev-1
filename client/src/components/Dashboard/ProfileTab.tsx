@@ -11,6 +11,7 @@ import ExperienceCard from '../ExperienceCard'
 import PortfolioCard from '../PortfolioCard'
 import ProfileInfoCard from '../ProfileInfoCard'
 import ProfileProjectCard from '../ProfileProjectCard'
+import ProfileLoading from '../ui/ProfileLoading'
 
 interface formattedExperience {
   companyLogo: string
@@ -43,6 +44,7 @@ const ProfileTab = () => {
   const [educations, setEducations] = useState<IEducationTableTypes[]>([])
   const [projects, setProjects] = useState<IProjectTableTypes[]>([])
   const [isLoading, setIsLoading] = useState(true)
+
   useEffect(() => {
     async function getData() {
       // make user user id is not null
@@ -70,7 +72,7 @@ const ProfileTab = () => {
     getData()
   }, [])
 
-  if (isLoading) return <div>Loading...</div>
+  if (isLoading) return <div><ProfileLoading/></div>
   const createProfileInfoCard = () => {
     if (profileData) {
       return (
@@ -179,6 +181,7 @@ const ProfileTab = () => {
    * Do not worry about the Skills Card, it is still in development
    * If you have any questions, please ask!
    */
+
   return (
     <div className='relative'>
       <div className='bg-[#ededed] rounded-3xl border-1'>
