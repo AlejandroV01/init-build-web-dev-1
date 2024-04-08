@@ -19,22 +19,22 @@ const topBanner = () => {
             <div className='flex flex-col sm:flex-row gap-6 justify-between w-fit bg-primary p-5 rounded-lg text-white'>
                 <div className='flex-col'>
                     <div>
-                        <Skeleton skeletonStyling="w-[270px] h-3 rounded-lg" />
+                        <Skeleton skeletonStyling="w-[150px] h-3 rounded-lg" />
                     </div>
                     <div>
                         <div className='flex items-center gap-1 py-3'>
-                            <Skeleton skeletonStyling="w-[70px] h-2 rounded-lg" />
+                            <Skeleton skeletonStyling="w-[270px] h-2 rounded-lg" />
                         </div>
                         <div className='flex items-center gap-1'>
-                            <Skeleton skeletonStyling="w-[70px] h-2 rounded-lg" />
+                            <Skeleton skeletonStyling="w-[100px] h-2 rounded-lg" />
                         </div>
                     </div>
                 </div>
                 <div className='w-[3px] bg-white/40' />
                 <div className='flex-col'>
-                    <div><Skeleton skeletonStyling="w-[70px] h-3 rounded-lg" /></div>
+                    <div><Skeleton skeletonStyling="w-[80px] h-3 rounded-lg" /></div>
                     <div className='py-3'>
-                        <Skeleton skeletonStyling="w-[70px] h-2 rounded-lg" /> <br />
+                        <Skeleton skeletonStyling="w-[150px] h-2 rounded-lg" /> <br />
                         <Skeleton skeletonStyling="w-[70px] h-2 rounded-lg" />
                     </div>
                 </div>
@@ -57,6 +57,9 @@ const skeletons = () => {
                     </div>
                     <div className='py-5'>
                         {loadingComponent("Projects")}
+                    </div>
+                    <div className='py-5'>
+                        {loadingComponent("Portfolio")}
                     </div>
                 </div>
             </div>
