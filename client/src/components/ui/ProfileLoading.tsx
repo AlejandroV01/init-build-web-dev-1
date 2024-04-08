@@ -1,12 +1,11 @@
-import ExperienceSkeleton from "./ProfileLoadingSkeleton";
-import ProfileLoadingSkeleton from "./ProfileLoadingSkeleton";
+import ProfileSkeleton from "./ProfileLoadingSkeleton";
 import Skeleton from "./skeleton";
 
 const loadingComponent = (header: string) => {
     return (
         <div className='w-[850px] py-5 px-5 pt-4 flex flex-col gap-7 rounded-[8px] drop-shad bg-[#E8E8E8] shadow-md border-l border-b border-[#b2b2b2]'>
             <span className="font-extrabold text-2xl text-black">{header}</span>
-            <ExperienceSkeleton />
+            <ProfileSkeleton />
         </div>
     );
 };
