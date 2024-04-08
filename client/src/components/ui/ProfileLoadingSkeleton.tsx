@@ -25,17 +25,4 @@ const ProfileSkeleton = () => {
     );
 };
 
-const ProfileLoadingSkeleton = () => {
-
-    return (
-        <div className='flex items-center space-x-4'>
-            <Skeleton skeletonStyling='h-12 w-12 rounded-full'/>
-            <div className='space-y-3'>
-                {ExperienceSkeleton()}
-            </div>
-        </div>
-    );
-};
-
-
 export default ProfileSkeleton;
