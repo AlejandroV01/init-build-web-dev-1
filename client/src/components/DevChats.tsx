@@ -1,16 +1,43 @@
-import React from "react";
+import React, { useEffect } from "react";
 import ChatPreviewCard from "./ChatPreviewCard";
 import ChatBanner from "./ChatBanner";
 import { useState } from "react";
 import { IoSend } from "react-icons/io5";
+import fetchIdeaProfileAcceptedViewByIdeaId from "@/database/idea_profile_accepted_view/fetchIdeaProfileAcceptedViewByIdeaId";
+
+import fetchIdeaProfileAcceptedViewsByProfileId from "@/database/idea_profile_accepted_view/fetchIdeaProfileAcceptedViewsByProfileId";
+import { get } from "http";
 
 const DevChats = () => {
   const [selectedChat, setSelectedChat] = useState<string | null>(null);
+  const [membersList, setMembersList] = useState<string[]>([]); // ["Members", "Members", "Members"
 
   const handleChatSelect = (title: string) => {
     setSelectedChat(title);
   };
 
+  useEffect(() => {
+    // const getAcceptedIdeaMembers = async () => {
+    //   const idea = await fetchIdeaProfileAcceptedViewByIdeaId(2);
+    //   console.log(idea);
+    //   console.log(idea.accepted_participants);
+
+    //   let members = idea.accepted_participants.map(
+    //     (participant: any) => participant.profile.first_name
+    //   );
+    //   setMembersList(members);
+    // };
+
+    const getAcceptedIdeas = async () => {
+      const ideas = await fetchIdeaProfileAcceptedViewsByProfileId(1);
+      console.log(ideas);
+    };
+
+    // getAcceptedIdeaMembers();
+    getAcceptedIdeas();
+  }, []);
+
+  console.log(membersList);
   return (
     <div className="flex justify-center bg-white h-[85vh] my-3 mx-16 rounded-md drop-shadow-lg">
       <div className="bg-white-400 w-[20%] bg-white flex flex-col p-6 gap-6 border border-r-gray-200 border-r-2">
