@@ -45,7 +45,7 @@ const ProjectCard: React.FC<CardProps> = ({ title, description, college, major, 
     setActivePopover(!activePopover)
   }
   return (
-    <ShadowCard className={`flex flex-col  w-full max-w-[800px]`}>
+    <ShadowCard className={`flex flex-col w-full max-w-[800px] h-fit`}>
       <div className='p-5'>
         {/* Card Header */}
         <div className='flex flex-col'>

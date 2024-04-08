@@ -7,7 +7,7 @@ const fetchIdeaProfileAcceptedViewByIdeaId = async (idea_id: number) => {
     return data[0]
   } else {
     console.error(error)
-    return []
+    return null
   }
 }
 

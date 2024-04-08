@@ -117,11 +117,13 @@ export interface IIdeaProfileAcceptedView {
   front_end: number
   back_end: number
   full_stack: number
+  github_link: string
   ux_ui: number
+  creator_first_name: string
+  creator_last_name: string
   profile_email: string
-  profile_first_name: string
-  profile_last_name: string
   profile_major: string
   profile_school: string
   accepted_participants: IAcceptedParticipant[]
+  accepted_profile_ids: number[]
 }
