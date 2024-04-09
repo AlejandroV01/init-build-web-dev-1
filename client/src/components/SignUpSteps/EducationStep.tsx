@@ -7,5 +7,4 @@ const EducationStep = () => {
     </div>
   )
 }
-
 export default EducationStep
