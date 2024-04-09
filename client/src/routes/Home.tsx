@@ -1,12 +1,6 @@
 import ApplicantsPopup from "@/components/ApplictantsPopup";
 import React from "react";
-
-export interface IApplicants {
-  id: number;
-  firstName: string;
-  lastName: string;
-  role: string;
-}
+import Footer from "@/components/Footer";
 const Home = () => {
   const mockApplicants = [
     {
@@ -37,10 +31,11 @@ const Home = () => {
   return (
     <div>
       <h1>Home</h1>
-      <ApplicantsPopup applicants={mockApplicants} />
+      <Footer />
     </div>
   );
 };
+
 export default Home;
 
 const CTA = () => {
