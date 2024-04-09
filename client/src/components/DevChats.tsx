@@ -3,41 +3,48 @@ import ChatPreviewCard from "./ChatPreviewCard";
 import ChatBanner from "./ChatBanner";
 import { useState } from "react";
 import { IoSend } from "react-icons/io5";
-import fetchIdeaProfileAcceptedViewByIdeaId from "@/database/idea_profile_accepted_view/fetchIdeaProfileAcceptedViewByIdeaId";
-
-import fetchIdeaProfileAcceptedViewsByProfileId from "@/database/idea_profile_accepted_view/fetchIdeaProfileAcceptedViewsByProfileId";
-import { get } from "http";
+import { io, Socket } from "socket.io-client";
+import fetchAcceptedIdeasByProfileId from "@/database/profile_ideas_view/fetchAcceptedIdeasByProfileId";
+import { useAppSelector } from "@/store/hooks";
 
 const DevChats = () => {
+  const user = useAppSelector((state) => state.auth);
   const [selectedChat, setSelectedChat] = useState<string | null>(null);
-  const [membersList, setMembersList] = useState<string[]>([]); // ["Members", "Members", "Members"
+  const [socket, setSocket] = useState<Socket | null>(null);
+  const [ideaTitles, setIdeaTitles] = useState<string[]>([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const profile_id = user.profile_id;
+        const data = await fetchAcceptedIdeasByProfileId(profile_id.toString());
+
+        if (data) {
+          const titles: string[] = data.map((idea: any) => idea.idea_title);
+          setIdeaTitles(titles);
+        } else {
+          console.error("Error fetching data");
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    fetchData();
+  }, []);
 
   const handleChatSelect = (title: string) => {
     setSelectedChat(title);
   };
 
   useEffect(() => {
-    // const getAcceptedIdeaMembers = async () => {
-    //   const idea = await fetchIdeaProfileAcceptedViewByIdeaId(2);
-    //   console.log(idea);
-    //   console.log(idea.accepted_participants);
+    const newSocket = io("http://localhost:3000");
+    setSocket(newSocket);
 
-    //   let members = idea.accepted_participants.map(
-    //     (participant: any) => participant.profile.first_name
-    //   );
-    //   setMembersList(members);
-    // };
-
-    const getAcceptedIdeas = async () => {
-      const ideas = await fetchIdeaProfileAcceptedViewsByProfileId(1);
-      console.log(ideas);
+    return () => {
+      newSocket.disconnect();
     };
-
-    // getAcceptedIdeaMembers();
-    getAcceptedIdeas();
   }, []);
 
-  console.log(membersList);
   return (
     <div className="flex justify-center bg-white h-[85vh] my-3 mx-16 rounded-md drop-shadow-lg">
       <div className="bg-white-400 w-[20%] bg-white flex flex-col p-6 gap-6 border border-r-gray-200 border-r-2">
@@ -48,24 +55,15 @@ const DevChats = () => {
           <h1 className=" text-2xl font-extrabold text-primary">DevChats</h1>
         </span>
 
-        <ChatPreviewCard
-          title="Chat1"
-          lastMessage="daojdowjo"
-          isSelected={selectedChat === "Chat1"}
-          onClickCard={() => handleChatSelect("Chat1")}
-        />
-        <ChatPreviewCard
-          title="Chat2"
-          lastMessage="daojdowjo"
-          isSelected={selectedChat === "Chat2"}
-          onClickCard={() => handleChatSelect("Chat2")}
-        />
-        <ChatPreviewCard
-          title="Chat3"
-          lastMessage="daojdowjo"
-          isSelected={selectedChat === "Chat3"}
-          onClickCard={() => handleChatSelect("Chat3")}
-        />
+        {ideaTitles.map((ideaTitle: string, index: number) => (
+          <ChatPreviewCard
+            key={index}
+            title={ideaTitle}
+            lastMessage="daojdowjo" // You can set this dynamically if needed
+            isSelected={selectedChat === ideaTitle}
+            onClickCard={() => handleChatSelect(ideaTitle)}
+          />
+        ))}
       </div>
       <div className="flex flex-col items-center w-[80%]">
         <ChatBanner

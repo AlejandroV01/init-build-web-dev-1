@@ -33,7 +33,7 @@ const ChatPreviewCard: React.FC<ChatPreviewCardProps> = ({
       >
         <div className="rounded-full bg-red-500 p-6"></div>
         <div className="flex flex-col justify-between">
-          <span className="font-bold">{title}</span>
+          <span className="font-bold over truncate w-[80%]">{title}</span>
           <span className="font-light text-secondary text-sm">
             {lastMessage}
           </span>
