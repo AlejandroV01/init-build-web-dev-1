@@ -75,7 +75,6 @@ export const SignUpCard = () => {
   const [passwordMatch, setPasswordMatch] = useState<boolean | null>(null)
   const [passwordLength, setPasswordLength] = useState<boolean | null>(null)
   const [validCredentials, setValidCredentials] = useState<boolean | null>(null)
-  const [showConfirmEmail, setShowConfirmEmail] = useState<boolean>(false)
   const signUpUser = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
     setValidCredentials(true)
