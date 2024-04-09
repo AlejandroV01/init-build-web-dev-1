@@ -30,7 +30,7 @@ const Idea = () => {
     }
   }
   return (
-    <div className='container flex justify-between'>
+    <div className='container flex flex-col md:flex-row gap-5 justify-between mt-4'>
       {idea && <ProjectCard idea={idea} />}
       {idea && <RightBox members={idea.accepted_participants} idea={idea} />}
     </div>
@@ -64,7 +64,22 @@ const RightBox = ({ members, idea }: { members: IAcceptedParticipant[]; idea: II
       return <MeetYourAcceptedTeam members={members} />
     }
   }
-
+  const handleShareIdea = () => {
+    if (navigator.share) {
+      navigator
+        .share({
+          title: idea.idea_title,
+          text: idea.idea_description,
+          url: window.location.href,
+        })
+        .then(() => {
+          console.log('Thanks for sharing!')
+        })
+        .catch(console.error)
+    } else {
+      console.log('Web Share API is not supported in your browser.')
+    }
+  }
   return (
     <ShadowCard className='flex flex-col !w-fit p-4 gap-4 max-w-[400px]'>
       <h2 className='font-bold text-2xl'>
@@ -79,7 +94,9 @@ const RightBox = ({ members, idea }: { members: IAcceptedParticipant[]; idea: II
           </div>
           <div className='flex flex-col justify-center '>
             <h4 className='font-semibold text-lg'>Github Repository</h4>
-            <span className='hover:underline text-sm text-foreground/90'>{idea.github_link}</span>
+            <a className='hover:underline text-sm text-foreground/90' href={idea.github_link} target='_blank'>
+              {idea.github_link}
+            </a>
           </div>
         </div>
         <div className='flex gap-2 items-center'>
@@ -88,7 +105,9 @@ const RightBox = ({ members, idea }: { members: IAcceptedParticipant[]; idea: II
           </div>
           <div className='flex flex-col justify-center '>
             <h4 className='font-semibold text-lg'>Buds Chat</h4>
-            <span className='hover:underline text-sm text-foreground/90'>https://asdasd</span>
+            <a className='hover:underline text-sm text-foreground/90' href='https://supabase.com' target='_blank'>
+              https://supabase.com
+            </a>
           </div>
         </div>
       </div>
@@ -127,7 +146,9 @@ const RightBox = ({ members, idea }: { members: IAcceptedParticipant[]; idea: II
           UI/UX
         </span>
       </div>
-      <Button className='w-full'>Share Idea</Button>
+      <Button className='w-full' onClick={handleShareIdea}>
+        Share Idea
+      </Button>
     </ShadowCard>
   )
 }
