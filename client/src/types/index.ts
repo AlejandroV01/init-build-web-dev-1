@@ -102,7 +102,7 @@ export interface IProfileInfo {
   created_at: string // Assuming this is a string representation of a date
 }
 
-export interface IAcceptedParticipant {
+export interface IApplicationParticipant {
   profile: IProfileInfo
   application_role: string
 }
@@ -116,14 +116,15 @@ export interface IIdeaProfileAcceptedView {
   created_at: string // Assuming this is a string representation of a date
   front_end: number
   back_end: number
-  full_stack: number
   github_link: string
+  full_stack: number
   ux_ui: number
-  creator_first_name: string
-  creator_last_name: string
   profile_email: string
+  profile_first_name: string
+  profile_last_name: string
   profile_major: string
   profile_school: string
-  accepted_participants: IAcceptedParticipant[]
+  accepted_participants: IApplicationParticipant[]
   accepted_profile_ids: number[]
+  non_accepted_participants: IApplicationParticipant[]
 }

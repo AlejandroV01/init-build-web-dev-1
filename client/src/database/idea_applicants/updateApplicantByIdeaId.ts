@@ -1,13 +1,7 @@
 import supabase from '@/lib/supabaseClient'
+import { IIdeaApplicantsTableTypes } from '@/types'
 
-interface IIdeaApplicants {
-  idea_id: number
-  profile_id: number
-  application_role: 'Frontend' | 'Backend' | 'UI/UX' | 'Full-Stack'
-  is_accepted: boolean
-}
-
-const updateIdeaApplicants = async (newApplicantUpdate: IIdeaApplicants) => {
+const updateIdeaApplicants = async (newApplicantUpdate: IIdeaApplicantsTableTypes) => {
   const { data: ideas, error } = await supabase
     .from('idea_applicants')
     .update({
