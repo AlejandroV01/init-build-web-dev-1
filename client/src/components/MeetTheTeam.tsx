@@ -138,11 +138,10 @@ const MeetTheTeam = () => {
           }}
         >
           <CarouselContent className='w-full'>
-            {teamMembers.map(member => {
+            {teamMembers.map((member, i) => {
               return (
-                <CarouselItem className='sm:basis-1/2 md:basis-1/3 lg:basis-1/4 xl:basis-1/5'>
+                <CarouselItem className='sm:basis-1/2 md:basis-1/3 lg:basis-1/4 xl:basis-1/5' key={i}>
                   <AboutUsCard
-                    key={member.userGitHub}
                     userFirstName={member.userFirstName}
                     userLastName={member.userLastName}
                     userSubtext={member.userSubtext}
