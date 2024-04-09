@@ -2,20 +2,21 @@ import React from 'react'
 import { FaGithub, FaLinkedin } from 'react-icons/fa'
 import Avatar from './Avatar'
 
-interface IAboutUsCard {
+export interface IAboutUsCard {
   userLinkedIn: string
   userGitHub: string
   userFirstName: string
   userLastName: string
   userSubtext: string
+  imageSrc: string
 }
 
-const AboutUsCard = ({ userLinkedIn, userGitHub, userFirstName, userLastName, userSubtext }: IAboutUsCard) => {
+const AboutUsCard = ({ userLinkedIn, userGitHub, userFirstName, userLastName, userSubtext, imageSrc }: IAboutUsCard) => {
   return (
-    <div className='flex flex-col justify-between w-[220px] rounded-lg overflow-hidden shadow-lg dark:bg-foreground/5'>
-      <div className='bg-primary flex justify-center relative h-[115px]'>
+    <div className='flex flex-col justify-between w-full rounded-lg shadow-lg bg-primary/15 dark:bg-foreground/50 h-[300px] '>
+      <div className='bg-primary flex justify-center relative h-[115px] rounded-tl-lg rounded-tr-lg'>
         <div className='absolute -bottom-3 border-[5px] border-primary rounded-full'>
-          <Avatar firstName={userFirstName} lastName={userLastName} size={100} className='border-[3px] border-white' />
+          <Avatar firstName={userFirstName} lastName={userLastName} src={imageSrc} size={100} className='border-[3px] border-white' />
         </div>
       </div>
       <div className='px-7 py-5 flex flex-col gap-5'>

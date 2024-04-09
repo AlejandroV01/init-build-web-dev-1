@@ -11,3 +11,4 @@ const Skeleton = ({ skeletonStyling }: {skeletonStyling: string} ) => {
 
 
 export default Skeleton;
+

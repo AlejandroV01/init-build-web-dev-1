@@ -53,7 +53,7 @@ export const LoginCard = () => {
             {validCredentials === false && <p className='text-red-500 text-sm text-center'>Invalid credentials. Please try again.</p>}
           </div>
           <Button variant='primary' className='w-full' type='submit'>
-            Create Account
+            Log In
           </Button>
           <p>
             Don't have an account? Sign Up{' '}
@@ -75,7 +75,6 @@ export const SignUpCard = () => {
   const [passwordMatch, setPasswordMatch] = useState<boolean | null>(null)
   const [passwordLength, setPasswordLength] = useState<boolean | null>(null)
   const [validCredentials, setValidCredentials] = useState<boolean | null>(null)
-  const [showConfirmEmail, setShowConfirmEmail] = useState<boolean>(false)
   const signUpUser = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
     setValidCredentials(true)

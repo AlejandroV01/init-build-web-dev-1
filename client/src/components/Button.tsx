@@ -1,30 +1,23 @@
 interface ButtonProps {
-  variant: "primary" | "secondary" | "success" | "destructive";
-  disabled?: boolean;
-  onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
-  className?: string;
-  children: string | React.ReactNode;
-  type?: "submit" | "reset" | "button";
+  variant?: 'primary' | 'secondary' | 'success' | 'destructive'
+  disabled?: boolean
+  onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void
+  className?: string
+  children: string | React.ReactNode
+  type?: 'submit' | 'reset' | 'button'
 }
 
-const Button = ({
-  variant,
-  disabled = false,
-  onClick,
-  className,
-  children,
-  type,
-}: ButtonProps) => {
+const Button = ({ variant = 'primary', disabled = false, onClick, className, children, type }: ButtonProps) => {
   const checkButtonVariance = () => {
     switch (variant) {
-      case "primary":
-        return "bg-primary";
-      case "secondary":
-        return "bg-secondary";
-      case "destructive":
-        return "bg-destructive";
+      case 'primary':
+        return 'bg-primary'
+      case 'secondary':
+        return 'bg-secondary'
+      case 'destructive':
+        return 'bg-destructive'
     }
-  };
+  }
   return (
     <button
       disabled={disabled}
@@ -34,7 +27,6 @@ const Button = ({
     >
       {children}
     </button>
-  );
-};
-
-export default Button;
+  )
+}
+export default Button
