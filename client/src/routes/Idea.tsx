@@ -2,6 +2,7 @@ import Button from '@/components/Button'
 import MeetYourAcceptedTeam from '@/components/MeetYourAcceptedTeam'
 import ProjectCard from '@/components/ProjectCard'
 import ShadowCard from '@/components/ShadowCard'
+import countAcceptedRoles from '@/database/idea_profile_accepted_view/countAcceptedRoles'
 import fetchIdeaProfileAcceptedViewByIdeaId from '@/database/idea_profile_accepted_view/fetchIdeaProfileAcceptedViewByIdeaId'
 import fetchProfileIdeasViewByIdeaId from '@/database/profile_ideas_view/fetchProfileIdeasViewByIdeaId'
 import fetchProfileByID from '@/database/profiles/fetchProfileByID'
@@ -13,9 +14,11 @@ import { useParams } from 'react-router-dom'
 const Idea = () => {
   const { id } = useParams<{ id: string }>()
   const [idea, setIdea] = useState<IIdeaProfileAcceptedView | null>(null)
+
   useEffect(() => {
     getIdea()
   }, [])
+
   if (!id) {
     return <div>Invalid Idea ID</div>
   }
@@ -28,28 +31,27 @@ const Idea = () => {
   }
   return (
     <div className='container flex justify-between'>
-      {idea && (
-        <ProjectCard
-          title={idea.idea_title}
-          description={idea.idea_description}
-          college='Florida International University'
-          major={'Computer Science'}
-          created={
-            new Date(idea.created_at).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }) +
-            ' - ' +
-            new Date(idea.created_at).toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' })
-          }
-          author={{ author_id: idea.profile_id, firstName: idea.creator_first_name, lastName: idea.creator_last_name, src: '' }}
-          badges={idea.tech_stack}
-          ideaId={idea.idea_id}
-        />
-      )}
+      {idea && <ProjectCard idea={idea} />}
       {idea && <RightBox members={idea.accepted_participants} idea={idea} />}
     </div>
   )
 }
 export default Idea
 const RightBox = ({ members, idea }: { members: IAcceptedParticipant[]; idea: IIdeaProfileAcceptedView }) => {
+  const [acceptedRoles, setAcceptedRoles] = useState<Record<string, number>>({
+    Frontend: 0,
+    Backend: 0,
+    'Full-Stack': 0,
+    'UI/UX': 0,
+  })
+  const handleCountAcceptedRoles = async () => {
+    if (!idea) return
+    const res = await countAcceptedRoles(idea.idea_id)
+    setAcceptedRoles(res)
+  }
+  useEffect(() => {
+    handleCountAcceptedRoles()
+  }, [])
   const memberBox = () => {
     if (members.length === 0) {
       return (
@@ -90,19 +92,39 @@ const RightBox = ({ members, idea }: { members: IAcceptedParticipant[]; idea: II
           </div>
         </div>
       </div>
-      <h3 className='font-semibold'>Still looking for...</h3>
+      <h3 className='font-semibold'>Dream Team...</h3>
       <div className='grid grid-cols-2'>
         <span className='font-semibold'>
-          🎨<span className='text-primary'>{idea.front_end}</span> Frontend
+          🎨
+          <span className='text-primary'>
+            {idea.front_end}
+            <span className='text-foreground text-sm'>({acceptedRoles['Frontend']})</span>
+          </span>{' '}
+          Frontend
         </span>
         <span className='font-semibold'>
-          👨‍💻<span className='text-primary'>{idea.back_end}</span> Backend
+          👨‍💻
+          <span className='text-primary'>
+            {idea.back_end}
+            <span className='text-foreground text-sm'>({acceptedRoles['Backend']})</span>
+          </span>{' '}
+          Backend
         </span>
         <span className='font-semibold'>
-          📊<span className='text-primary'>{idea.full_stack}</span> Full Stack
+          📊
+          <span className='text-primary'>
+            {idea.full_stack}
+            <span className='text-foreground text-sm'>({acceptedRoles['Full-Stack']})</span>
+          </span>{' '}
+          Full Stack
         </span>
         <span className='font-semibold'>
-          🖼️<span className='text-primary'>{idea.ux_ui}</span> UX/UI
+          🖼️
+          <span className='text-primary'>
+            {idea.ux_ui}
+            <span className='text-foreground text-sm'>({acceptedRoles['UI/UX']})</span>
+          </span>{' '}
+          UI/UX
         </span>
       </div>
       <Button className='w-full'>Share Idea</Button>
