@@ -12,10 +12,8 @@ import Home from "./routes/Home.tsx";
 import Idea from "./routes/Idea.tsx";
 import Ideas from "./routes/Ideas.tsx";
 import Root from "./routes/Root.tsx";
-import DevChats from "./components/DevChats.tsx";
-
+import UserSetup from "./routes/UserSetup.tsx";
 import StoreProvider from "./store/StoreProvider.tsx";
-
 const router = createBrowserRouter([
   {
     path: "/",
@@ -43,8 +41,8 @@ const router = createBrowserRouter([
         element: <Idea />,
       },
       {
-        path: "devchats",
-        element: <DevChats />,
+        path: "/user-setup",
+        element: <UserSetup />,
       },
     ],
   },
