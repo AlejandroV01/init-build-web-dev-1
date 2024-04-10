@@ -1,57 +1,65 @@
-import ApplicantsPopup from "@/components/ApplictantsPopup";
-import React from "react";
-import Footer from "@/components/Footer";
+import Button from '@/components/Button'
+import Hero from '@/components/Hero'
+import HomeInfoCard from '@/components/HomeInfoCard'
+import MeetTheTeam from '@/components/MeetTheTeam'
+import React from 'react'
 const Home = () => {
-  const mockApplicants = [
-    {
-      id: 1,
-      firstName: "John",
-      lastName: "Doe",
-      role: "Software Engineer",
-    },
-    {
-      id: 2,
-      firstName: "Jane",
-      lastName: "Doe",
-      role: "Product Manager",
-    },
-    {
-      id: 3,
-      firstName: "Mike",
-      lastName: "Smith",
-      role: "Software Engineer",
-    },
-    {
-      id: 4,
-      firstName: "Daniela",
-      lastName: "Smith",
-      role: "Product Manager",
-    },
-  ];
+  const companies = [
+    { name: 'FIU', src: '/Florida_International_University_FIU_logo.svg' },
+    { name: 'INIT', src: '/init.png' },
+    { name: 'KF', src: '/kf.png' },
+  ]
   return (
-    <div>
-      <h1>Home</h1>
-      <Footer />
+    <div className=''>
+      <Hero />
+      <div className='flex flex-col items-center gap-5 container md:pl-20 md:pr-20'>
+        <span className='font-medium'>Made possible by:</span>
+        <div className='flex gap-7 sm:gap-14'>
+          {companies.map(company => {
+            return <img key={company.name} src={company.src} alt={company.name} className='h-[35px] sm:h-[45px] aspect-auto' />
+          })}
+        </div>
+      </div>
+      <div className='py-14 flex flex-col gap-14 container md:pl-40 md:pr-40'>
+        <HomeInfoCard
+          title='Discover the World of Coding'
+          highlight='Discover'
+          imgSRC='https://images3.alphacoders.com/133/1332803.png'
+          description={`Explore a diverse range of project ideas from talented individuals within the development community. Whether you're passionate about frontend design or backend development, find projects that match your skills and interests.`}
+        />
+        <HomeInfoCard
+          title='Build Your Dream Team'
+          highlight='Team'
+          imgSRC='https://images3.alphacoders.com/133/1332803.png'
+          description={`Connect with like-minded collaborators and build your dream team for project execution. Whether you're seeking frontend developers, backend engineers, or UI/UX designers, our platform facilitates seamless team formation to bring your ideas to life.`}
+          reversed
+        />
+        <HomeInfoCard
+          title='Foster Community Collaboration'
+          highlight='Community'
+          imgSRC='https://images3.alphacoders.com/133/1332803.png'
+          description={`Cultivate a collaborative environment where creativity flourishes and ideas thrive. Share your project concepts, receive valuable feedback, and collaborate with passionate individuals to turn your vision into reality. Together, we empower innovation and drive collective progress.`}
+        />
+      </div>
+      <CTA />
+      <MeetTheTeam />
     </div>
-  );
-};
-
-export default Home;
+  )
+}
+export default Home
 
 const CTA = () => {
   return (
-    <div className="bg-primary py-10">
-      <div className="flex flex-col items-center gap-5 container">
-        <h2 className="text-3xl font-semibold text-center text-white">
-          Get your ideas out there.
-        </h2>
-        <a href="/auth">
-          <Button variant="secondary" className="text-white bg-[#928bff]">
+    <div className='bg-primary py-10'>
+      <div className='flex flex-col items-center gap-5 container'>
+        <h2 className='text-3xl font-semibold text-center text-white'>Get your ideas out there.</h2>
+        <a href='/auth'>
+          <Button variant='secondary' className='text-white bg-[#928bff]'>
             Get Started
           </Button>
         </a>
-        <img src="/MAC.webp" alt="" className="w-full max-w-[900px]" />
+        <img src='/MAC.webp' alt='' className='w-full max-w-[900px]' />
       </div>
     </div>
-  );
-};
+  )
+}

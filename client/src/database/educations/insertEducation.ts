@@ -1,27 +1,26 @@
-import supabase from "@/lib/supabaseClient";
-import { IEducationTableTypes } from "./../../types/index";
+import supabase from '@/lib/supabaseClient'
+import { IEducationTableTypes } from '@/types'
 
-const insertEducation = async (education: IEducationTableTypes) => {
+const insertEducation = async (educationInfo: IEducationTableTypes) => {
   const { data, error } = await supabase
-    .from("education")
+    .from('educations')
     .insert([
       {
-        education_id: education.education_id,
-        profile_id: education.profile_id,
-        school: education.school,
-        major: education.major,
-        start_date: education.start_date,
-        end_date: education.end_date,
+        profile_id: educationInfo.profile_id,
+        school: educationInfo.school,
+        major: educationInfo.major,
+        start_date: educationInfo.start_date,
+        end_date: educationInfo.end_date,
       },
     ])
-    .select();
+    .select()
   if (data) {
-    console.log(data);
-    return true;
+    console.log(data)
+    return true
   } else {
-    console.error(error);
-    return false;
+    console.error(error)
+    return false
   }
-};
+}
 
-export default insertEducation;
+export default insertEducation
