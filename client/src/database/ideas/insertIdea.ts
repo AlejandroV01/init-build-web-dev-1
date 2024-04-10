@@ -1,4 +1,4 @@
-import supabase from '@/lib/supabaseClient'
+import supabase from "@/lib/supabaseClient";
 
 // CREATE TABLE ideas (
 //   idea_id BIGINT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
@@ -13,18 +13,19 @@ import supabase from '@/lib/supabaseClient'
 //   ux_ui INT NOT NULL
 // );
 interface IIdeaCreate {
-  id: number
-  title: string
-  description: string
-  techStack: string[]
-  frontend: number
-  backend: number
-  fullstack: number
-  uiux: number
+  id: number;
+  title: string;
+  description: string;
+  techStack: string[];
+  frontend: number;
+  backend: number;
+  fullstack: number;
+  uiux: number;
+  github_link: string;
 }
 const insertIdea = async (idea: IIdeaCreate) => {
   const { data, error } = await supabase
-    .from('ideas')
+    .from("ideas")
     .insert([
       {
         profile_id: idea.id,
@@ -35,16 +36,17 @@ const insertIdea = async (idea: IIdeaCreate) => {
         back_end: idea.backend,
         full_stack: idea.fullstack,
         ux_ui: idea.uiux,
+        github_link: idea.github_link,
       },
     ])
-    .select()
+    .select();
   if (data) {
-    console.log(data)
-    return true
+    console.log(data);
+    return true;
   } else {
-    console.error(error)
-    return false
+    console.error(error);
+    return false;
   }
-}
+};
 
-export default insertIdea
+export default insertIdea;

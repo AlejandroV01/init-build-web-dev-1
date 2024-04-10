@@ -13,7 +13,6 @@ import supabase from "@/lib/supabaseClient";
 //   ux_ui INT NOT NULL
 // );
 interface IMessageCreate {
-  id: number;
   profile_id: number;
   idea_id: string;
   text: string;
@@ -24,7 +23,6 @@ const insertMessageByProfileId = async (message: IMessageCreate) => {
     .from("messages")
     .insert([
       {
-        id: message.id,
         profile_id: message.profile_id,
         idea_id: message.idea_id,
         text: message.text,
