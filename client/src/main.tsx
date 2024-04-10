@@ -1,3 +1,4 @@
+
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
@@ -14,6 +15,7 @@ import Ideas from "./routes/Ideas.tsx";
 import Root from "./routes/Root.tsx";
 import UserSetup from "./routes/UserSetup.tsx";
 import StoreProvider from "./store/StoreProvider.tsx";
+
 const router = createBrowserRouter([
   {
     path: "/",
@@ -41,7 +43,7 @@ const router = createBrowserRouter([
         element: <Idea />,
       },
       {
-        path: "/user-setup",
+        path: '/user-setup',
         element: <UserSetup />,
       },
     ],

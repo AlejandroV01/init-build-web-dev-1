@@ -55,29 +55,19 @@ const Nav = () => {
           ))}
         </ul>
       )}
-      {pathname !== "/user-setup" && (
-        <div className="flex gap-5 items-center">
+      {pathname !== '/user-setup' && (
+        <div className='flex gap-5 items-center'>
           {user.profile_id ? (
-            <div className="flex items-center gap-2">
+            <div className='flex items-center gap-2'>
               <Popover>
                 <PopoverTrigger>
-                  <Avatar
-                    firstName={user.first_name}
-                    lastName={user.last_name}
-                    size={35}
-                  />
+                  <Avatar firstName={user.first_name} lastName={user.last_name} size={35} />
                 </PopoverTrigger>
-                <PopoverContent className="w-fit flex flex-col items-start gap-2 pr-10">
-                  <a
-                    className="font-semibold hover:underline cursor-pointer text-foreground/90"
-                    href="/dashboard"
-                  >
+                <PopoverContent className='w-fit flex flex-col items-start gap-2 pr-10'>
+                  <a className='font-semibold hover:underline cursor-pointer text-foreground/90' href='/dashboard'>
                     My Profile
                   </a>
-                  <div
-                    className="font-semibold hover:underline cursor-pointer text-foreground/90"
-                    onClick={handleSignOut}
-                  >
+                  <div className='font-semibold hover:underline cursor-pointer text-foreground/90' onClick={handleSignOut}>
                     Sign Out
                   </div>
                 </PopoverContent>
@@ -87,7 +77,7 @@ const Nav = () => {
             </div>
           ) : (
             <>
-              <NavAuthButtons className="hidden sm:flex" />
+              <NavAuthButtons className='hidden sm:flex' />
               <HamburgerMenu />
             </>
           )}
