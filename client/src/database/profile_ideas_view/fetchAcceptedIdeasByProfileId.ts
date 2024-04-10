@@ -1,6 +1,6 @@
 import supabase from "@/lib/supabaseClient";
 
-const fetchAcceptedIdeasByProfileId = async (profileId: string) => {
+const fetchAcceptedIdeasByProfileId = async (profileId: number) => {
   const { data: acceptedIdeas, error } = await supabase
     .from("idea_profile_accepted_view")
     .select("*")

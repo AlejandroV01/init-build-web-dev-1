@@ -1,5 +1,6 @@
 import supabase from "@/lib/supabaseClient";
-const fetchIdeaByIdeaId = async (ideaId: number) => {
+
+const fetchMessageByIdeaId = async (ideaId: string) => {
   const { data, error } = await supabase
     .from("messages")
     .select("*")
@@ -12,4 +13,4 @@ const fetchIdeaByIdeaId = async (ideaId: number) => {
   }
 };
 
-export default fetchIdeaByIdeaId;
+export default fetchMessageByIdeaId;

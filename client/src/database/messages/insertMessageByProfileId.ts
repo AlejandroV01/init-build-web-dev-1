@@ -15,11 +15,11 @@ import supabase from "@/lib/supabaseClient";
 interface IMessageCreate {
   id: number;
   profile_id: number;
-  idea_id: number;
+  idea_id: string;
   text: string;
 }
 
-const insertIdea = async (message: IMessageCreate) => {
+const insertMessageByProfileId = async (message: IMessageCreate) => {
   const { data, error } = await supabase
     .from("messages")
     .insert([
@@ -40,4 +40,4 @@ const insertIdea = async (message: IMessageCreate) => {
   }
 };
 
-export default insertIdea;
+export default insertMessageByProfileId;
