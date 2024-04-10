@@ -5,7 +5,7 @@ export type Database = {
     Tables: {
       educations: {
         Row: {
-          education_id: number
+          education_id: string
           end_date: string
           major: string
           profile_id: number
@@ -13,7 +13,7 @@ export type Database = {
           start_date: string
         }
         Insert: {
-          education_id?: number
+          education_id?: string
           end_date: string
           major: string
           profile_id: number
@@ -21,7 +21,7 @@ export type Database = {
           start_date: string
         }
         Update: {
-          education_id?: number
+          education_id?: string
           end_date?: string
           major?: string
           profile_id?: number
@@ -29,13 +29,6 @@ export type Database = {
           start_date?: string
         }
         Relationships: [
-          {
-            foreignKeyName: 'educations_profile_id_fkey'
-            columns: ['profile_id']
-            isOneToOne: false
-            referencedRelation: 'profile_ideas_view'
-            referencedColumns: ['profile_id_profiles']
-          },
           {
             foreignKeyName: 'educations_profile_id_fkey'
             columns: ['profile_id']
@@ -50,7 +43,7 @@ export type Database = {
           company: string
           description: string
           end_date: string
-          experience_id: number
+          experience_id: string
           profile_id: number
           start_date: string
           title: string
@@ -59,7 +52,7 @@ export type Database = {
           company: string
           description: string
           end_date: string
-          experience_id?: number
+          experience_id?: string
           profile_id: number
           start_date: string
           title: string
@@ -68,19 +61,12 @@ export type Database = {
           company?: string
           description?: string
           end_date?: string
-          experience_id?: number
+          experience_id?: string
           profile_id?: number
           start_date?: string
           title?: string
         }
         Relationships: [
-          {
-            foreignKeyName: 'experiences_profile_id_fkey'
-            columns: ['profile_id']
-            isOneToOne: false
-            referencedRelation: 'profile_ideas_view'
-            referencedColumns: ['profile_id_profiles']
-          },
           {
             foreignKeyName: 'experiences_profile_id_fkey'
             columns: ['profile_id']
@@ -92,20 +78,23 @@ export type Database = {
       }
       idea_applicants: {
         Row: {
-          application_role: Database['public']['Enums']['application_role']
-          idea_id: number
+          application_id: string
+          application_role: string
+          idea_id: string
           is_accepted: boolean
           profile_id: number
         }
         Insert: {
-          application_role: Database['public']['Enums']['application_role']
-          idea_id: number
-          is_accepted?: boolean
+          application_id?: string
+          application_role: string
+          idea_id: string
+          is_accepted: boolean
           profile_id: number
         }
         Update: {
-          application_role?: Database['public']['Enums']['application_role']
-          idea_id?: number
+          application_id?: string
+          application_role?: string
+          idea_id?: string
           is_accepted?: boolean
           profile_id?: number
         }
@@ -123,20 +112,6 @@ export type Database = {
             isOneToOne: false
             referencedRelation: 'ideas'
             referencedColumns: ['idea_id']
-          },
-          {
-            foreignKeyName: 'idea_applicants_idea_id_fkey'
-            columns: ['idea_id']
-            isOneToOne: false
-            referencedRelation: 'profile_ideas_view'
-            referencedColumns: ['idea_id_ideas']
-          },
-          {
-            foreignKeyName: 'idea_applicants_profile_id_fkey'
-            columns: ['profile_id']
-            isOneToOne: false
-            referencedRelation: 'profile_ideas_view'
-            referencedColumns: ['profile_id_profiles']
           },
           {
             foreignKeyName: 'idea_applicants_profile_id_fkey'
@@ -149,15 +124,18 @@ export type Database = {
       }
       idea_saves: {
         Row: {
-          idea_id: number
+          idea_id: string
+          idea_save_id: string
           profile_id: number
         }
         Insert: {
-          idea_id: number
+          idea_id: string
+          idea_save_id?: string
           profile_id: number
         }
         Update: {
-          idea_id?: number
+          idea_id?: string
+          idea_save_id?: string
           profile_id?: number
         }
         Relationships: [
@@ -174,20 +152,6 @@ export type Database = {
             isOneToOne: false
             referencedRelation: 'ideas'
             referencedColumns: ['idea_id']
-          },
-          {
-            foreignKeyName: 'idea_saves_idea_id_fkey'
-            columns: ['idea_id']
-            isOneToOne: false
-            referencedRelation: 'profile_ideas_view'
-            referencedColumns: ['idea_id_ideas']
-          },
-          {
-            foreignKeyName: 'idea_saves_profile_id_fkey'
-            columns: ['profile_id']
-            isOneToOne: false
-            referencedRelation: 'profile_ideas_view'
-            referencedColumns: ['profile_id_profiles']
           },
           {
             foreignKeyName: 'idea_saves_profile_id_fkey'
@@ -206,7 +170,7 @@ export type Database = {
           full_stack: number
           github_link: string
           idea_description: string
-          idea_id: number
+          idea_id: string
           idea_title: string
           profile_id: number
           tech_stack: string[]
@@ -214,12 +178,12 @@ export type Database = {
         }
         Insert: {
           back_end: number
-          created_at?: string
+          created_at: string
           front_end: number
           full_stack: number
-          github_link?: string
+          github_link: string
           idea_description: string
-          idea_id?: never
+          idea_id?: string
           idea_title: string
           profile_id: number
           tech_stack: string[]
@@ -232,20 +196,13 @@ export type Database = {
           full_stack?: number
           github_link?: string
           idea_description?: string
-          idea_id?: never
+          idea_id?: string
           idea_title?: string
           profile_id?: number
           tech_stack?: string[]
           ux_ui?: number
         }
         Relationships: [
-          {
-            foreignKeyName: 'ideas_profile_id_fkey'
-            columns: ['profile_id']
-            isOneToOne: false
-            referencedRelation: 'profile_ideas_view'
-            referencedColumns: ['profile_id_profiles']
-          },
           {
             foreignKeyName: 'ideas_profile_id_fkey'
             columns: ['profile_id']
@@ -258,56 +215,42 @@ export type Database = {
       messages: {
         Row: {
           created_at: string
-          id: number
-          idea_id: number
+          idea_id: string
+          message_id: string
           profile_id: number
           text: string
         }
         Insert: {
-          created_at?: string
-          id?: number
-          idea_id: number
+          created_at: string
+          idea_id: string
+          message_id?: string
           profile_id: number
           text: string
         }
         Update: {
           created_at?: string
-          id?: number
-          idea_id?: number
+          idea_id?: string
+          message_id?: string
           profile_id?: number
           text?: string
         }
         Relationships: [
           {
-            foreignKeyName: 'public_messages_idea_id_fkey'
+            foreignKeyName: 'messages_idea_id_fkey'
             columns: ['idea_id']
             isOneToOne: false
             referencedRelation: 'idea_profile_accepted_view'
             referencedColumns: ['idea_id']
           },
           {
-            foreignKeyName: 'public_messages_idea_id_fkey'
+            foreignKeyName: 'messages_idea_id_fkey'
             columns: ['idea_id']
             isOneToOne: false
             referencedRelation: 'ideas'
             referencedColumns: ['idea_id']
           },
           {
-            foreignKeyName: 'public_messages_idea_id_fkey'
-            columns: ['idea_id']
-            isOneToOne: false
-            referencedRelation: 'profile_ideas_view'
-            referencedColumns: ['idea_id_ideas']
-          },
-          {
-            foreignKeyName: 'public_messages_profile_id_fkey'
-            columns: ['profile_id']
-            isOneToOne: false
-            referencedRelation: 'profile_ideas_view'
-            referencedColumns: ['profile_id_profiles']
-          },
-          {
-            foreignKeyName: 'public_messages_profile_id_fkey'
+            foreignKeyName: 'messages_profile_id_fkey'
             columns: ['profile_id']
             isOneToOne: false
             referencedRelation: 'profiles'
@@ -369,7 +312,7 @@ export type Database = {
           end_date: string
           position_title: string
           profile_id: number
-          project_id: number
+          project_id: string
           project_name: string
           start_date: string
         }
@@ -378,7 +321,7 @@ export type Database = {
           end_date: string
           position_title: string
           profile_id: number
-          project_id?: number
+          project_id?: string
           project_name: string
           start_date: string
         }
@@ -387,18 +330,11 @@ export type Database = {
           end_date?: string
           position_title?: string
           profile_id?: number
-          project_id?: number
+          project_id?: string
           project_name?: string
           start_date?: string
         }
         Relationships: [
-          {
-            foreignKeyName: 'projects_profile_id_fkey'
-            columns: ['profile_id']
-            isOneToOne: false
-            referencedRelation: 'profile_ideas_view'
-            referencedColumns: ['profile_id_profiles']
-          },
           {
             foreignKeyName: 'projects_profile_id_fkey'
             columns: ['profile_id']
@@ -416,16 +352,17 @@ export type Database = {
           accepted_profile_ids: number[] | null
           back_end: number | null
           created_at: string | null
-          creator_first_name: string | null
-          creator_last_name: string | null
           front_end: number | null
           full_stack: number | null
           github_link: string | null
           idea_description: string | null
-          idea_id: number | null
+          idea_id: string | null
           idea_title: string | null
+          non_accepted_participants: Json | null
           profile_email: string | null
+          profile_first_name: string | null
           profile_id: number | null
+          profile_last_name: string | null
           profile_major: string | null
           profile_school: string | null
           tech_stack: string[] | null
@@ -438,42 +375,8 @@ export type Database = {
             isOneToOne: false
             referencedRelation: 'profiles'
             referencedColumns: ['profile_id']
-          },
-          {
-            foreignKeyName: 'ideas_profile_id_fkey'
-            columns: ['profile_id']
-            isOneToOne: false
-            referencedRelation: 'profile_ideas_view'
-            referencedColumns: ['profile_id_profiles']
           }
         ]
-      }
-      profile_ideas_view: {
-        Row: {
-          back_end_ideas: number | null
-          created_at_ideas: string | null
-          created_at_profiles: string | null
-          email_profiles: string | null
-          first_name_profiles: string | null
-          front_end_ideas: number | null
-          full_stack_ideas: number | null
-          github_link_profiles: string | null
-          idea_description_ideas: string | null
-          idea_id_ideas: number | null
-          idea_title_ideas: string | null
-          languages_profiles: string[] | null
-          last_name_profiles: string | null
-          linkedin_link_profiles: string | null
-          location_profiles: string | null
-          major_profiles: string | null
-          portfolio_link_profiles: string | null
-          profile_id_profiles: number | null
-          school_profiles: string | null
-          skills_profiles: string[] | null
-          tech_stack_ideas: string[] | null
-          ux_ui_ideas: number | null
-        }
-        Relationships: []
       }
     }
     Functions: {

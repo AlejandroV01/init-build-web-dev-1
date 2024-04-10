@@ -1,5 +1,5 @@
 export interface IIdeaTableTypes {
-  idea_id: number
+  idea_id: string
   profile_id: number
   idea_title: string
   idea_description: string
@@ -12,19 +12,19 @@ export interface IIdeaTableTypes {
 }
 
 export interface IIdeaSavesTableTypes {
-  idea_id: number
+  idea_id: string
   profile_id: number
 }
 
 export interface IIdeaApplicantsTableTypes {
-  idea_id: number
+  idea_id: string
   profile_id: number
-  application_role: string
+  application_role: 'Frontend' | 'Backend' | 'Full-Stack' | 'UI/UX'
   is_accepted: boolean
 }
 
 export interface IEducationTableTypes {
-  education_id: number
+  education_id?: string
   profile_id: number
   school: string
   major: string
@@ -33,8 +33,8 @@ export interface IEducationTableTypes {
 }
 
 export interface IExperienceTableTypes {
+  experience_id?: string
   profile_id: number
-  experience_id: number
   company: string
   title: string
   start_date: string
@@ -59,7 +59,7 @@ export interface IProfileTableTypes {
 }
 
 export interface IProjectTableTypes {
-  project_id: number
+  project_id: string
   profile_id: number
   project_name: string
   position_title: string
@@ -81,7 +81,7 @@ export interface IProfileIdeasViewTypes {
   portfolio_link_profiles: string
   school_profiles: string
   skills_profiles: string[]
-  idea_id_ideas: number
+  idea_id_ideas: string
   back_end_ideas: number
   created_at_ideas: string
   front_end_ideas: number
@@ -99,21 +99,21 @@ export interface IProfileInfo {
   email: string
   school: string
   major: string
-  created_at: string // Assuming this is a string representation of a date
+  created_at: string
 }
 
 export interface IApplicationParticipant {
   profile: IProfileInfo
-  application_role: string
+  application_role: 'Frontend' | 'Backend' | 'Full-Stack' | 'UI/UX'
 }
 
 export interface IIdeaProfileAcceptedView {
-  idea_id: number
+  idea_id: string
   profile_id: number
   idea_title: string
   idea_description: string
   tech_stack: string[]
-  created_at: string // Assuming this is a string representation of a date
+  created_at: string
   front_end: number
   back_end: number
   github_link: string

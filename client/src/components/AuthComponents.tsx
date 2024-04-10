@@ -1,10 +1,12 @@
 import Button from '@/components/Button'
 import Input from '@/components/Input'
 import fetchProfileByEmail from '@/database/profiles/fetchProfileByEmail'
+import { insertEmptyProfile } from '@/database/profiles/insertProfile'
 import supabase from '@/lib/supabaseClient'
 import { addProfile, addProfileUuid } from '@/store/auth/auth.slice'
 import { useAppDispatch } from '@/store/hooks'
 import React, { useState } from 'react'
+import { redirect } from 'react-router-dom'
 import Logo from './Logo'
 
 export const LoginCard = () => {
@@ -86,10 +88,19 @@ export const SignUpCard = () => {
     const { data, error } = await supabase.auth.signUp({
       email,
       password,
+      options: {
+        emailRedirectTo: 'http://localhost:5173/user-setup',
+      },
     })
     console.log('AuthComponent SignUp Data: ', data, error)
+    const res = await insertEmptyProfile(email)
     if (data) {
-      console.log('User created successfully, showing confirm email popup')
+      if (res) {
+        console.log('User created successfully, showing confirm email popup')
+      } else {
+        console.error('Error creating user profile in DB but successful in auth')
+      }
+
       setPasswordMatch(true)
     } else {
       setPasswordMatch(false)
