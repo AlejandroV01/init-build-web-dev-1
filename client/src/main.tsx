@@ -12,6 +12,7 @@ import Home from './routes/Home.tsx'
 import Idea from './routes/Idea.tsx'
 import Ideas from './routes/Ideas.tsx'
 import Root from './routes/Root.tsx'
+import UserSetup from './routes/UserSetup.tsx'
 import StoreProvider from './store/StoreProvider.tsx'
 const router = createBrowserRouter([
   {
@@ -38,6 +39,10 @@ const router = createBrowserRouter([
       {
         path: '/idea/:id',
         element: <Idea />,
+      },
+      {
+        path: '/user-setup',
+        element: <UserSetup />,
       },
     ],
   },

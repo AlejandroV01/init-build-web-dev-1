@@ -41,3 +41,31 @@ const insertProfile = async (profile: IProfileCreate) => {
 }
 
 export default insertProfile
+
+export const insertEmptyProfile = async (email: string) => {
+  const { data, error } = await supabase
+    .from('profiles')
+    .insert([
+      {
+        first_name: '',
+        last_name: '',
+        email: email,
+        school: '',
+        major: '',
+        location: '',
+        linkedin_link: '',
+        github_link: '',
+        portfolio_link: '',
+        skills: [],
+        languages: [],
+      },
+    ])
+    .select()
+  if (data) {
+    console.log(data)
+    return true
+  } else {
+    console.error(error)
+    return false
+  }
+}
