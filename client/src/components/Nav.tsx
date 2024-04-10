@@ -1,45 +1,54 @@
-import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
-import supabase from '@/lib/supabaseClient'
-import { removeProfile } from '@/store/auth/auth.slice'
-import { useAppDispatch, useAppSelector } from '@/store/hooks'
-import { useLocation, useNavigate } from 'react-router-dom'
-import Avatar from './Avatar'
-import Button from './Button'
-import HamburgerMenu from './HamburgerMenu'
-import { ModeToggle } from './mode-toggle'
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import supabase from "@/lib/supabaseClient";
+import { removeProfile } from "@/store/auth/auth.slice";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import { useLocation, useNavigate } from "react-router-dom";
+import Avatar from "./Avatar";
+import Button from "./Button";
+import HamburgerMenu from "./HamburgerMenu";
+import { ModeToggle } from "./mode-toggle";
 const Nav = () => {
-  const user = useAppSelector(state => state.auth)
-  const dispatch = useAppDispatch()
-  const navigate = useNavigate()
-  const location = useLocation()
-  const { pathname } = location
+  const user = useAppSelector((state) => state.auth);
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+  const location = useLocation();
+  const { pathname } = location;
   const handleSignOut = async () => {
-    dispatch(removeProfile())
-    const { error } = await supabase.auth.signOut()
+    dispatch(removeProfile());
+    const { error } = await supabase.auth.signOut();
     if (error) {
-      console.error('Error signing out:', error.message)
-      return
+      console.error("Error signing out:", error.message);
+      return;
     }
-    navigate('/')
-  }
+    navigate("/");
+  };
   const items = [
     {
-      name: 'Home',
-      route: '/',
+      name: "Home",
+      route: "/",
     },
     {
-      name: 'Browse Ideas',
-      route: '/ideas',
+      name: "Browse Ideas",
+      route: "/ideas",
     },
-  ]
+
+    {
+      name: "DevChats",
+      route: "/devchats",
+    },
+  ];
   return (
-    <div className='flex justify-between container items-center h-[60px] z-20'>
-      <a href='/'>
-        <h2 className='font-bold text-xl'>Devbuds</h2>
+    <div className="flex justify-between container items-center h-[60px] z-20">
+      <a href="/">
+        <h2 className="font-bold text-xl">Devbuds</h2>
       </a>
-      {pathname !== '/user-setup' && (
-        <ul className='gap-5 change [&>*]:hover:cursor-pointer font-medium hidden sm:flex'>
-          {items.map(item => (
+      {pathname !== "/user-setup" && (
+        <ul className="gap-5 change [&>*]:hover:cursor-pointer font-medium hidden sm:flex">
+          {items.map((item) => (
             <li key={item.route}>
               <a href={item.route}>{item.name}</a>
             </li>
@@ -75,21 +84,21 @@ const Nav = () => {
         </div>
       )}
     </div>
-  )
-}
+  );
+};
 
-export default Nav
+export default Nav;
 
 export const NavAuthButtons = ({ className }: { className?: string }) => {
   return (
     <div className={`items-center gap-3 ${className}`}>
-      <a href='/auth?login=true'>
-        <Button variant='secondary'>Log in</Button>
+      <a href="/auth?login=true">
+        <Button variant="secondary">Log in</Button>
       </a>
-      <a href='/auth?login=false'>
-        <Button variant='primary'>Sign up</Button>
+      <a href="/auth?login=false">
+        <Button variant="primary">Sign up</Button>
       </a>
       <ModeToggle />
     </div>
-  )
-}
+  );
+};
