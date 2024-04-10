@@ -2,18 +2,19 @@ import { useAppSelector } from '@/store/hooks'
 import { IIdeaProfileAcceptedView } from '@/types'
 import { useEffect, useRef, useState } from 'react'
 import { BsBookmark } from 'react-icons/bs'
+import { useLocation } from 'react-router-dom'
 import ApplicantsPopup from './ApplictantsPopup'
 import Avatar from './Avatar'
 import Button from './Button'
 import ShadowCard from './ShadowCard'
 import Badge from './badge'
-
 const ProjectCard = ({ idea }: { idea: IIdeaProfileAcceptedView }) => {
   const user = useAppSelector(state => state.auth)
   const [bookmarked, setBookmarked] = useState<boolean>(false)
   const [activePopover, setActivePopover] = useState(false)
   const isYourPost = user.profile_id === idea.profile_id ? true : false
   const popoverRef = useRef(null)
+  const location = useLocation()
   const handleBookmarkBtnOnClick = () => {
     setBookmarked(!bookmarked)
   }
@@ -27,6 +28,7 @@ const ProjectCard = ({ idea }: { idea: IIdeaProfileAcceptedView }) => {
     document.body.style.overflow = 'auto'
     setActivePopover(false)
   }
+  const isOnIdeaPage = location.pathname.split('/')[1] === 'idea'
 
   const formattedDate = () => {
     const date =
@@ -87,7 +89,7 @@ const ProjectCard = ({ idea }: { idea: IIdeaProfileAcceptedView }) => {
           <div className='flex flex-row py-3 gap-2'>
             <a href={`/idea/${idea.idea_id}`} className='w-full'>
               <Button variant='primary' className='w-full'>
-                Apply
+                View More
               </Button>
             </a>
             <Button variant='secondary' onClick={handleBookmarkBtnOnClick} className={bookmarked ? 'bg-yellow-400' : ''}>

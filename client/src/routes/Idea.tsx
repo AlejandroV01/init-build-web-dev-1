@@ -10,11 +10,11 @@ import { IAcceptedParticipant, IIdeaProfileAcceptedView, IProfileIdeasViewTypes 
 import React, { useEffect, useState } from 'react'
 import { BsGithub } from 'react-icons/bs'
 import { IoChatboxSharp } from 'react-icons/io5'
-import { useParams } from 'react-router-dom'
+import { useLocation, useParams } from 'react-router-dom'
 const Idea = () => {
   const { id } = useParams<{ id: string }>()
   const [idea, setIdea] = useState<IIdeaProfileAcceptedView | null>(null)
-
+  const location = useLocation()
   useEffect(() => {
     getIdea()
   }, [])
@@ -23,7 +23,7 @@ const Idea = () => {
     return <div>Invalid Idea ID</div>
   }
   const getIdea = async () => {
-    const res = await fetchIdeaProfileAcceptedViewByIdeaId(parseInt(id))
+    const res = await fetchIdeaProfileAcceptedViewByIdeaId(id)
     if (res) {
       // @ts-expect-error supabase wants JSON but we know its array
       setIdea(res)
