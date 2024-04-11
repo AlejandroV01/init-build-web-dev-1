@@ -1,3 +1,9 @@
+export interface IMessageCreate {
+  profile_id: number
+  idea_id: string
+  text: string
+  created_at?: string
+}
 export interface IIdeaTableTypes {
   idea_id: string
   profile_id: number
@@ -6,6 +12,7 @@ export interface IIdeaTableTypes {
   tech_stack: string[]
   front_end: number
   back_end: number
+  github_link: string
   full_stack: number
   ux_ui: number
   created_at: string
@@ -65,6 +72,7 @@ export interface IProjectTableTypes {
   position_title: string
   start_date: string
   end_date: string
+  description: string
 }
 
 export interface IProfileIdeasViewTypes {
@@ -127,4 +135,11 @@ export interface IIdeaProfileAcceptedView {
   accepted_participants: IApplicationParticipant[]
   accepted_profile_ids: number[]
   non_accepted_participants: IApplicationParticipant[]
+}
+
+export interface IMessageCreate {
+  profile_id: number
+  idea_id: string
+  text: string
+  created_at?: string
 }

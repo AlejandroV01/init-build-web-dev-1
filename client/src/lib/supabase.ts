@@ -178,7 +178,7 @@ export type Database = {
         }
         Insert: {
           back_end: number
-          created_at: string
+          created_at?: string
           front_end: number
           full_stack: number
           github_link: string
@@ -221,7 +221,7 @@ export type Database = {
           text: string
         }
         Insert: {
-          created_at: string
+          created_at?: string
           idea_id: string
           message_id?: string
           profile_id: number

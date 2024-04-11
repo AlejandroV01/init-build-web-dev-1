@@ -1,17 +1,9 @@
-import supabase from "@/lib/supabaseClient";
+import supabase from '@/lib/supabaseClient'
+import { IProjectTableTypes } from '@/types'
 
-interface ProjectTableTypes {
-  project_id: number;
-  project_name: string;
-  position_title: string;
-  start_date: string;
-  end_date: string;
-  description: string;
-}
-
-const updateProject = async (project: ProjectTableTypes) => {
+const updateProject = async (project: IProjectTableTypes) => {
   const { data, error } = await supabase
-    .from("projects")
+    .from('projects')
     .update({
       project_name: project.project_name,
       position_title: project.position_title,
@@ -19,14 +11,15 @@ const updateProject = async (project: ProjectTableTypes) => {
       end_date: project.end_date,
       description: project.description,
     })
-    .eq("project_id", project.project_id);
+    .eq('project_id', project.project_id)
+    .select()
   if (data) {
-    console.log(data);
-    return true;
+    console.log(data)
+    return true
   } else {
-    console.error(error);
-    return false;
+    console.error(error)
+    return false
   }
-};
+}
 
-export default updateProject;
+export default updateProject

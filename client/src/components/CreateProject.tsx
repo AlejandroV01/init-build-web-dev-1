@@ -1,13 +1,16 @@
+import insertIdea from '@/database/ideas/insertIdea'
 import { IIdeaCreate } from '@/routes/Home'
 import { useAppSelector } from '@/store/hooks'
-import React, { useState } from 'react'
+import React, { useRef, useState } from 'react'
 import { FaMinus } from 'react-icons/fa'
 import { FaPlus, FaXmark } from 'react-icons/fa6'
+import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import Button from './Button'
 import Input from './Input'
+import PopupParent from './PopupParent'
 import Badge from './badge'
-const CreateProject = ({ handleClosePopup, handleCreateIdea }: { handleClosePopup: () => void; handleCreateIdea: (idea: IIdeaCreate) => void }) => {
+const CreateProject = ({ handleClosePopup, isActive, closePopup }: { handleClosePopup: () => void; isActive: boolean; closePopup: () => void }) => {
   const user = useAppSelector(state => state.auth)
   const [title, setTitle] = useState<string>('')
   const [description, setDescription] = useState<string>('')
@@ -18,7 +21,7 @@ const CreateProject = ({ handleClosePopup, handleCreateIdea }: { handleClosePopu
   const [fullstack, setFullstack] = useState<number>(0)
   const [uiux, setUiux] = useState<number>(0)
   const [techStackBadges, setTechStackBadges] = useState<string[]>([])
-
+  const navigate = useNavigate()
   const handleBadgeEnter = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     if (techStackBadges.includes(techStack) || techStack === '') {
@@ -32,27 +35,38 @@ const CreateProject = ({ handleClosePopup, handleCreateIdea }: { handleClosePopu
     const newBadges = techStackBadges.filter(b => b !== badge)
     setTechStackBadges(newBadges)
   }
-  const handleSubmitIdea = () => {
+  const handleSubmitIdea = async () => {
     if (title === '' || description === '' || techStackBadges.length === 0 || repoLink === '' || frontend + backend + fullstack + uiux === 0) {
       return alert('Fill all fields!')
     }
     // if (!user.id) return alert('Not signed in!')
     const idea: IIdeaCreate = {
-      id: user.id || 1,
-      title,
-      description,
-      techStack: techStackBadges,
-      repoLink,
-      frontend,
-      backend,
-      fullstack,
-      uiux,
+      idea_title: title,
+      idea_description: description,
+      tech_stack: techStackBadges,
+      github_link: repoLink,
+      front_end: frontend,
+      back_end: backend,
+      full_stack: fullstack,
+      ux_ui: uiux,
+      profile_id: user.profile_id,
     }
-    handleCreateIdea(idea)
+    const res = await insertIdea(idea)
+    if (res) {
+      toast.success('Idea created successfully!')
+      handleClosePopup()
+      navigate(0)
+    } else {
+      toast.error('Failed to create idea!')
+    }
+  }
+  const handleCancel = () => {
+    document.body.style.overflow = 'auto'
+    closePopup()
   }
   return (
-    <div className='z-10 absolute w-screen h-screen bg-black/50 left-0 top-0 flex items-center justify-center'>
-      <div className='bg-white rounded-lg absolute left-0 right-0 ml-auto mr-auto w-fit max-w-[80%] flex flex-col md:flex-row  '>
+    <PopupParent active={isActive} handlePopoverClose={closePopup} mt='mt-14'>
+      <div className='flex flex-col md:flex-row max-w-[1000px]'>
         <div className='bg-primary text-white w-full md:w-1/2 p-8 rounded-tl-lg rounded-tr-lg md:rounded-bl-lg md:rounded-tr-none'>
           <h2 className='font-bold text-3xl'>Idea Creation</h2>
           <p className='mt-2'>Create an idea to collaborate with the Devbuds community!</p>
@@ -72,7 +86,7 @@ const CreateProject = ({ handleClosePopup, handleCreateIdea }: { handleClosePopu
               onChange={e => setDescription(e.target.value)}
             ></textarea>
           </div>
-          <form action='submit' onSubmit={e => handleBadgeEnter(e)} className='flex items-end gap-2 w-full'>
+          <form action='submit' onSubmit={e => handleBadgeEnter(e)} className='flex items-end gap-2 w-full flex-wrap'>
             <InputCombo
               className='w-4/5'
               placeholder='Enter tech...'
@@ -106,7 +120,7 @@ const CreateProject = ({ handleClosePopup, handleCreateIdea }: { handleClosePopu
             <TeamCounter label='UI/UX' count={uiux} setCount={setUiux} />
           </div>
           <div className='w-full flex justify-end gap-3'>
-            <Button variant='secondary' onClick={handleClosePopup}>
+            <Button variant='secondary' onClick={handleCancel}>
               Cancel
             </Button>
             <Button variant='primary' onClick={handleSubmitIdea}>
@@ -115,13 +129,13 @@ const CreateProject = ({ handleClosePopup, handleCreateIdea }: { handleClosePopu
           </div>
         </div>
       </div>
-    </div>
+    </PopupParent>
   )
 }
 
 export default CreateProject
 
-const TeamCounter = ({ label, count, setCount }: { label: string; count: number; setCount: (newCount: number) => void }) => {
+export const TeamCounter = ({ label, count, setCount }: { label: string; count: number; setCount: (newCount: number) => void }) => {
   return (
     <div className='flex items-center w-full'>
       <span className='w-2/5 select-none font-medium'>{label}</span>
@@ -144,7 +158,7 @@ const TeamCounter = ({ label, count, setCount }: { label: string; count: number;
   )
 }
 
-const InputCombo = ({
+export const InputCombo = ({
   label,
   value,
   onChange,

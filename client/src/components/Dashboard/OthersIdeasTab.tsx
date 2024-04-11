@@ -3,6 +3,7 @@ import fetchIdeaNotProfileId from '@/database/ideas/fetchIdeaNotProfileId'
 import { useAppSelector } from '@/store/hooks'
 import { IIdeaApplicantsTableTypes, IIdeaProfileAcceptedView, IIdeaTableTypes } from '@/types'
 import React, { useEffect, useState } from 'react'
+import Button from '../Button'
 import ProjectCard from '../ProjectCard'
 const OthersIdeasTab = () => {
   const [ideas, setIdeas] = useState<IIdeaProfileAcceptedView[]>([])
@@ -30,6 +31,15 @@ const OthersIdeasTab = () => {
           {ideas.map(idea => (
             <ProjectCard idea={idea} />
           ))}
+          {ideas.length === 0 && (
+            <div className='bg-primary/20 p-5 flex flex-col items-center rounded-lg gap-2'>
+              <h2 className='text-3xl font-semibold'>No Ideas Here Yet!</h2>
+              <p>Start joining other developers project ideas to view them here!</p>
+              <a href='/ideas'>
+                <Button>Browse Ideas</Button>
+              </a>
+            </div>
+          )}
         </div>
       </div>
     </div>

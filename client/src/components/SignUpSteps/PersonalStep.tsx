@@ -25,7 +25,7 @@ const PersonalStep: React.FC<Props> = ({ handleStepSubmit }) => {
   const uploadResume = async () => {
     if (!user.uuid) return
     if (!file) return
-    const { data, error } = await supabase.storage.from('resumes').upload(user.uuid + '/' + uuidv4(), file)
+    const { data, error } = await supabase.storage.from('resumes').upload(user.profile_id + '/' + 'resume-file', file)
     if (data) {
       console.log('success', data)
       return data
