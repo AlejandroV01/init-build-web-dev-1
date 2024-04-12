@@ -18,6 +18,7 @@ const Message = ({ message, author_id, created_at }: IMessage) => {
   useEffect(() => {
     const fetch = async () => {
       try {
+        console.log("Messages author_id: " + author_id);
         const data = await fetchProfileByID(author_id);
         if (data !== null) {
           setFirstName(data.first_name);
@@ -26,7 +27,9 @@ const Message = ({ message, author_id, created_at }: IMessage) => {
         } else {
           return;
         }
-      } catch {}
+      } catch (error) {
+        console.log(error);
+      }
     };
     fetch();
   }, []);
