@@ -1,8 +1,11 @@
+import deleteEducation from '@/database/educations/deleteEducation'
 import fetchEducation from '@/database/educations/fetchEducation'
+import deleteExperience from '@/database/experiences/deleteExperience'
 import fetchExperiences from '@/database/experiences/fetchExperiences'
 import fetchProfileByID from '@/database/profiles/fetchProfileByID'
 import profileQuery from '@/database/profiles/profileQuery'
 import { updateSkillsForm } from '@/database/profiles/updateProfileByEmail'
+import deleteProject from '@/database/projects/deleteProject'
 import getProjects from '@/database/projects/getProjects'
 import fetchResume from '@/database/resume/fetchResume'
 import supabase from '@/lib/supabaseClient'
@@ -152,7 +155,7 @@ const ProfileTab = ({ userId = null }: { userId: number | null }) => {
       // fix type of description It can't be NULL
       return (
         <div>
-          <ExperienceCard experiences={formattedExperiences} isYourProfile={isYourProfile} />
+          <ExperienceCard experiences={formattedExperiences} isYourProfile={isYourProfile} removeExperience={removeExperience} />
         </div>
       )
     }
@@ -174,7 +177,7 @@ const ProfileTab = ({ userId = null }: { userId: number | null }) => {
       )
       return (
         <div>
-          <EducationCard educations={formattedEducation} isYourProfile={isYourProfile} />
+          <EducationCard educations={formattedEducation} isYourProfile={isYourProfile} removeEducation={removeEducation} />
         </div>
       )
     }
@@ -197,7 +200,7 @@ const ProfileTab = ({ userId = null }: { userId: number | null }) => {
       // Fix type of description, it can't be NULL ?
       return (
         <div>
-          <ProfileProjectCard projects={formattedProjects} isYourProfile={isYourProfile} />
+          <ProfileProjectCard projects={formattedProjects} isYourProfile={isYourProfile} removeProject={removeProject} />
         </div>
       )
     }
@@ -323,14 +326,43 @@ const ProfileTab = ({ userId = null }: { userId: number | null }) => {
     )
   }
   if (!fullProfile) return <div>Profile not found</div>
+
+  const removeEducation = async (education_id: string) => {
+    const res = await deleteEducation(education_id)
+    if (res) {
+      toast.success('Education removed')
+      fullProfile.educations = fullProfile.educations.filter(edu => edu.education_id !== education_id)
+    } else {
+      toast.error('Failed to remove education')
+    }
+  }
+  const removeExperience = async (experience_id: string) => {
+    const res = await deleteExperience(experience_id)
+    if (res) {
+      toast.success('Experience removed')
+      fullProfile.experiences = fullProfile.experiences.filter(exp => exp.experience_id !== experience_id)
+    } else {
+      toast.error('Failed to remove experience')
+    }
+  }
+  const removeProject = async (project_id: string) => {
+    const res = await deleteProject(project_id)
+    if (res) {
+      toast.success('Project removed')
+      fullProfile.projects = fullProfile.projects.filter(project => project.project_id !== project_id)
+    } else {
+      toast.error('Failed to remove project')
+    }
+  }
+
   return (
-    <div className='flex justify-center'>
-      <div className='w-full lg:w-[70%] py-7 '>
-        <div className='p-5 flex flex-col lg:flex-row items-center gap-3 rounded-lg bg-foreground/5 dark:border dark:border-foreground/20 shadow-lg'>
+    <div className='flex justify-center w-full  lg:ml-0'>
+      <div className='w-full lg:w-[80%] flex flex-col items-center'>
+        <div className='w-full p-5 flex flex-col lg:flex-row items-center gap-3 rounded-lg bg-foreground/5 dark:border dark:border-foreground/20 shadow-lg'>
           <div className='w-[20%]'>{createAvatar()}</div>
           <div>{createProfileInfoCard()}</div>
         </div>
-        <div className='flex flex-col gap-4'>
+        <div className='w-full flex flex-col gap-4'>
           <CreateResumeCard />
           <div>{createExperienceCard()}</div>
           <div>{createEducationCard()}</div>

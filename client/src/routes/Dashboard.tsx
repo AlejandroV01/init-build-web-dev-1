@@ -31,7 +31,7 @@ const Dashboard = () => {
   }
   return (
     <div className='container py-14'>
-      <div className='flex justify-between'>
+      <div className='flex justify-between gap-5'>
         <SideNav tabs={tabs} active={activeTab} onTabClick={handleSetActive} />
         {renderInfo()}
       </div>

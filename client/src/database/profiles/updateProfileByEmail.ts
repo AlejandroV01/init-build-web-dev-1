@@ -93,3 +93,32 @@ export const updateLinksForm = async (personalForm: ILinksForm) => {
     return false
   }
 }
+
+interface IAccountInfo {
+  first_name: string
+  last_name: string
+  school: string
+  major: string
+  location: string
+  profile_id: number
+}
+export const updateAccountInfo = async (personalForm: IAccountInfo) => {
+  const { data, error } = await supabase
+    .from('profiles')
+    .update({
+      first_name: personalForm.first_name,
+      last_name: personalForm.last_name,
+      school: personalForm.school,
+      major: personalForm.major,
+      location: personalForm.location,
+    })
+    .eq('profile_id', personalForm.profile_id)
+    .select()
+  if (data) {
+    console.log(data)
+    return true
+  } else {
+    console.error(error)
+    return false
+  }
+}

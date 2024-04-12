@@ -38,16 +38,12 @@ const Portfolio = ({ variant, title, bgColor, domain, link, icon: Icon, handleSt
   }
 
   const [userLink, setLink] = useState(link)
-  const [input, setInput] = useState('')
+  const [input, setInput] = useState(link)
   const [showInput, setShowInput] = useState(false)
   const [showEdit, setShowEdit] = useState(true)
 
   const handleDBLinkChange = () => {
-    console.log('Change link in db to', input)
-    const dataBaseResult = true
-    if (dataBaseResult) {
-      handleStateLinkChange(input, variant)
-    }
+    handleStateLinkChange(input || '', variant)
   }
   const handleLinkChange = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault()

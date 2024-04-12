@@ -3,7 +3,6 @@ import React, { useState } from 'react'
 import { CiEdit } from 'react-icons/ci'
 import { FaXmark } from 'react-icons/fa6'
 import { HiPencil } from 'react-icons/hi2'
-import { RiPencilFill } from 'react-icons/ri'
 import Button from './Button'
 import Input from './Input'
 import Badge from './badge'
@@ -51,8 +50,8 @@ const SkillCard = ({
     <div className='p-5 flex flex-col gap-2 rounded-lg bg-foreground/5 shadow-lg dark:border dark:border-foreground/20'>
       <div className='flex items-center justify-between'>
         <span className='font-extrabold text-2xl'>Skills</span>
-        {!isEdit && isYourProfile && <HiPencil onClick={handleEdit} className='cursor-pointer' size={20} color='#7B7B7B' />}
-        {isEdit && isYourProfile && <FaXmark onClick={exitEdit} className='cursor-pointer' size={20} />}
+        {!isEdit && isYourProfile && <HiPencil onClick={handleEdit} className='cursor-pointer' size={18} color='#7B7B7B' />}
+        {isEdit && isYourProfile && <FaXmark onClick={exitEdit} className='cursor-pointer' size={18} />}
       </div>
       {isEdit && <p className='text-primary'>Click a skill again to remove it.</p>}
       {isEdit && (

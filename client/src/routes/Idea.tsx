@@ -104,14 +104,18 @@ const RightBox = ({ members, idea }: { members: IAcceptedParticipant[]; idea: II
             <IoChatboxSharp color='white' size={35} />
           </div>
           <div className='flex flex-col justify-center '>
-            <h4 className='font-semibold text-lg'>Buds Chat</h4>
-            <a className='hover:underline text-sm text-foreground/90' href='https://supabase.com' target='_blank'>
-              https://supabase.com
+            <h4 className='font-semibold text-lg'>DevChat</h4>
+            <a
+              className='hover:underline text-sm text-foreground/90'
+              href={`https://localhost:5173/devchats?idea_id=${idea.idea_id}`}
+              target='_blank'
+            >
+              https://localhost:5173/devchats...
             </a>
           </div>
         </div>
       </div>
-      <h3 className='font-semibold'>Dream Team...</h3>
+      <h3 className='font-semibold'>Dream Team:</h3>
       <div className='grid grid-cols-2'>
         <span className='font-semibold'>
           🎨

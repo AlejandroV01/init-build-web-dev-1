@@ -87,7 +87,7 @@ const ProjectStep: React.FC<Props> = ({ handleStepSubmit }) => {
         project.startMonth === '' ||
         project.startYear === '' ||
         project.endMonth === '' ||
-        (project.endYear === '' && !project.isPresent)
+        (!project.isPresent && (project.endMonth === '' || project.endYear === ''))
       ) {
         setMissingFields(true)
         check = true
