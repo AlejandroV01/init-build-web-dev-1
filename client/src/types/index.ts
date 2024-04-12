@@ -134,6 +134,7 @@ export interface IIdeaProfileAcceptedView {
   profile_school: string
   accepted_participants: IApplicationParticipant[]
   accepted_profile_ids: number[]
+  accepted_profile_firstNames: string[]
   non_accepted_participants: IApplicationParticipant[]
 }
 
