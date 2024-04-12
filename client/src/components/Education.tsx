@@ -64,7 +64,7 @@ const Education = ({ education_id, schoolName, schoolMajor, startDate, endDate, 
   }
   return (
     <div className='w-full flex flex-col '>
-      <PopupParent active={isPopupOpen} handlePopoverClose={() => setIsPopupOpen(false)}>
+      <PopupParent active={isPopupOpen} handlePopoverClose={handleCancel}>
         <div className='flex flex-col gap-3 p-5'>
           <div className='flex items-center justify-between mb-5'>
             <div className='flex items-center gap-4'>
@@ -73,7 +73,7 @@ const Education = ({ education_id, schoolName, schoolMajor, startDate, endDate, 
               </div>
               <h2 className='text-xl font-semibold'>Edit Education</h2>
             </div>
-            <FaXmark size={20} className='cursor-pointer' onClick={() => setIsPopupOpen(false)} />
+            <FaXmark size={20} className='cursor-pointer' onClick={handleCancel} />
           </div>
           <div className='grid grid-cols-12  gap-5'>
             <div className='col-span-6'>

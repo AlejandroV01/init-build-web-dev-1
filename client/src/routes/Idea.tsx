@@ -36,6 +36,7 @@ const Idea = () => {
 }
 export default Idea
 const RightBox = ({ members, idea }: { members: IApplicationParticipant[]; idea: IIdeaProfileAcceptedView }) => {
+  console.log(members)
   const [acceptedRoles, setAcceptedRoles] = useState<Record<string, number>>({
     Frontend: 0,
     Backend: 0,

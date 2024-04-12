@@ -268,7 +268,7 @@ const EditIdea = ({
     setIsPopupOpen(false)
   }
   return (
-    <PopupParent active={isPopupOpen} handlePopoverClose={() => setIsPopupOpen(false)} mt='mt-14'>
+    <PopupParent active={isPopupOpen} handlePopoverClose={handleCancel} mt='mt-14'>
       <div className='flex flex-col gap-3 p-5 max-h-[600px] overflow-y-auto'>
         <div className='flex items-center justify-between mb-5'>
           <div className='flex items-center gap-4'>

@@ -51,6 +51,7 @@ const Project = ({
     isPresent: projectEndDate === 'Present',
   })
   const [isPresent, setIsPresent] = useState(projectEndDate === 'Present')
+  console.log(projectEndDate)
   const handleManageBtnOnClick = () => {
     document.body.style.overflow = 'hidden'
     setIsPopupOpen(true)
@@ -81,7 +82,7 @@ const Project = ({
   }
   return (
     <div className=' w-full flex flex-col '>
-      <PopupParent active={isPopupOpen} handlePopoverClose={() => setIsPopupOpen(false)}>
+      <PopupParent active={isPopupOpen} handlePopoverClose={handleCancel}>
         <div className='flex flex-col gap-3 p-5'>
           <div className='flex items-center justify-between mb-5'>
             <div className='flex items-center gap-4'>
@@ -90,7 +91,7 @@ const Project = ({
               </div>
               <h2 className='text-xl font-semibold'>Edit Project</h2>
             </div>
-            <FaXmark size={20} className='cursor-pointer' onClick={() => setIsPopupOpen(false)} />
+            <FaXmark size={20} className='cursor-pointer' onClick={handleCancel} />
           </div>
 
           <div className='grid grid-cols-12  gap-5'>
@@ -283,7 +284,7 @@ export const ProjectProfileForm = ({
     } else {
       if (!user.profile_id) return
       const data = {
-        profile_id: 0,
+        profile_id: user.profile_id,
         project_name: project.project_name,
         position_title: project.position_title,
         start_date: `${project.startMonth} ${project.startYear}`,
@@ -306,7 +307,7 @@ export const ProjectProfileForm = ({
     setIsActive(false)
   }
   return (
-    <PopupParent active={isActive} handlePopoverClose={() => setIsActive(false)}>
+    <PopupParent active={isActive} handlePopoverClose={handleCancel}>
       <div className='flex flex-col gap-3 p-5'>
         <div className='flex items-center justify-between mb-5'>
           <div className='flex items-center gap-4'>
@@ -315,7 +316,7 @@ export const ProjectProfileForm = ({
             </div>
             <h2 className='text-xl font-semibold'>{heading}</h2>
           </div>
-          <FaXmark size={20} className='cursor-pointer' onClick={() => setIsActive(false)} />
+          <FaXmark size={20} className='cursor-pointer' onClick={handleCancel} />
         </div>
 
         <div className='grid grid-cols-12  gap-5'>
@@ -400,7 +401,7 @@ export const ProjectProfileForm = ({
               <div className='col-span-6 flex flex-row align-middle gap-1 checkbox'>
                 <CheckboxComponent checked={isPresent} onChange={() => setIsPresent(!isPresent)} />
                 <Label htmlFor='checkbox' className='font-normal text-sm'>
-                  Still work here?
+                  Still working on it?
                 </Label>
               </div>
             </div>
