@@ -14,6 +14,7 @@ import Message from "./Message";
 import fetchIdeaByIdeaId from "@/database/ideas/fetchIdeaByIdeaId";
 import { profile } from "console";
 import { useSearchParams } from "react-router-dom";
+import fetchProfileIdeasViewByIdeaId from "@/database/profile_ideas_view/fetchProfileIdeasViewByIdeaId";
 
 const DevChats = () => {
   const user = useAppSelector((state) => state.auth);
@@ -34,6 +35,10 @@ const DevChats = () => {
     try {
       // alert(`roomId: ${new_room}`);
       const data = await fetchMessageByIdeaId(new_room);
+      const acceptedIdea = await fetchProfileIdeasViewByIdeaId(new_room);
+
+      setMembers(acceptedIdea.accepted_profile_firstnames);
+
       if (data === null) {
         console.error("Error fetching data");
         return;
@@ -152,8 +157,8 @@ const DevChats = () => {
   };
 
   return (
-    <div className="flex justify-center bg-white h-[85vh] my-3 mx-16 rounded-md drop-shadow-lg">
-      <div className="bg-white-400 w-[20%] bg-white flex flex-col p-6 gap-6 border border-r-gray-200 border-r-2">
+    <div className="flex justify-center bg-background h-[85vh] my-3 mx-16 rounded-md drop-shadow-lg border border-secondary/15">
+      <div className="bg-white-400 w-[20%] bg-background flex flex-col p-6 gap-6 border border-secondary/15 border-r-2">
         <span className="flex gap-[0.35rem]">
           {/* theres a better way to do this but i couldnt be asked at 1AM, sorry :( */}
           <h1 className="text-2xl font-extrabold ">Your</h1>
@@ -185,49 +190,53 @@ const DevChats = () => {
         ))}
       </div>
       <div className="flex flex-col items-center w-[80%] h-full">
-        <ChatBanner
-          chatName={selectedChat || "N/A"}
-          membersList={ideas.map(
-            (idea: IIdeaProfileAcceptedView, index: number) =>
-              index === ideas.length - 1
-                ? idea.profile_first_name + " " + idea.profile_last_name
-                : idea.profile_first_name + " " + idea.profile_last_name + ", "
+        <div className="w-full h-[10%]">
+          <ChatBanner
+            chatName={selectedChat || "Select a Chat"}
+            membersList={members}
+          />
+        </div>
+        <div className="flex flex-col w-full items-center h-[90%] over">
+          {roomId === "default" ? (
+            <div className=" flex items-center justify-center h-full">
+              Select a Chat!
+            </div>
+          ) : (
+            <div className=" w-full p-4 flex flex-col gap-2 overflow-auto h-full">
+              {messages.map((message: IMessageCreate, index: number) => {
+                // Parse the created_at timestamp string
+                const createdAtDate = new Date(message.created_at);
+
+                // Format the date in the desired format
+                const formattedDate = `${createdAtDate.toLocaleString("en-US", {
+                  month: "long",
+                  day: "numeric",
+                })}, ${createdAtDate.toLocaleString("en-US", {
+                  hour: "2-digit",
+                  minute: "2-digit",
+                  hour12: true,
+                })}`;
+
+                return (
+                  <Message
+                    message={message.text}
+                    author_id={message.profile_id}
+                    created_at={formattedDate}
+                    key={index}
+                  />
+                );
+              })}
+            </div>
           )}
-        />
-        <div className="flex flex-col w-full items-center h-[530px] over">
-          <div className="h-[85%] w-full p-4 flex flex-col gap-2 overflow-auto">
-            {messages.map((message: IMessageCreate, index: number) => {
-              // Parse the created_at timestamp string
-              const createdAtDate = new Date(message.created_at);
 
-              // Format the date in the desired format
-              const formattedDate = `${createdAtDate.toLocaleString("en-US", {
-                month: "long",
-                day: "numeric",
-              })}, ${createdAtDate.toLocaleString("en-US", {
-                hour: "2-digit",
-                minute: "2-digit",
-                hour12: true,
-              })}`;
-
-              return (
-                <Message
-                  message={message.text}
-                  author_id={message.profile_id}
-                  created_at={formattedDate}
-                  key={index}
-                />
-              );
-            })}
-          </div>
-          <div className="w-full h-[15%] bg-gray-200 p-5">
+          <div className="w-full bg-secondary/10 p-5">
             <form
               className="flex items-center justify-center h-full gap-3"
               onSubmit={handleSubmit}
             >
               <input
                 type="text"
-                className="h-10 w-full bg-white rounded-md p-2 drop-shadow-md"
+                className="h-10 w-full bg-background rounded-md p-2 drop-shadow-md border-2 border-primary"
                 onChange={handleMessageChange}
               ></input>
               <button type="submit" onClick={sendMessage}>
