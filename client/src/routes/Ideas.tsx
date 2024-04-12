@@ -12,6 +12,9 @@ const Ideas = () => {
     if (jobType === 'Job Type') jobType = ''
     console.log('searching:', input, jobType, formattedTech)
     const res = await fetchIdeasOnFilters(input, jobType, formattedTech)
+    // @ts-expect-error supabase wants JSON but we know its array
+    if (res) setIdeas(res)
+
     console.log(res)
   }
   const getIdeas = async () => {
