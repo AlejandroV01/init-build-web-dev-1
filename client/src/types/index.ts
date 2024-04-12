@@ -133,4 +133,5 @@ export interface IMessageCreate {
   profile_id: number;
   idea_id: string;
   text: string;
+  created_at?: string;
 }
