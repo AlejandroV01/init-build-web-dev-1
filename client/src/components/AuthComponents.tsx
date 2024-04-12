@@ -90,7 +90,7 @@ export const SignUpCard = () => {
       email,
       password,
       options: {
-        emailRedirectTo: 'http://localhost:5173/user-setup',
+        emailRedirectTo: 'https://www.devbuds.org/user-setup',
       },
     })
     console.log('AuthComponent SignUp Data: ', data, error)
