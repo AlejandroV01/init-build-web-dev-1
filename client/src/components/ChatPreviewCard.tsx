@@ -31,12 +31,17 @@ const ChatPreviewCard: React.FC<ChatPreviewCardProps> = ({
         }`}
         onClick={onClickCard}
       >
-        <div className="rounded-full bg-red-500 p-6"></div>
-        <div className="flex flex-col justify-between">
-          <span className="font-bold over truncate w-[80%]">{title}</span>
-          <span className="font-light text-secondary text-sm">
+        <img
+          src={`https://api.dicebear.com/8.x/icons/svg?seed=${title}`}
+          alt="avatar"
+          className="h-12  rounded-full"
+        />
+
+        <div className="flex flex-col justify-center">
+          <span className="font-bold over truncate w-full">{title}</span>
+          {/* <span className="font-light text-secondary text-sm truncate w-[80%]">
             {lastMessage}
-          </span>
+          </span> */}
         </div>
       </div>
       <div className="h-[2px] bg-gray-200 rounded-lg"></div>
