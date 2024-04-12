@@ -105,12 +105,8 @@ const RightBox = ({ members, idea }: { members: IApplicationParticipant[]; idea:
           </div>
           <div className='flex flex-col justify-center '>
             <h4 className='font-semibold text-lg'>DevChat</h4>
-            <a
-              className='hover:underline text-sm text-foreground/90'
-              href={`https://localhost:5173/devchats?idea_id=${idea.idea_id}`}
-              target='_blank'
-            >
-              https://localhost:5173/devchats...
+            <a className='hover:underline text-sm text-foreground/90' href={`https://devbuds.org/devchats?idea_id=${idea.idea_id}`} target='_blank'>
+              https://devbuds.org/devchats...
             </a>
           </div>
         </div>
