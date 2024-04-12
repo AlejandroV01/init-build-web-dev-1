@@ -34,9 +34,8 @@ const DevChats = () => {
       // alert(`roomId: ${new_room}`);
       const data = await fetchMessageByIdeaId(new_room)
       const acceptedIdea = await fetchProfileIdeasViewByIdeaId(new_room)
-      const actualProfiles: string[] = acceptedIdea.accepted_profile_firstnames.filter((name: string) => id !== null)
 
-      setMembers(actualProfiles)
+      setMembers(acceptedIdea.accepted_profile_firstnames)
 
       if (data === null) {
         console.error('Error fetching data')
