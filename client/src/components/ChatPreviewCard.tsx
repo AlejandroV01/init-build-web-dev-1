@@ -27,7 +27,7 @@ const ChatPreviewCard: React.FC<ChatPreviewCardProps> = ({
     <div className="flex flex-col gap-4 cursor-pointer" onClick={handleClick}>
       <div
         className={`flex w-full gap-3 p-3 rounded-lg ${
-          isSelected ? "bg-gray-200" : "bg-white"
+          isSelected ? "bg-secondary/15" : "bg-background"
         }`}
         onClick={onClickCard}
       >
@@ -44,7 +44,7 @@ const ChatPreviewCard: React.FC<ChatPreviewCardProps> = ({
           </span> */}
         </div>
       </div>
-      <div className="h-[2px] bg-gray-200 rounded-lg"></div>
+      <div className="h-[2px] bg-secondary/15 rounded-lg"></div>
     </div>
   );
 };
