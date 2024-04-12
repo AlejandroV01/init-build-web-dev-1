@@ -1,7 +1,11 @@
-import React, { useState } from 'react'
+import { useAppSelector } from '@/store/hooks'
+import { useState } from 'react'
 import EducationStep from './EducationStep'
 import ExperienceStep from './ExperienceStep'
-import PersonalInfoStep from './PersonalInfoStep'
+import LinksStep from './LinksStep'
+import PersonalStep from './PersonalStep'
+import ProjectStep from './ProjectStep'
+import SkillsStep from './SkillsStep'
 import StepTracker from './StepTracker'
 const steps = ['Personal Info', 'Education', 'Experience', 'Projects', 'Skills', 'Links']
 const ParentSteps = () => {
@@ -10,27 +14,30 @@ const ParentSteps = () => {
     if (steps.indexOf(currentStep) === steps.length - 1) return
     setCurrentStep(steps[steps.indexOf(currentStep) + 1])
   }
-  console.log(currentStep)
+  const user = useAppSelector(state => state.auth)
+  console.log(user)
   const RenderStep = () => {
     switch (currentStep) {
       case 'Personal Info':
-        return <PersonalInfoStep />
+        return <PersonalStep handleStepSubmit={increaseStep} />
       case 'Education':
-        return <EducationStep />
+        return <EducationStep handleStepSubmit={increaseStep} />
       case 'Experience':
-        return <ExperienceStep />
+        return <ExperienceStep handleStepSubmit={increaseStep} />
+      case 'Projects':
+        return <ProjectStep handleStepSubmit={increaseStep} />
+      case 'Skills':
+        return <SkillsStep handleStepSubmit={increaseStep} />
+      case 'Links':
+        return <LinksStep />
       default:
-        return <PersonalInfoStep />
+        return <ExperienceStep handleStepSubmit={increaseStep} />
     }
   }
-  console.log(currentStep)
   return (
-    <div>
+    <div className='flex flex-col items-center gap-5'>
       <StepTracker currentStep={currentStep} />
       <RenderStep />
-      <button onClick={increaseStep} className='bg-red-500 p-2'>
-        Next
-      </button>
     </div>
   )
 }

@@ -4,26 +4,24 @@ import ProjectCard from '@/components/ProjectCard'
 import ShadowCard from '@/components/ShadowCard'
 import countAcceptedRoles from '@/database/idea_profile_accepted_view/countAcceptedRoles'
 import fetchIdeaProfileAcceptedViewByIdeaId from '@/database/idea_profile_accepted_view/fetchIdeaProfileAcceptedViewByIdeaId'
-import fetchProfileIdeasViewByIdeaId from '@/database/profile_ideas_view/fetchProfileIdeasViewByIdeaId'
-import fetchProfileByID from '@/database/profiles/fetchProfileByID'
-import { IAcceptedParticipant, IIdeaProfileAcceptedView, IProfileIdeasViewTypes } from '@/types'
-import React, { useEffect, useState } from 'react'
+import { IApplicationParticipant, IIdeaProfileAcceptedView } from '@/types'
+import { useEffect, useState } from 'react'
 import { BsGithub } from 'react-icons/bs'
 import { IoChatboxSharp } from 'react-icons/io5'
 import { useParams } from 'react-router-dom'
 const Idea = () => {
   const { id } = useParams<{ id: string }>()
   const [idea, setIdea] = useState<IIdeaProfileAcceptedView | null>(null)
-
   useEffect(() => {
     getIdea()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   if (!id) {
     return <div>Invalid Idea ID</div>
   }
   const getIdea = async () => {
-    const res = await fetchIdeaProfileAcceptedViewByIdeaId(parseInt(id))
+    const res = await fetchIdeaProfileAcceptedViewByIdeaId(id)
     if (res) {
       // @ts-expect-error supabase wants JSON but we know its array
       setIdea(res)
@@ -37,7 +35,8 @@ const Idea = () => {
   )
 }
 export default Idea
-const RightBox = ({ members, idea }: { members: IAcceptedParticipant[]; idea: IIdeaProfileAcceptedView }) => {
+const RightBox = ({ members, idea }: { members: IApplicationParticipant[]; idea: IIdeaProfileAcceptedView }) => {
+  console.log(members)
   const [acceptedRoles, setAcceptedRoles] = useState<Record<string, number>>({
     Frontend: 0,
     Backend: 0,
@@ -51,6 +50,7 @@ const RightBox = ({ members, idea }: { members: IAcceptedParticipant[]; idea: II
   }
   useEffect(() => {
     handleCountAcceptedRoles()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
   const memberBox = () => {
     if (members.length === 0) {
@@ -104,14 +104,18 @@ const RightBox = ({ members, idea }: { members: IAcceptedParticipant[]; idea: II
             <IoChatboxSharp color='white' size={35} />
           </div>
           <div className='flex flex-col justify-center '>
-            <h4 className='font-semibold text-lg'>Buds Chat</h4>
-            <a className='hover:underline text-sm text-foreground/90' href='https://supabase.com' target='_blank'>
-              https://supabase.com
+            <h4 className='font-semibold text-lg'>DevChat</h4>
+            <a
+              className='hover:underline text-sm text-foreground/90'
+              href={`https://localhost:5173/devchats?idea_id=${idea.idea_id}`}
+              target='_blank'
+            >
+              https://localhost:5173/devchats...
             </a>
           </div>
         </div>
       </div>
-      <h3 className='font-semibold'>Dream Team...</h3>
+      <h3 className='font-semibold'>Dream Team:</h3>
       <div className='grid grid-cols-2'>
         <span className='font-semibold'>
           🎨

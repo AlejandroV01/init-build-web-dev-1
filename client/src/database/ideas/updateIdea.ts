@@ -7,12 +7,14 @@ const updateIdea = async (idea: IIdeaTableTypes) => {
       idea_title: idea.idea_title,
       idea_description: idea.idea_description,
       tech_stack: idea.tech_stack,
+      github_link: idea.github_link,
       front_end: idea.front_end,
       back_end: idea.back_end,
       full_stack: idea.full_stack,
       ux_ui: idea.ux_ui,
     })
     .eq('idea_id', idea.idea_id)
+    .select()
   if (data) {
     console.log(data)
     return true

@@ -1,11 +1,14 @@
 import Button from '@/components/Button'
 import Input from '@/components/Input'
 import fetchProfileByEmail from '@/database/profiles/fetchProfileByEmail'
+import { insertEmptyProfile } from '@/database/profiles/insertProfile'
 import supabase from '@/lib/supabaseClient'
 import { addProfile, addProfileUuid } from '@/store/auth/auth.slice'
 import { useAppDispatch } from '@/store/hooks'
 import React, { useState } from 'react'
+import { FaCircleCheck } from 'react-icons/fa6'
 import Logo from './Logo'
+import PopupParent from './PopupParent'
 
 export const LoginCard = () => {
   const [email, setEmail] = useState('')
@@ -67,7 +70,6 @@ export const LoginCard = () => {
     </div>
   )
 }
-
 export const SignUpCard = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -75,6 +77,7 @@ export const SignUpCard = () => {
   const [passwordMatch, setPasswordMatch] = useState<boolean | null>(null)
   const [passwordLength, setPasswordLength] = useState<boolean | null>(null)
   const [validCredentials, setValidCredentials] = useState<boolean | null>(null)
+  const [popup, setPopup] = useState(false)
   const signUpUser = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
     setValidCredentials(true)
@@ -86,10 +89,20 @@ export const SignUpCard = () => {
     const { data, error } = await supabase.auth.signUp({
       email,
       password,
+      options: {
+        emailRedirectTo: 'http://localhost:5173/user-setup',
+      },
     })
     console.log('AuthComponent SignUp Data: ', data, error)
+    const res = await insertEmptyProfile(email)
     if (data) {
-      console.log('User created successfully, showing confirm email popup')
+      if (res) {
+        console.log('User created successfully, showing confirm email popup')
+        setPopup(true)
+      } else {
+        console.error('Error creating user profile in DB but successful in auth')
+      }
+
       setPasswordMatch(true)
     } else {
       setPasswordMatch(false)
@@ -97,6 +110,14 @@ export const SignUpCard = () => {
   }
   return (
     <div className='flex flex-col items-center mt-14 w-full'>
+      <PopupParent active={popup} handlePopoverClose={() => setPopup(false)}>
+        <div className='flex flex-col items-center gap-2 px-10 '>
+          <FaCircleCheck size={35} className='text-[#89FF41]' />
+          <h3 className='text-xl font-semibold'>You're all set!</h3>
+          <p className='text-base text-foreground/80'>Please check your email to verify you account.</p>
+          <Button onClick={() => setPopup(false)}>Got it!</Button>
+        </div>
+      </PopupParent>
       <h1 className='font-bold text-4xl mb-4 text-center'>Create Your Account</h1>
       <p className='text-foreground/80 text-center'>Create your free account here!</p>
       <div className='border-2 border-foreground/40 p-5 rounded-lg shadow-lg mt-8 w-full sm:w-[500px] dark:border-foreground/20'>

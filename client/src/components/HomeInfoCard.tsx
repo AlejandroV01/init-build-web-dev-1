@@ -24,16 +24,13 @@ const HomeInfoCard = ({ title, highlight, description, imgSRC, reversed = false 
           </h2>
           <div className='text-wrap font-medium'>{description}</div>
         </div>
-        <img
-          className='hidden lg:block w-1/2 hover:animate-[wiggle_1s_ease-in-out_infinite] rounded-lg border-[8px] border-primary/60'
-          src={imgSRC}
-        />
+        <img className='hidden lg:block w-1/2 rounded-lg border-[8px] border-primary/60' src={imgSRC} />
       </div>
     )
   }
   return (
     <div className='flex w-full gap-10 justify-center'>
-      <img className='hidden lg:block w-1/2 hover:animate-[wiggle_1s_ease-in-out_infinite] rounded-lg border-[8px] border-primary/60' src={imgSRC} />
+      <img className='hidden lg:block w-1/2 rounded-lg border-[8px] border-primary/60' src={imgSRC} />
       <div className='w-full lg:w-1/2 flex flex-col justify-center gap-6'>
         <h2 className='text-wrap text-3xl font-semibold'>
           {newTitle.map((word: string) => (

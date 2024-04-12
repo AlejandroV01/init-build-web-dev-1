@@ -1,24 +1,49 @@
-import fetchEducation from '@/database/educations/fetchEducation'
-import fetchExperiences from '@/database/experiences/fetchExperiences'
-import fetchProfileByID from '@/database/profiles/fetchProfileByID'
-import getProjects from '@/database/projects/getProjects'
+import deleteEducation from '@/database/educations/deleteEducation'
+import deleteExperience from '@/database/experiences/deleteExperience'
+import profileQuery from '@/database/profiles/profileQuery'
+import { updateSkillsForm } from '@/database/profiles/updateProfileByEmail'
+import deleteProject from '@/database/projects/deleteProject'
+import supabase from '@/lib/supabaseClient'
 import { useAppSelector } from '@/store/hooks'
-import { IEducationTableTypes, IExperienceTableTypes, IProfileTableTypes, IProjectTableTypes } from '@/types'
-import React, { useEffect, useState } from 'react'
+import { IEducationTableTypes, IExperienceTableTypes, IProjectTableTypes } from '@/types'
+import { useEffect, useState } from 'react'
+import { FaRegFileAlt } from 'react-icons/fa'
+import { useNavigate } from 'react-router-dom'
+import { toast } from 'react-toastify'
 import Avatar from '../Avatar'
+import Button from '../Button'
 import EducationCard from '../EducationCard'
 import ExperienceCard from '../ExperienceCard'
+import FileDrop from '../FileDrop'
 import PortfolioCard from '../PortfolioCard'
 import ProfileInfoCard from '../ProfileInfoCard'
 import ProfileProjectCard from '../ProfileProjectCard'
-
+import SkillCard from '../SkillCard'
+import ProfileLoading from '../ui/ProfileLoading'
+export interface IFileObject {
+  name: string
+  id: string
+  updated_at: string
+  created_at: string
+  last_accessed_at: string
+  metadata: {
+    eTag: string
+    size: number
+    mimetype: string
+    cacheControl: string
+    lastModified: string
+    contentLength: number
+    httpStatusCode: number
+  }
+}
 interface formattedExperience {
   companyLogo: string
   companyTitle: string
   companyName: string
   startDate: string
   endDate: string
-  description: string | null
+  description: string
+  experience_id: string
 }
 
 interface formattedEducation {
@@ -27,61 +52,69 @@ interface formattedEducation {
   schoolMajor: string
   startDate: string
   endDate: string
+  education_id: string
 }
 
 interface formattedProject {
   projectName: string
-  hackathonName: string
-  projectDate: string
+  positionTitle: string
+  projectStartDate: string
+  projectEndDate: string
   description: string
+  project_id: string
 }
 
-const ProfileTab = () => {
-  const user = useAppSelector(state => state.auth)
-  const [profileData, setProfileData] = useState<IProfileTableTypes>()
-  const [experiences, setExperiences] = useState<IExperienceTableTypes[]>([])
-  const [educations, setEducations] = useState<IEducationTableTypes[]>([])
-  const [projects, setProjects] = useState<IProjectTableTypes[]>([])
+export interface IFullProfile {
+  educations: IEducationTableTypes[]
+  experiences: IExperienceTableTypes[]
+  projects: IProjectTableTypes[]
+  email: string
+  first_name: string
+  last_name: string
+  location: string
+  major: string
+  profile_id: number
+  school: string
+  skills: string[]
+  github_link: string
+  linkedin_link: string
+  portfolio_link: string
+}
+const ProfileTab = ({ userId = null }: { userId: number | null }) => {
+  const reduxId = useAppSelector(state => state.auth).profile_id
+  const finalUserId = userId || reduxId
+  const isYourProfile = userId === null
   const [isLoading, setIsLoading] = useState(true)
+  const [fullProfile, setFullProfile] = useState<IFullProfile | null>(null)
+  const [resume, setResume] = useState<IFileObject | null>(null)
+  const user = useAppSelector(state => state.auth)
   useEffect(() => {
     async function getData() {
-      // make user user id is not null
-      if (typeof user.profile_id === 'number') {
-        // fetch user profile data using id
-        const userData = await fetchProfileByID(user.profile_id)
-        // fetch user experience data using profile_id
-        const experienceData = await fetchExperiences(user.profile_id)
-        // fetch user education data using profile_id
-        const educationData = await fetchEducation(user.profile_id)
-        // fetch user projects data using profile_id
-        const projectsData = await getProjects(user.profile_id)
-        setIsLoading(false)
-        // if statements to make sure data is not null type
-
-        if (userData) setProfileData(userData)
-
-        if (experienceData) setExperiences(experienceData)
-
-        if (educationData) setEducations(educationData)
-
-        if (projectsData) setProjects(projectsData)
-      }
+      if (!finalUserId) return
+      const res = await profileQuery(finalUserId)
+      // @ts-expect-error error in genericStringError
+      setFullProfile(res?.fullProfile)
+      // @ts-expect-error error in genericStringError
+      setResume(res?.resume)
+      console.log(res?.resume)
+      setIsLoading(false)
     }
     getData()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
-
-  if (isLoading) return <div>Loading...</div>
+  if (isLoading) return <ProfileLoading />
   const createProfileInfoCard = () => {
-    if (profileData) {
+    if (fullProfile) {
       return (
         <div>
           <ProfileInfoCard
-            userFirstName={profileData.first_name}
-            userLastName={profileData.last_name}
-            userSchool={profileData.school}
-            userLocation={profileData.location}
-            userEmail={profileData.email}
-            userMajor={profileData.major}
+            userFirstName={fullProfile.first_name}
+            userLastName={fullProfile.last_name}
+            userSchool={fullProfile.school}
+            userLocation={fullProfile.location}
+            userEmail={fullProfile.email}
+            userMajor={fullProfile.major}
+            isYourProfile={isYourProfile}
           />
         </div>
       )
@@ -89,20 +122,20 @@ const ProfileTab = () => {
   }
 
   const createAvatar = () => {
-    if (profileData) {
+    if (fullProfile) {
       return (
         <div>
-          <Avatar firstName={profileData.first_name} lastName={profileData.last_name} />
+          <Avatar firstName={fullProfile.first_name} lastName={fullProfile.last_name} className='w-full aspect-square' />
         </div>
       )
     }
   }
 
   const createExperienceCard = () => {
-    if (experiences) {
+    if (fullProfile && fullProfile.experiences) {
       const formattedExperiences: formattedExperience[] = []
       // format experience data to a format acceptable for Experience Card
-      experiences.map(experience =>
+      fullProfile.experiences.map(experience =>
         formattedExperiences.push({
           companyLogo: experience.company,
           companyTitle: experience.title,
@@ -110,92 +143,228 @@ const ProfileTab = () => {
           startDate: experience.start_date,
           endDate: experience.end_date,
           description: experience.description,
+          experience_id: experience.experience_id || '',
         })
       )
 
       // fix type of description It can't be NULL
       return (
         <div>
-          <ExperienceCard experiences={formattedExperiences} />
+          <ExperienceCard experiences={formattedExperiences} isYourProfile={isYourProfile} removeExperience={removeExperience} />
         </div>
       )
     }
   }
 
   const createEducationCard = () => {
-    if (educations) {
+    if (fullProfile && fullProfile.educations) {
       const formattedEducation: formattedEducation[] = []
       // Format education to be acceptable for EducationCard
-      educations.map(education =>
+      fullProfile.educations.map(education =>
         formattedEducation.push({
           schoolLogo: education.school,
           schoolName: education.school,
           schoolMajor: education.major,
           startDate: education.start_date,
           endDate: education.end_date,
+          education_id: education.education_id || '',
         })
       )
       return (
         <div>
-          <EducationCard educations={formattedEducation} />
+          <EducationCard educations={formattedEducation} isYourProfile={isYourProfile} removeEducation={removeEducation} />
         </div>
       )
     }
   }
 
   const createProjectCard = () => {
-    if (projects) {
+    if (fullProfile && fullProfile.projects) {
       const formattedProjects: formattedProject[] = []
       // Format projects to be acceptable by Project Card
-      projects.map(project =>
+      fullProfile.projects.map(project =>
         formattedProjects.push({
           projectName: project.project_name,
-          hackathonName: project.position_title,
-          projectDate: project.start_date + project.end_date,
+          positionTitle: project.position_title,
+          projectStartDate: project.start_date,
+          projectEndDate: project.end_date,
           description: project.description,
+          project_id: project.project_id || '',
         })
       )
       // Fix type of description, it can't be NULL ?
       return (
         <div>
-          <ProfileProjectCard projects={formattedProjects} />
+          <ProfileProjectCard projects={formattedProjects} isYourProfile={isYourProfile} removeProject={removeProject} />
         </div>
       )
     }
   }
 
-  /**
-   * Navigate to localhost:5167/dashboard to view this file
-   * Order of the components if the following
-   * 1. Avatar
-   * 2. ProfileInfoCard
-   * 3. ExperienceCard
-   * 4. EducationCard
-   * 5. ProfileProjectCard
-   * 6. PortfolioCard
-   * Use the fetchProfileByID function to get the user's profile
-   * I made it so that in this branch the user.id is default to 1 which is
-   * a valid user id in the database
-   * Do not worry about the Skills Card, it is still in development
-   * If you have any questions, please ask!
-   */
-  return (
-    <div className='relative'>
-      <div className='bg-[#ededed] rounded-3xl border-1'>
-        <div className='w-full px-14 py-7 ml-4'>
-          <div className='flex items-center space-x-8'>
-            {createAvatar()}
-            {createProfileInfoCard()}
-          </div>
-          <div className='py-5 mr-10'>
-            <div className='py-5'>{createExperienceCard()}</div>
+  const CreateSkillCard = () => {
+    const [allSkills, setAllSkills] = useState<string[]>(fullProfile ? fullProfile.skills : [])
+    const handleRemoveSkill = (skill: string) => {
+      console.log(allSkills)
+      const newSkills = allSkills.filter(s => s !== skill)
+      console.log(newSkills)
+      setAllSkills(newSkills)
+    }
+    const handleSkillEnter = (val: string) => {
+      if (val === '') return
+      if (allSkills.includes(val)) return
+      setAllSkills([...allSkills, val])
+    }
+    const handleFinishEditing = async () => {
+      if (!finalUserId) return
+      const data = {
+        skills: allSkills,
+        profile_id: finalUserId,
+      }
+      const res = await updateSkillsForm(data)
+      if (res) {
+        toast.success('Skills updated')
+      } else {
+        toast.error('Failed to update skills')
+      }
+    }
+    const handleCancelEditing = () => {
+      setAllSkills(fullProfile ? fullProfile.skills : [])
+    }
+    if (fullProfile && fullProfile.skills) {
+      return (
+        <div>
+          <SkillCard
+            skills={allSkills}
+            handleCancelEditing={handleCancelEditing}
+            onSkillEnter={handleSkillEnter}
+            handleRemoveSkill={handleRemoveSkill}
+            onFinishEditing={handleFinishEditing}
+            isYourProfile={isYourProfile}
+          />
+        </div>
+      )
+    }
+  }
 
-            <div className='py-5'>{createEducationCard()}</div>
+  const CreateResumeCard = () => {
+    function formatDate(isoDateString: string) {
+      const date = new Date(isoDateString)
+      const month = date.getUTCMonth() + 1
+      const day = date.getUTCDate()
+      const year = date.getUTCFullYear()
 
-            <div className='py-5'>{createProjectCard()}</div>
-            <div className='py-5'>
-              <PortfolioCard />
+      const formattedDate = `${month}/${day}/${year}`
+      return formattedDate
+    }
+    const navigate = useNavigate()
+    const [file, setFile] = useState<File | null>(null)
+    const uploadResume = async () => {
+      if (!file) return
+      const { data, error } = await supabase.storage.from('resumes').upload(user.profile_id + '/' + 'resume-file', file)
+      if (data) {
+        toast.success('Resume uploaded')
+        navigate(0)
+        return data
+      } else {
+        toast.error('Failed to upload resume')
+        console.log('error', error)
+      }
+    }
+    if (!resume)
+      return (
+        <div className='p-5 flex flex-col gap-2 rounded-lg bg-foreground/5 shadow-lg dark:border dark:border-foreground/20'>
+          {isYourProfile ? (
+            <div className='bg-primary/20 p-4 rounded-lg flex flex-col gap-2'>
+              <div className='flex flex-col'>
+                <h3 className='text-lg font-semibold'>No resume found</h3>
+                <p>Enter a resume here to share!</p>
+              </div>
+              <FileDrop handleFileUpload={setFile} />
+              <Button onClick={uploadResume} disabled={!file} className={`w-full ${!file && 'cursor-not-allowed'}`}>
+                Upload
+              </Button>
             </div>
+          ) : (
+            <div className='bg-primary/20 p-4 rounded-lg flex flex-col gap-2'>
+              <div className='flex flex-col'>
+                <h3 className='text-lg font-semibold'>No resume found</h3>
+                <p>Tell {fullProfile?.first_name} to enter a resume!</p>
+              </div>
+            </div>
+          )}
+        </div>
+      )
+    return (
+      <div className='p-5 flex flex-col gap-2 rounded-lg bg-foreground/5 shadow-lg dark:border dark:border-foreground/20 mt-4'>
+        <div className='flex gap-4'>
+          <div className='w-[80px] h-[80px] flex items-center justify-center bg-primary rounded-lg'>
+            <FaRegFileAlt size={50} color='white' />
+          </div>
+          <div className='flex flex-col'>
+            <a
+              href={import.meta.env.VITE_SUPABASE_URL + '/storage/v1/object/public/resumes/' + fullProfile?.profile_id + '/' + resume.name}
+              target='_blank'
+              className='font-extrabold text-xl underline'
+            >
+              Resume
+            </a>
+            <a
+              href={import.meta.env.VITE_SUPABASE_URL + '/storage/v1/object/public/resumes/' + fullProfile?.profile_id + '/' + resume.name}
+              target='_blank'
+              className='underline '
+            >
+              View resume last uploaded: {formatDate(resume.created_at)}
+            </a>
+          </div>
+        </div>
+      </div>
+    )
+  }
+  if (!fullProfile) return <div>Profile not found</div>
+
+  const removeEducation = async (education_id: string) => {
+    const res = await deleteEducation(education_id)
+    if (res) {
+      toast.success('Education removed')
+      fullProfile.educations = fullProfile.educations.filter(edu => edu.education_id !== education_id)
+    } else {
+      toast.error('Failed to remove education')
+    }
+  }
+  const removeExperience = async (experience_id: string) => {
+    const res = await deleteExperience(experience_id)
+    if (res) {
+      toast.success('Experience removed')
+      fullProfile.experiences = fullProfile.experiences.filter(exp => exp.experience_id !== experience_id)
+    } else {
+      toast.error('Failed to remove experience')
+    }
+  }
+  const removeProject = async (project_id: string) => {
+    const res = await deleteProject(project_id)
+    if (res) {
+      toast.success('Project removed')
+      fullProfile.projects = fullProfile.projects.filter(project => project.project_id !== project_id)
+    } else {
+      toast.error('Failed to remove project')
+    }
+  }
+
+  return (
+    <div className='flex justify-center w-full  lg:ml-0'>
+      <div className='w-full lg:w-[80%] flex flex-col items-center'>
+        <div className='w-full p-5 flex flex-col lg:flex-row items-center gap-3 rounded-lg bg-foreground/5 dark:border dark:border-foreground/20 shadow-lg'>
+          <div className='w-[20%]'>{createAvatar()}</div>
+          <div>{createProfileInfoCard()}</div>
+        </div>
+        <div className='w-full flex flex-col gap-4'>
+          <CreateResumeCard />
+          <div>{createExperienceCard()}</div>
+          <div>{createEducationCard()}</div>
+          <div>{createProjectCard()}</div>
+          <CreateSkillCard />
+          <div>
+            <PortfolioCard fullProfile={fullProfile} isYourProfile={isYourProfile} />
           </div>
         </div>
       </div>

@@ -1,7 +1,5 @@
-import React from 'react'
 import { FaGraduationCap } from 'react-icons/fa6'
 import { PiFlaskLight } from 'react-icons/pi'
-
 interface IProfileInfoCard {
   userFirstName: string
   userLastName: string
@@ -9,6 +7,7 @@ interface IProfileInfoCard {
   userLocation: string
   userEmail: string
   userMajor: string
+  isYourProfile: boolean
 }
 
 const ProfileInfoCard = ({ userFirstName, userLastName, userSchool, userLocation, userEmail, userMajor }: IProfileInfoCard) => {

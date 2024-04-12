@@ -1,6 +1,6 @@
 import supabase from '@/lib/supabaseClient'
-
-const countAcceptedRoles = async (idea_id: number) => {
+import { IApplicationParticipant } from '@/types'
+const countAcceptedRoles = async (idea_id: string) => {
   try {
     const { data, error } = await supabase.from('idea_profile_accepted_view').select('accepted_participants').eq('idea_id', idea_id)
     if (error) {
@@ -12,8 +12,10 @@ const countAcceptedRoles = async (idea_id: number) => {
       'Full-Stack': 0,
       'UI/UX': 0,
     }
+    if (!data) return acceptedRoles
     data?.forEach(idea => {
-      idea.accepted_participants.forEach(participant => {
+      if (!idea.accepted_participants) return
+      idea.accepted_participants.forEach((participant: IApplicationParticipant) => {
         acceptedRoles[participant.application_role]++
       })
     })

@@ -11,9 +11,10 @@ interface PortfolioProps {
   link?: string
   icon?: IconType
   handleStateLinkChange: (link: string, variant: string) => void
+  isYourProfile: boolean
 }
 
-const Portfolio = ({ variant, title, bgColor, domain, link, icon: Icon, handleStateLinkChange }: PortfolioProps) => {
+const Portfolio = ({ variant, title, bgColor, domain, link, icon: Icon, handleStateLinkChange, isYourProfile }: PortfolioProps) => {
   switch (variant) {
     case 'github':
       title = 'Github'
@@ -37,16 +38,12 @@ const Portfolio = ({ variant, title, bgColor, domain, link, icon: Icon, handleSt
   }
 
   const [userLink, setLink] = useState(link)
-  const [input, setInput] = useState('')
+  const [input, setInput] = useState(link)
   const [showInput, setShowInput] = useState(false)
   const [showEdit, setShowEdit] = useState(true)
 
   const handleDBLinkChange = () => {
-    console.log('Change link in db to', input)
-    const dataBaseResult = true
-    if (dataBaseResult) {
-      handleStateLinkChange(input, variant)
-    }
+    handleStateLinkChange(input || '', variant)
   }
   const handleLinkChange = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault()
@@ -62,7 +59,7 @@ const Portfolio = ({ variant, title, bgColor, domain, link, icon: Icon, handleSt
 
   return (
     <div className='w-full flex flex-col '>
-      <div className='flex items-center gap-4 h-[80px] mb-4 text-black '>
+      <div className='flex items-center gap-4 h-[80px] mb-4 '>
         <div className={`h-full rounded-[8px] w-[80px] drop-shad ${bgColor} flex justify-center items-center`}>
           {Icon && <Icon size={45} color='white' />}
         </div>
@@ -92,7 +89,7 @@ const Portfolio = ({ variant, title, bgColor, domain, link, icon: Icon, handleSt
               </form>
             )}
 
-            {showEdit && (
+            {showEdit && isYourProfile && (
               <button
                 onClick={() => {
                   setShowInput(true)

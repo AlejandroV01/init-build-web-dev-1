@@ -2,6 +2,7 @@ import supabase from '@/lib/supabaseClient'
 import { IExperienceTableTypes } from '@/types'
 
 const insertExperience = async (experienceInfo: IExperienceTableTypes) => {
+  console.log(experienceInfo)
   const { data, error } = await supabase
     .from('experiences')
     .insert([

@@ -1,7 +1,7 @@
 import updateIdeaApplicants from '@/database/idea_applicants/updateApplicantByIdeaId'
 import countAcceptedRoles from '@/database/idea_profile_accepted_view/countAcceptedRoles'
 import { IApplicationParticipant, IIdeaApplicantsTableTypes, IIdeaProfileAcceptedView } from '@/types'
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { AiOutlineLoading } from 'react-icons/ai'
 import { toast } from 'react-toastify'
 import Avatar from './Avatar'
@@ -39,6 +39,7 @@ const ApplicantsPopup = ({ applicants, idea }: { applicants: IApplicationPartici
   }
   useEffect(() => {
     handleCountAcceptedRoles()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
   return (
     <div className='flex flex-col items-center p-4'>

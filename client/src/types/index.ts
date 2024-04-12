@@ -1,30 +1,37 @@
+export interface IMessageCreate {
+  profile_id: number
+  idea_id: string
+  text: string
+  created_at?: string
+}
 export interface IIdeaTableTypes {
-  idea_id: number
+  idea_id?: string
   profile_id: number
   idea_title: string
   idea_description: string
   tech_stack: string[]
   front_end: number
   back_end: number
+  github_link: string
   full_stack: number
   ux_ui: number
-  created_at: string
+  created_at?: string
 }
 
 export interface IIdeaSavesTableTypes {
-  idea_id: number
+  idea_id: string
   profile_id: number
 }
 
 export interface IIdeaApplicantsTableTypes {
-  idea_id: number
+  idea_id: string
   profile_id: number
-  application_role: string
+  application_role: 'Frontend' | 'Backend' | 'Full-Stack' | 'UI/UX'
   is_accepted: boolean
 }
 
 export interface IEducationTableTypes {
-  education_id: number
+  education_id?: string
   profile_id: number
   school: string
   major: string
@@ -33,8 +40,8 @@ export interface IEducationTableTypes {
 }
 
 export interface IExperienceTableTypes {
+  experience_id?: string
   profile_id: number
-  experience_id: number
   company: string
   title: string
   start_date: string
@@ -59,12 +66,13 @@ export interface IProfileTableTypes {
 }
 
 export interface IProjectTableTypes {
-  project_id: number
+  project_id: string
   profile_id: number
   project_name: string
   position_title: string
   start_date: string
   end_date: string
+  description: string
 }
 
 export interface IProfileIdeasViewTypes {
@@ -81,7 +89,7 @@ export interface IProfileIdeasViewTypes {
   portfolio_link_profiles: string
   school_profiles: string
   skills_profiles: string[]
-  idea_id_ideas: number
+  idea_id_ideas: string
   back_end_ideas: number
   created_at_ideas: string
   front_end_ideas: number
@@ -99,21 +107,21 @@ export interface IProfileInfo {
   email: string
   school: string
   major: string
-  created_at: string // Assuming this is a string representation of a date
+  created_at: string
 }
 
 export interface IApplicationParticipant {
   profile: IProfileInfo
-  application_role: string
+  application_role: 'Frontend' | 'Backend' | 'Full-Stack' | 'UI/UX'
 }
 
 export interface IIdeaProfileAcceptedView {
-  idea_id: number
+  idea_id: string
   profile_id: number
   idea_title: string
   idea_description: string
   tech_stack: string[]
-  created_at: string // Assuming this is a string representation of a date
+  created_at: string
   front_end: number
   back_end: number
   github_link: string
@@ -126,5 +134,20 @@ export interface IIdeaProfileAcceptedView {
   profile_school: string
   accepted_participants: IApplicationParticipant[]
   accepted_profile_ids: number[]
+  accepted_profile_firstNames: string[] //added first names
   non_accepted_participants: IApplicationParticipant[]
+}
+
+export interface IMessageCreate {
+  profile_id: number
+  idea_id: string
+  text: string
+  created_at?: string
+}
+
+export interface IMessageCreate {
+  profile_id: number
+  idea_id: string
+  text: string
+  created_at?: string
 }

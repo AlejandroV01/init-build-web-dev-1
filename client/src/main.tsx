@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom/client'
 import { RouterProvider, createBrowserRouter } from 'react-router-dom'
 import { Bounce, ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
+import DevChats from './components/DevChats.tsx'
 import { ThemeProvider } from './components/theme-provider.tsx'
 import ErrorPage from './error-page.tsx'
 import './index.css'
@@ -11,7 +12,9 @@ import Dashboard from './routes/Dashboard.tsx'
 import Home from './routes/Home.tsx'
 import Idea from './routes/Idea.tsx'
 import Ideas from './routes/Ideas.tsx'
+import Profile from './routes/Profile.tsx'
 import Root from './routes/Root.tsx'
+import UserSetup from './routes/UserSetup.tsx'
 import StoreProvider from './store/StoreProvider.tsx'
 const router = createBrowserRouter([
   {
@@ -38,6 +41,18 @@ const router = createBrowserRouter([
       {
         path: '/idea/:id',
         element: <Idea />,
+      },
+      {
+        path: '/user-setup',
+        element: <UserSetup />,
+      },
+      {
+        path: '/devchats',
+        element: <DevChats />,
+      },
+      {
+        path: '/profile/:id',
+        element: <Profile />,
       },
     ],
   },
