@@ -1,14 +1,21 @@
+export interface IMessageCreate {
+  profile_id: number
+  idea_id: string
+  text: string
+  created_at?: string
+}
 export interface IIdeaTableTypes {
-  idea_id: string;
-  profile_id: number;
-  idea_title: string;
-  idea_description: string;
-  tech_stack: string[];
-  front_end: number;
-  back_end: number;
-  full_stack: number;
-  ux_ui: number;
-  created_at: string;
+  idea_id: string
+  profile_id: number
+  idea_title: string
+  idea_description: string
+  tech_stack: string[]
+  front_end: number
+  back_end: number
+  github_link: string
+  full_stack: number
+  ux_ui: number
+  created_at: string
 }
 
 export interface IIdeaSavesTableTypes {
@@ -59,12 +66,13 @@ export interface IProfileTableTypes {
 }
 
 export interface IProjectTableTypes {
-  project_id: string;
-  profile_id: number;
-  project_name: string;
-  position_title: string;
-  start_date: string;
-  end_date: string;
+  project_id: string
+  profile_id: number
+  project_name: string
+  position_title: string
+  start_date: string
+  end_date: string
+  description: string
 }
 
 export interface IProfileIdeasViewTypes {
@@ -134,4 +142,11 @@ export interface IMessageCreate {
   idea_id: string;
   text: string;
   created_at?: string;
+}
+
+export interface IMessageCreate {
+  profile_id: number
+  idea_id: string
+  text: string
+  created_at?: string
 }

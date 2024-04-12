@@ -25,7 +25,11 @@ export const fetchIdeaProfileAcceptedViewByProfileId = async (profile_id: number
 }
 
 export const fetchIdeaProfileAcceptedViewByProfileIdCounter = async (profile_id: number) => {
-  const { data, error } = await supabase.from('idea_profile_accepted_view').select('*').neq('profile_id', profile_id)
+  const { data, error } = await supabase
+    .from('idea_profile_accepted_view')
+    .select('*')
+    .neq('profile_id', profile_id)
+    .contains('accepted_profile_ids', [profile_id])
   if (data) {
     console.log(data)
     return data

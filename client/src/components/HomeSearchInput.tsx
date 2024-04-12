@@ -28,7 +28,7 @@ const HomeSearchInput: React.FC<HomeSearchInputProps> = ({ handleSearch }) => {
     const formattedTech = tech.map(tech => tech.value)
     handleSearch(input, jobType, formattedTech)
   }
-  console.log(tech)
+
   return (
     <ShadowCard className='p-3 w-full max-w-[800px] flex flex-col gap-2'>
       <form onSubmit={handleSubmit} className='flex gap-5'>

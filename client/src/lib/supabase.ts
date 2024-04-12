@@ -183,18 +183,18 @@ export type Database = {
           ux_ui: number;
         };
         Insert: {
-          back_end: number;
-          created_at?: string;
-          front_end: number;
-          full_stack: number;
-          github_link: string;
-          idea_description: string;
-          idea_id?: string;
-          idea_title: string;
-          profile_id: number;
-          tech_stack: string[];
-          ux_ui: number;
-        };
+          back_end: number
+          created_at?: string
+          front_end: number
+          full_stack: number
+          github_link: string
+          idea_description: string
+          idea_id?: string
+          idea_title: string
+          profile_id: number
+          tech_stack: string[]
+          ux_ui: number
+        }
         Update: {
           back_end?: number;
           created_at?: string;
@@ -227,12 +227,12 @@ export type Database = {
           text: string;
         };
         Insert: {
-          created_at?: string;
-          idea_id: string;
-          message_id?: string;
-          profile_id: number;
-          text: string;
-        };
+          created_at?: string
+          idea_id: string
+          message_id?: string
+          profile_id: number
+          text: string
+        }
         Update: {
           created_at?: string;
           idea_id?: string;

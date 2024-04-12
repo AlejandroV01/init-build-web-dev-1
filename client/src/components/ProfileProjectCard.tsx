@@ -5,30 +5,35 @@ import { HiPencil } from 'react-icons/hi2'
 
 interface Projects {
   projectName: string
-  hackathonName: string
-  projectDate: string
+  positionTitle: string
+  projectStartDate: string
+  projectEndDate: string
   description: string
+  project_id: string
 }
 
 interface ProjectCardProps {
   projects: Projects[]
+  isYourProfile: boolean
 }
 
-const ProfileProjectCard: React.FC<ProjectCardProps> = ({ projects }) => {
+const ProfileProjectCard: React.FC<ProjectCardProps> = ({ projects, isYourProfile }) => {
   return (
-    <div className='w-[850px] py-5 px-5 pt-4 flex flex-col gap-7 rounded-[8px] drop-shad bg-[#E8E8E8] shadow-md border-l border-b border-[#b2b2b2]'>
+    <div className='p-5 flex flex-col gap-3 rounded-lg bg-foreground/5 shadow-lg dark:border dark:border-foreground/20'>
       <div className='flex justify-between items-center'>
-        <span className='font-extrabold text-2xl text-black'>Projects</span>
-        <HiPencil color='#7B7B7B' fontSize='18px' />
+        <span className='font-extrabold text-2xl'>Projects</span>
       </div>
       <div className='flex flex-col gap-7'>
         {projects.map((proj, index) => (
           <Project
             key={index}
             projectName={proj.projectName}
-            hackathonName={proj.hackathonName}
-            projectDate={proj.projectDate}
+            positionTitle={proj.positionTitle}
+            projectStartDate={proj.projectStartDate}
+            projectEndDate={proj.projectEndDate}
             description={proj.description}
+            project_id={proj.project_id}
+            isYourProfile={isYourProfile}
           />
         ))}
       </div>

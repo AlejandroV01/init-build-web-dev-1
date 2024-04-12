@@ -12,6 +12,7 @@ import Dashboard from './routes/Dashboard.tsx'
 import Home from './routes/Home.tsx'
 import Idea from './routes/Idea.tsx'
 import Ideas from './routes/Ideas.tsx'
+import Profile from './routes/Profile.tsx'
 import Root from './routes/Root.tsx'
 import UserSetup from './routes/UserSetup.tsx'
 import StoreProvider from './store/StoreProvider.tsx'
@@ -48,6 +49,10 @@ const router = createBrowserRouter([
       {
         path: '/devchats',
         element: <DevChats />,
+      },
+      {
+        path: '/profile/:id',
+        element: <Profile />,
       },
     ],
   },

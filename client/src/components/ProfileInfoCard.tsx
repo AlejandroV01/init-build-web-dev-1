@@ -9,6 +9,7 @@ interface IProfileInfoCard {
   userLocation: string
   userEmail: string
   userMajor: string
+  isYourProfile: boolean
 }
 
 const ProfileInfoCard = ({ userFirstName, userLastName, userSchool, userLocation, userEmail, userMajor }: IProfileInfoCard) => {

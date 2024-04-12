@@ -1,13 +1,15 @@
 import { fetchIdeaProfileAcceptedViewByProfileId } from '@/database/idea_profile_accepted_view/fetchIdeaProfileAcceptedViewByIdeaId'
 import fetchIdeaNotProfileId from '@/database/ideas/fetchIdeaNotProfileId'
 import { useAppSelector } from '@/store/hooks'
-import { IIdeaApplicantsTableTypes, IIdeaProfileAcceptedView, IIdeaTableTypes } from '@/types'
-import React, { useEffect, useState } from 'react'
+import { IIdeaProfileAcceptedView } from '@/types'
+import { useEffect, useState } from 'react'
+import Button from '../Button'
+import CreateProject from '../CreateProject'
 import ProjectCard from '../ProjectCard'
 const OthersIdeasTab = () => {
   const [ideas, setIdeas] = useState<IIdeaProfileAcceptedView[]>([])
   const user = useAppSelector(state => state.auth)
-
+  const [isPopupOpen, setIsPopupOpen] = useState(false)
   useEffect(() => {
     const fetchOthersIdeas = async () => {
       if (!user || !user.profile_id) return
@@ -29,6 +31,14 @@ const OthersIdeasTab = () => {
           {ideas.map(idea => (
             <ProjectCard idea={idea} />
           ))}
+          {ideas.length === 0 && (
+            <div className='bg-primary/20 p-5 flex flex-col items-center rounded-lg gap-2'>
+              <h2 className='text-3xl font-semibold'>No Ideas Created Yet!</h2>
+              <p>Start creating some ideas and share it to the community!</p>
+              <Button onClick={() => setIsPopupOpen(true)}>Create an Idea</Button>
+            </div>
+          )}
+          <CreateProject handleClosePopup={() => setIsPopupOpen(false)} isActive={isPopupOpen} closePopup={() => setIsPopupOpen(false)} />
         </div>
       </div>
     </div>
