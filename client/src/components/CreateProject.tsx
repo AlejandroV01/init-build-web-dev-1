@@ -1,7 +1,6 @@
 import insertIdea from '@/database/ideas/insertIdea'
-import { IIdeaCreate } from '@/routes/Home'
 import { useAppSelector } from '@/store/hooks'
-import React, { useRef, useState } from 'react'
+import React, { useState } from 'react'
 import { FaMinus } from 'react-icons/fa'
 import { FaPlus, FaXmark } from 'react-icons/fa6'
 import { useNavigate } from 'react-router-dom'
@@ -40,7 +39,8 @@ const CreateProject = ({ handleClosePopup, isActive, closePopup }: { handleClose
       return alert('Fill all fields!')
     }
     // if (!user.id) return alert('Not signed in!')
-    const idea: IIdeaCreate = {
+    if (!user.profile_id) return
+    const idea = {
       idea_title: title,
       idea_description: description,
       tech_stack: techStackBadges,

@@ -1,4 +1,3 @@
-import React from 'react'
 import { useDropzone } from 'react-dropzone'
 import { HiOutlineDocumentPlus } from 'react-icons/hi2'
 import { IoIosDocument } from 'react-icons/io'

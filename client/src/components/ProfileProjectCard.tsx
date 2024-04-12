@@ -1,7 +1,6 @@
 import Project, { ProjectProfileForm } from '@/components/Project'
 import React, { useState } from 'react'
 import { FaPlus } from 'react-icons/fa'
-import { HiPencil } from 'react-icons/hi2'
 interface Projects {
   projectName: string
   positionTitle: string

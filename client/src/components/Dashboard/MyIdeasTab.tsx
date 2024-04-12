@@ -1,5 +1,4 @@
 import { fetchIdeaProfileAcceptedViewByProfileId } from '@/database/idea_profile_accepted_view/fetchIdeaProfileAcceptedViewByIdeaId'
-import fetchIdeaNotProfileId from '@/database/ideas/fetchIdeaNotProfileId'
 import { useAppSelector } from '@/store/hooks'
 import { IIdeaProfileAcceptedView } from '@/types'
 import { useEffect, useState } from 'react'

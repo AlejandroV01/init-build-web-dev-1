@@ -10,6 +10,7 @@ const Profile = () => {
 
   useEffect(() => {
     getFullProfile()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   if (!id) {

@@ -1,5 +1,3 @@
-import React from 'react'
-import { PiSteps } from 'react-icons/pi'
 const steps = ['Personal Info', 'Education', 'Experience', 'Projects', 'Skills', 'Links']
 const StepTracker = ({ currentStep }: { currentStep: string }) => {
   return (

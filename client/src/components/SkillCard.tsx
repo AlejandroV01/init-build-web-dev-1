@@ -1,6 +1,4 @@
-import { spawn } from 'child_process'
 import React, { useState } from 'react'
-import { CiEdit } from 'react-icons/ci'
 import { FaXmark } from 'react-icons/fa6'
 import { HiPencil } from 'react-icons/hi2'
 import Button from './Button'

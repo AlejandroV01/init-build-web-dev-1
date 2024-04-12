@@ -1,4 +1,4 @@
-import React, { ReactNode } from 'react'
+import { ReactNode } from 'react'
 
 const SeedBackground = ({ children, seed }: { children: ReactNode; seed: string }) => {
   return (

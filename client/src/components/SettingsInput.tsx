@@ -1,6 +1,6 @@
-import updateProfileByEmail, { updateAccountInfo } from '@/database/profiles/updateProfileByEmail'
+import { updateAccountInfo } from '@/database/profiles/updateProfileByEmail'
 import { useAppSelector } from '@/store/hooks'
-import React, { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { toast } from 'react-toastify'
 import Button from './Button'
 import Input from './Input'

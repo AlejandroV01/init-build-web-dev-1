@@ -7,7 +7,6 @@ import { addProfile, addProfileUuid } from '@/store/auth/auth.slice'
 import { useAppDispatch } from '@/store/hooks'
 import React, { useState } from 'react'
 import { FaCircleCheck } from 'react-icons/fa6'
-import { redirect } from 'react-router-dom'
 import Logo from './Logo'
 import PopupParent from './PopupParent'
 

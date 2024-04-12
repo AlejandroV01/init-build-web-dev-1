@@ -3,13 +3,11 @@ import ProjectCard from '@/components/ProjectCard'
 
 import fetchAllIdeas from '@/database/idea_profile_accepted_view/fetchAllIdeas'
 import fetchIdeasOnFilters from '@/database/idea_profile_accepted_view/fetchIdeasOnFilters'
-import fetchProfileIdeasView from '@/database/profile_ideas_view/fetchProfileIdeasView'
-import { IIdeaProfileAcceptedView, IIdeaTableTypes, IProfileIdeasViewTypes } from '@/types'
-import React, { useEffect, useState } from 'react'
+import { IIdeaProfileAcceptedView } from '@/types'
+import { useEffect, useState } from 'react'
 const Ideas = () => {
   const [ideas, setIdeas] = useState<IIdeaProfileAcceptedView[]>([])
   const [loading, setLoading] = useState<boolean>(true)
-  const [disableScroll, setDisableScroll] = useState<boolean>(false)
   const handleSearch = async (input: string, jobType: string, formattedTech: string[]) => {
     if (jobType === 'Job Type') jobType = ''
     console.log('searching:', input, jobType, formattedTech)

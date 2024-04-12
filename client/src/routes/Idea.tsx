@@ -4,19 +4,17 @@ import ProjectCard from '@/components/ProjectCard'
 import ShadowCard from '@/components/ShadowCard'
 import countAcceptedRoles from '@/database/idea_profile_accepted_view/countAcceptedRoles'
 import fetchIdeaProfileAcceptedViewByIdeaId from '@/database/idea_profile_accepted_view/fetchIdeaProfileAcceptedViewByIdeaId'
-import fetchProfileIdeasViewByIdeaId from '@/database/profile_ideas_view/fetchProfileIdeasViewByIdeaId'
-import fetchProfileByID from '@/database/profiles/fetchProfileByID'
-import { IAcceptedParticipant, IIdeaProfileAcceptedView, IProfileIdeasViewTypes } from '@/types'
-import React, { useEffect, useState } from 'react'
+import { IApplicationParticipant, IIdeaProfileAcceptedView } from '@/types'
+import { useEffect, useState } from 'react'
 import { BsGithub } from 'react-icons/bs'
 import { IoChatboxSharp } from 'react-icons/io5'
-import { useLocation, useParams } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 const Idea = () => {
   const { id } = useParams<{ id: string }>()
   const [idea, setIdea] = useState<IIdeaProfileAcceptedView | null>(null)
-  const location = useLocation()
   useEffect(() => {
     getIdea()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   if (!id) {
@@ -37,7 +35,7 @@ const Idea = () => {
   )
 }
 export default Idea
-const RightBox = ({ members, idea }: { members: IAcceptedParticipant[]; idea: IIdeaProfileAcceptedView }) => {
+const RightBox = ({ members, idea }: { members: IApplicationParticipant[]; idea: IIdeaProfileAcceptedView }) => {
   const [acceptedRoles, setAcceptedRoles] = useState<Record<string, number>>({
     Frontend: 0,
     Backend: 0,
@@ -51,6 +49,7 @@ const RightBox = ({ members, idea }: { members: IAcceptedParticipant[]; idea: II
   }
   useEffect(() => {
     handleCountAcceptedRoles()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
   const memberBox = () => {
     if (members.length === 0) {

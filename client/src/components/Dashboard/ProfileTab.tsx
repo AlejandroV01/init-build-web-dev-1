@@ -1,17 +1,12 @@
 import deleteEducation from '@/database/educations/deleteEducation'
-import fetchEducation from '@/database/educations/fetchEducation'
 import deleteExperience from '@/database/experiences/deleteExperience'
-import fetchExperiences from '@/database/experiences/fetchExperiences'
-import fetchProfileByID from '@/database/profiles/fetchProfileByID'
 import profileQuery from '@/database/profiles/profileQuery'
 import { updateSkillsForm } from '@/database/profiles/updateProfileByEmail'
 import deleteProject from '@/database/projects/deleteProject'
-import getProjects from '@/database/projects/getProjects'
-import fetchResume from '@/database/resume/fetchResume'
 import supabase from '@/lib/supabaseClient'
 import { useAppSelector } from '@/store/hooks'
-import { IEducationTableTypes, IExperienceTableTypes, IProfileTableTypes, IProjectTableTypes } from '@/types'
-import React, { useEffect, useState } from 'react'
+import { IEducationTableTypes, IExperienceTableTypes, IProjectTableTypes } from '@/types'
+import { useEffect, useState } from 'react'
 import { FaRegFileAlt } from 'react-icons/fa'
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
@@ -23,7 +18,6 @@ import FileDrop from '../FileDrop'
 import PortfolioCard from '../PortfolioCard'
 import ProfileInfoCard from '../ProfileInfoCard'
 import ProfileProjectCard from '../ProfileProjectCard'
-import SeedBackground from '../SeedBackground'
 import SkillCard from '../SkillCard'
 import ProfileLoading from '../ui/ProfileLoading'
 export interface IFileObject {
@@ -106,6 +100,7 @@ const ProfileTab = ({ userId = null }: { userId: number | null }) => {
       setIsLoading(false)
     }
     getData()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
   if (isLoading) return <ProfileLoading />
   const createProfileInfoCard = () => {
@@ -252,7 +247,7 @@ const ProfileTab = ({ userId = null }: { userId: number | null }) => {
   }
 
   const CreateResumeCard = () => {
-    function formatDate(isoDateString) {
+    function formatDate(isoDateString: string) {
       const date = new Date(isoDateString)
       const month = date.getUTCMonth() + 1
       const day = date.getUTCDate()

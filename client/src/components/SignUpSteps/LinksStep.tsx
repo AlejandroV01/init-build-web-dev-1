@@ -1,15 +1,13 @@
 import { updateLinksForm } from '@/database/profiles/updateProfileByEmail'
 import { useAppSelector } from '@/store/hooks'
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { FaCircleCheck } from 'react-icons/fa6'
-import { useNavigate } from 'react-router-dom'
 import Button from '../Button'
 import CardBox from '../CardBox'
 import Input from '../Input'
 import Label from '../Label'
 import PopupParent from '../PopupParent'
-const LinksStep = ({ handleStepSubmit }: { handleStepSubmit: () => void }) => {
-  const navigate = useNavigate()
+const LinksStep = () => {
   const user = useAppSelector(state => state.auth)
   const [linkedin, setLinkedin] = useState('')
   const [githubUrl, setGithubUrl] = useState('')
@@ -41,7 +39,7 @@ const LinksStep = ({ handleStepSubmit }: { handleStepSubmit: () => void }) => {
 
   return (
     <CardBox>
-      <PopupParent active={popup}>
+      <PopupParent active={popup} handlePopoverClose={() => setPopup(false)}>
         <div className='flex flex-col items-center gap-2 px-10 '>
           <FaCircleCheck size={35} className='text-[#89FF41]' />
           <h3 className='text-xl font-semibold'>Nice work!</h3>

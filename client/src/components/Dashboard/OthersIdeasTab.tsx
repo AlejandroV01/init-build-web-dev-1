@@ -1,8 +1,7 @@
 import { fetchIdeaProfileAcceptedViewByProfileIdCounter } from '@/database/idea_profile_accepted_view/fetchIdeaProfileAcceptedViewByIdeaId'
-import fetchIdeaNotProfileId from '@/database/ideas/fetchIdeaNotProfileId'
 import { useAppSelector } from '@/store/hooks'
-import { IIdeaApplicantsTableTypes, IIdeaProfileAcceptedView, IIdeaTableTypes } from '@/types'
-import React, { useEffect, useState } from 'react'
+import { IIdeaProfileAcceptedView } from '@/types'
+import { useEffect, useState } from 'react'
 import Button from '../Button'
 import ProjectCard from '../ProjectCard'
 const OthersIdeasTab = () => {

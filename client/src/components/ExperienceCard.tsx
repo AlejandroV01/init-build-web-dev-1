@@ -1,7 +1,6 @@
 import Experience, { ExperienceProfileForm } from '@/components/Experience'
 import React, { useState } from 'react'
 import { FaPlus } from 'react-icons/fa'
-import { HiPencil } from 'react-icons/hi2'
 interface Experiences {
   companyLogo: string
   companyTitle: string

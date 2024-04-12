@@ -1,5 +1,4 @@
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel'
-import React from 'react'
 import AboutUsCard, { IAboutUsCard } from './AboutUsCard'
 const MeetTheTeam = () => {
   const teamMembers: IAboutUsCard[] = [
@@ -67,7 +66,7 @@ const MeetTheTeam = () => {
     {
       userFirstName: 'Michael',
       userLastName: 'Duran',
-      userSubtext: 'Front End Developer',
+      userSubtext: 'Frontend Engineer',
       userGitHub: 'https://github.com/duranmichael681',
       userLinkedIn: 'https://www.linkedin.com/in/michael-a-duran/',
       imageSrc:
@@ -103,7 +102,7 @@ const MeetTheTeam = () => {
     {
       userFirstName: 'Lorenzo',
       userLastName: 'Montero',
-      userSubtext: 'Software Engineer',
+      userSubtext: 'Frontend Engineer',
       userGitHub: 'https://github.com/LoreMontero',
       userLinkedIn: 'https://www.linkedin.com/in/lorenzo-montero/',
       imageSrc: 'https://avatars.githubusercontent.com/u/54688379?u=e1cb369fd58f98eb06f50b40379a5e251706638d&v=4',
@@ -136,12 +135,12 @@ const MeetTheTeam = () => {
         'https://media.discordapp.net/attachments/1208259913848061992/1225612295091257396/IsmailsHeadshot.png?ex=6621c365&is=660f4e65&hm=5e6988c20983ec349b160e52657686bc789c6709c8687c5c705f81f29e8da3d7&=&format=webp&quality=lossless',
     },
     {
-      userFirstName: 'Alejandro',
-      userLastName: 'Vera',
-      userSubtext: 'Lead Software Engineer',
-      userGitHub: 'https://github.com/AlejandroV01',
+      userFirstName: 'Felix',
+      userLastName: 'Arbucias',
+      userSubtext: 'Frontend Engineer',
+      userGitHub: 'https://github.com/felixArbucias',
       userLinkedIn: 'https://www.linkedin.com/in/alejandrovera09/',
-      imageSrc: 'https://avatars.githubusercontent.com/u/91917536?v=4',
+      imageSrc: `https://api.dicebear.com/8.x/initials/svg?seed=FelixArbucias&backgroundColor=00897b,00acc1,039be5,1e88e5,3949ab,43a047,5e35b1,7cb342,8e24aa,c0ca33,d81b60,e53935,f4511e,fb8c00,fdd835,ffb300,c0aede,d1d4f9,b6e3f4&backgroundType=solid,gradientLinear&backgroundRotation=0,360,10,20,30,40,50,60,70,80,90,100,110,120,130,140,150,160,170,180,190,200,210,220,230,240,250,260,270,280,290,300,310,320,330,340,350`,
     },
   ]
   return (

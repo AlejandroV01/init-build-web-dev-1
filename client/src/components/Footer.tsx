@@ -1,5 +1,3 @@
-import React from 'react';
-
 function Footer() {
   return (
     <footer style={{ backgroundColor: '#333', color: 'white', textAlign: 'center', padding: '20px 0' }}>
@@ -32,16 +30,16 @@ function Footer() {
           <h4>Subscribe to our email</h4>
           <button>Subscribe</button>
           <div>
-          <button>Facebook </button>
-          <br />
-          <button>Twitter</button>
-          <br />
-          <button>Instagram</button>
+            <button>Facebook </button>
+            <br />
+            <button>Twitter</button>
+            <br />
+            <button>Instagram</button>
           </div>
         </div>
       </div>
     </footer>
-  );
+  )
 }
 
-export default Footer;
+export default Footer

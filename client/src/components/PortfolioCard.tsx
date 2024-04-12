@@ -1,12 +1,8 @@
 import Portfolio from '@/components/Portfolio'
 import { updateLinksForm } from '@/database/profiles/updateProfileByEmail'
-import { addProfile } from '@/store/auth/auth.slice'
-import { useAppDispatch, useAppSelector } from '@/store/hooks'
 import { toast } from 'react-toastify'
 import { IFullProfile } from './Dashboard/ProfileTab'
 const PortfolioCard = ({ fullProfile, isYourProfile }: { fullProfile: IFullProfile; isYourProfile: boolean }) => {
-  const user = useAppSelector(state => state.auth)
-  const dispatch = useAppDispatch()
   const handleStateLinkChange = async (link: string, variant: string) => {
     if (!fullProfile.profile_id) return toast.error('Profile ID not found')
     let success = false

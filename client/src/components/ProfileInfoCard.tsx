@@ -1,4 +1,3 @@
-import React, { useState } from 'react'
 import { FaGraduationCap } from 'react-icons/fa6'
 import { PiFlaskLight } from 'react-icons/pi'
 interface IProfileInfoCard {

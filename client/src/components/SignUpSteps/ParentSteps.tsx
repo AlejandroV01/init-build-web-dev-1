@@ -1,5 +1,5 @@
 import { useAppSelector } from '@/store/hooks'
-import React, { useState } from 'react'
+import { useState } from 'react'
 import EducationStep from './EducationStep'
 import ExperienceStep from './ExperienceStep'
 import LinksStep from './LinksStep'
@@ -29,7 +29,7 @@ const ParentSteps = () => {
       case 'Skills':
         return <SkillsStep handleStepSubmit={increaseStep} />
       case 'Links':
-        return <LinksStep handleStepSubmit={increaseStep} />
+        return <LinksStep />
       default:
         return <ExperienceStep handleStepSubmit={increaseStep} />
     }
