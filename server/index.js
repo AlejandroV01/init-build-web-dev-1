@@ -12,18 +12,19 @@ const io = new Server({
 io.on("connection", (socket) => {
   console.log("a user connected");
 
-  socket.on("joinRoom", (roomId) => {
-    console.log(`User joined room ${roomId}`);
+  socket.on("joinRoom", (data) => {
+    let roomId = JSON.parse(data).roomId;
+    let userName = JSON.parse(data).userName;
+
+    console.log(`${userName} joined room ${roomId}`);
     socket.join(roomId); // Join the specified room
   });
 
-  socket.on("message", (data) => {
-    // Send the message only to sockets in the specified room
-    console.log(`Message received in room ${data.roomId}: ${data.message}`);
-    io.to(data.roomId).emit("message", {
-      roomId: data.roomId,
-      message: data.message,
-    });
+  socket.on("send-message", (data) => {
+    let dataParsed = JSON.parse(data);
+    console.log("data: ");
+    console.log(dataParsed);
+    io.to(dataParsed.roomId).emit("messaging-room", dataParsed.message);
   });
 
   socket.on("disconnect", () => {
