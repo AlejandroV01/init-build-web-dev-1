@@ -24,20 +24,20 @@ const Home = () => {
         <HomeInfoCard
           title='Discover the World of Coding'
           highlight='Discover'
-          imgSRC='https://images3.alphacoders.com/133/1332803.png'
+          imgSRC='/home.PNG'
           description={`Explore a diverse range of project ideas from talented individuals within the development community. Whether you're passionate about frontend design or backend development, find projects that match your skills and interests.`}
         />
         <HomeInfoCard
           title='Build Your Dream Team'
           highlight='Team'
-          imgSRC='https://images3.alphacoders.com/133/1332803.png'
+          imgSRC='/applicant.PNG'
           description={`Connect with like-minded collaborators and build your dream team for project execution. Whether you're seeking frontend developers, backend engineers, or UI/UX designers, our platform facilitates seamless team formation to bring your ideas to life.`}
           reversed
         />
         <HomeInfoCard
           title='Foster Community Collaboration'
           highlight='Community'
-          imgSRC='https://images3.alphacoders.com/133/1332803.png'
+          imgSRC='/chat.PNG'
           description={`Cultivate a collaborative environment where creativity flourishes and ideas thrive. Share your project concepts, receive valuable feedback, and collaborate with passionate individuals to turn your vision into reality. Together, we empower innovation and drive collective progress.`}
         />
       </div>
@@ -58,7 +58,7 @@ const CTA = () => {
             Get Started
           </Button>
         </a>
-        <img src='/MAC.webp' alt='' className='w-full max-w-[900px]' />
+        <img src='/MACProfile.png' alt='' className='w-full max-w-[900px]' />
       </div>
     </div>
   )
