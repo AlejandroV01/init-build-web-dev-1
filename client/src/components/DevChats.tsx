@@ -51,7 +51,7 @@ const DevChats = () => {
 
   // creating initial socket and fetching accepted chats
   useEffect(() => {
-    const newSocket = io('https://devbuds.onrender.com:3000')
+    const newSocket = io('https://devbuds.onrender.com')
     setSocket(newSocket)
 
     const fetchAcceptedIdeas = async () => {
